@@ -1,0 +1,120 @@
+{
+  "users": {
+    "nrqjrpjh9k": {
+      "xp": 1055,
+      "streak": 1,
+      "lastStudyDate": "Wed May 27 2026",
+      "completedLessons": [
+        "hsk1-lesson-2",
+        "hsk1-lesson-1",
+        "hsk1-lesson-3",
+        "hsk1-lesson-4",
+        "hsk1-lesson-5"
+      ],
+      "favoriteWords": [],
+      "quizMistakes": [
+        {
+          "word": {
+            "chinese": "多",
+            "pinyin": "duō",
+            "english": "adj. many / adv. how (degree)",
+            "sentences": [
+              {
+                "chinese": "这里的人很多。",
+                "pinyin": "Zhèlǐ de rén hěn duō.",
+                "english": "There are many people here."
+              },
+              {
+                "chinese": "你儿子多大了？",
+                "pinyin": "Nǐ érzi duō dà le?",
+                "english": "How old is your son?"
+              }
+            ]
+          },
+          "yourAnswer": "多少",
+          "correctAnswer": "多",
+          "level": "HSK1",
+          "lessonId": "hsk1-lesson-2",
+          "date": "2026-05-27T06:52:54.433Z"
+        }
+      ],
+      "lessonProgress": {
+        "hsk1-lesson-2": {
+          "lessonId": "hsk1-lesson-2",
+          "wordsLearned": 15,
+          "totalWords": 15,
+          "isCompleted": true,
+          "lastStudied": "2026-05-27T06:52:26.042Z"
+        },
+        "hsk1-lesson-1": {
+          "lessonId": "hsk1-lesson-1",
+          "wordsLearned": 15,
+          "totalWords": 15,
+          "isCompleted": true,
+          "quizScore": 110,
+          "lastStudied": "2026-05-27T08:38:22.895Z"
+        },
+        "hsk1-lesson-3": {
+          "lessonId": "hsk1-lesson-3",
+          "wordsLearned": 15,
+          "totalWords": 15,
+          "isCompleted": true,
+          "quizScore": 100,
+          "lastStudied": "2026-05-27T08:40:48.146Z"
+        },
+        "hsk1-lesson-4": {
+          "lessonId": "hsk1-lesson-4",
+          "wordsLearned": 15,
+          "totalWords": 15,
+          "isCompleted": true,
+          "quizScore": 110,
+          "lastStudied": "2026-05-27T08:42:45.312Z"
+        },
+        "hsk1-lesson-5": {
+          "lessonId": "hsk1-lesson-5",
+          "wordsLearned": 15,
+          "totalWords": 15,
+          "isCompleted": true,
+          "quizScore": 110,
+          "lastStudied": "2026-05-27T09:05:48.367Z"
+        }
+      },
+      "achievements": [],
+      "dailyXP": {
+        "Wed May 27 2026": 1055
+      }
+    },
+    "hl9upu998tn": {
+      "xp": 505,
+      "streak": 1,
+      "lastStudyDate": "Wed May 27 2026",
+      "completedLessons": [
+        "hsk1-lesson-1",
+        "hsk1-lesson-2"
+      ],
+      "favoriteWords": [],
+      "quizMistakes": [],
+      "lessonProgress": {
+        "hsk1-lesson-1": {
+          "lessonId": "hsk1-lesson-1",
+          "wordsLearned": 15,
+          "totalWords": 15,
+          "isCompleted": true,
+          "lastStudied": "2026-05-27T06:50:08.866Z"
+        },
+        "hsk1-lesson-2": {
+          "lessonId": "hsk1-lesson-2",
+          "wordsLearned": 15,
+          "totalWords": 15,
+          "isCompleted": true,
+          "quizScore": 110,
+          "lastStudied": "2026-05-27T08:47:04.448Z"
+        }
+      },
+      "achievements": [],
+      "dailyXP": {
+        "Wed May 27 2026": 505
+      }
+    }
+  }
+}

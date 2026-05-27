@@ -1,0 +1,224 @@
+import type { Lesson } from '@/types'
+
+export const hsk2Lessons: Lesson[] = [
+  {
+    id: 'hsk2-lesson-1',
+    level: 'HSK2',
+    lessonNumber: 1,
+    words: [
+      { chinese: '吧', pinyin: 'ba', english: 'particle (suggestion/speculation)', sentences: [{ chinese: '你是个学生吧？', pinyin: 'Nǐ shì gè xuésheng ba?', english: 'You are a student, right?' }, { chinese: '请你走吧！', pinyin: 'Qǐng nǐ zǒu ba!', english: 'Please go!' }] },
+      { chinese: '白', pinyin: 'bái', english: 'adj. white', sentences: [{ chinese: '我很爱穿那件白衣服。', pinyin: 'Wǒ hěn ài chuān nà jiàn bái yīfu.', english: 'I really love wearing that white clothing.' }, { chinese: '白色很干净。', pinyin: 'Báisè hěn gānjìng.', english: 'White is very clean.' }] },
+      { chinese: '百', pinyin: 'bǎi', english: 'num. one hundred', sentences: [{ chinese: '这个自行车五百多元。', pinyin: 'Zhège zìxíngchē wǔ bǎi duō yuán.', english: 'This bicycle is over five hundred yuan.' }, { chinese: '一百块钱。', pinyin: 'Yī bǎi kuài qián.', english: 'One hundred yuan.' }] },
+      { chinese: '帮助', pinyin: 'bāngzhù', english: 'v. help', sentences: [{ chinese: '请帮助我找一家搬家公司，好吗？', pinyin: 'Qǐng bāngzhù wǒ zhǎo yī jiā bānjiā gōngsī, hǎo ma?', english: 'Please help me find a moving company, okay?' }, { chinese: '谢谢你帮助我。', pinyin: 'Xièxie nǐ bāngzhù wǒ.', english: 'Thank you for helping me.' }] },
+      { chinese: '报纸', pinyin: 'bàozhǐ', english: 'n. newspaper', sentences: [{ chinese: '我每天早上都要读报纸。', pinyin: 'Wǒ měitiān zǎoshang dōu yào dú bàozhǐ.', english: 'I read the newspaper every morning.' }, { chinese: '报纸上有什么新闻？', pinyin: 'Bàozhǐ shàng yǒu shénme xīnwén?', english: 'What news is in the newspaper?' }] },
+      { chinese: '比', pinyin: 'bǐ', english: 'prep. than (comparison)', sentences: [{ chinese: '我的孩子比我高。', pinyin: 'Wǒ de háizi bǐ wǒ gāo.', english: 'My child is taller than me.' }, { chinese: '今天比昨天热。', pinyin: 'Jīntiān bǐ zuótiān rè.', english: 'Today is hotter than yesterday.' }] },
+      { chinese: '别', pinyin: 'bié', english: 'adv. don\'t', sentences: [{ chinese: '太晚了，别看电视了。', pinyin: 'Tài wǎn le, bié kàn diànshì le.', english: 'It\'s too late, don\'t watch TV.' }, { chinese: '别客气。', pinyin: 'Bié kèqi.', english: 'Don\'t be polite (You\'re welcome).' }] },
+      { chinese: '长', pinyin: 'cháng', english: 'adj. long', sentences: [{ chinese: '姐姐的腿长，跑得快。', pinyin: 'Jiějie de tuǐ cháng, pǎo de kuài.', english: 'Older sister\'s legs are long, she runs fast.' }, { chinese: '她的头发很长。', pinyin: 'Tā de tóufa hěn cháng.', english: 'Her hair is very long.' }] },
+      { chinese: '唱歌', pinyin: 'chànggē', english: 'v. sing', sentences: [{ chinese: '我最爱唱歌了，我给你们唱一个。', pinyin: 'Wǒ zuì ài chànggē le, wǒ gěi nǐmen chàng yī gè.', english: 'I love singing the most, I\'ll sing one for you.' }, { chinese: '她唱歌很好听。', pinyin: 'Tā chànggē hěn hǎotīng.', english: 'She sings very nicely.' }] },
+      { chinese: '出', pinyin: 'chū', english: 'v. exit; go out', sentences: [{ chinese: '我已经走出火车站了。', pinyin: 'Wǒ yǐjīng zǒu chū huǒchēzhàn le.', english: 'I have already walked out of the train station.' }, { chinese: '请出来。', pinyin: 'Qǐng chūlái.', english: 'Please come out.' }] },
+      { chinese: '穿', pinyin: 'chuān', english: 'v. wear; put on', sentences: [{ chinese: '天冷了，多穿些衣服吧。', pinyin: 'Tiān lěng le, duō chuān xiē yīfu ba.', english: 'It\'s cold, wear more clothes.' }, { chinese: '你今天穿得很漂亮。', pinyin: 'Nǐ jīntiān chuān de hěn piàoliang.', english: 'You are dressed very beautifully today.' }] },
+      { chinese: '次', pinyin: 'cì', english: 'nm./vm. number of times', sentences: [{ chinese: '我去过一次北京。', pinyin: 'Wǒ qù guò yī cì Běijīng.', english: 'I have been to Beijing once.' }, { chinese: '这次不行。', pinyin: 'Zhè cì bù xíng.', english: 'This time won\'t work.' }] },
+      { chinese: '从', pinyin: 'cóng', english: 'prep. from; since', sentences: [{ chinese: '从我家到公司，开车要20分钟。', pinyin: 'Cóng wǒ jiā dào gōngsī, kāichē yào èrshí fēnzhōng.', english: 'From my home to the company, driving takes twenty minutes.' }, { chinese: '我从北京来。', pinyin: 'Wǒ cóng Běijīng lái.', english: 'I come from Beijing.' }] },
+      { chinese: '错', pinyin: 'cuò', english: 'adj. wrong; incorrect', sentences: [{ chinese: '对不起，我错了。', pinyin: 'Duìbuqǐ, wǒ cuò le.', english: 'Sorry, I was wrong.' }, { chinese: '这个答案错了。', pinyin: 'Zhège dá\'àn cuò le.', english: 'This answer is wrong.' }] },
+      { chinese: '打篮球', pinyin: 'dǎ lánqiú', english: 'play basketball', sentences: [{ chinese: '我每天下午都去打篮球。', pinyin: 'Wǒ měitiān xiàwǔ dōu qù dǎ lánqiú.', english: 'I go play basketball every afternoon.' }, { chinese: '他喜欢打篮球。', pinyin: 'Tā xǐhuan dǎ lánqiú.', english: 'He likes playing basketball.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-2',
+    level: 'HSK2',
+    lessonNumber: 2,
+    words: [
+      { chinese: '大家', pinyin: 'dàjiā', english: 'pron. everyone', sentences: [{ chinese: '请大家不要等我了。', pinyin: 'Qǐng dàjiā bú yào děng wǒ le.', english: 'Please don\'t wait for me, everyone.' }, { chinese: '大家好！', pinyin: 'Dàjiā hǎo!', english: 'Hello everyone!' }] },
+      { chinese: '到', pinyin: 'dào', english: 'v. arrive; reach', sentences: [{ chinese: '我早上9点到公司。', pinyin: 'Wǒ zǎoshang jiǔ diǎn dào gōngsī.', english: 'I arrive at the company at nine in the morning.' }, { chinese: '到北京了吗？', pinyin: 'Dào Běijīng le ma?', english: 'Have you arrived in Beijing?' }] },
+      { chinese: '得', pinyin: 'de', english: 'complement marker', sentences: [{ chinese: '你走得太快了。', pinyin: 'Nǐ zǒu de tài kuài le.', english: 'You walk too fast.' }, { chinese: '他说得很好。', pinyin: 'Tā shuō de hěn hǎo.', english: 'He speaks very well.' }] },
+      { chinese: '等', pinyin: 'děng', english: 'v. wait', sentences: [{ chinese: '你还要再等我10分钟。', pinyin: 'Nǐ hái yào zài děng wǒ shí fēnzhōng.', english: 'You still need to wait for me ten more minutes.' }, { chinese: '请等一下。', pinyin: 'Qǐng děng yīxià.', english: 'Please wait a moment.' }] },
+      { chinese: '弟弟', pinyin: 'dìdi', english: 'n. younger brother', sentences: [{ chinese: '在我们家，我最大，下面还有两个弟弟。', pinyin: 'Zài wǒmen jiā, wǒ zuì dà, xiàmian hái yǒu liǎng gè dìdi.', english: 'In our family, I\'m the oldest, below me there are two younger brothers.' }, { chinese: '弟弟很小。', pinyin: 'Dìdi hěn xiǎo.', english: 'Little brother is very young.' }] },
+      { chinese: '第一', pinyin: 'dì-yī', english: 'num. first', sentences: [{ chinese: '这是我第一次见到他。', pinyin: 'Zhè shì wǒ dì-yī cì jiàn dào tā.', english: 'This is the first time I have seen him.' }, { chinese: '他考了第一名。', pinyin: 'Tā kǎo le dì-yī míng.', english: 'He got first place.' }] },
+      { chinese: '懂', pinyin: 'dǒng', english: 'v. understand', sentences: [{ chinese: '你的意思我懂了。', pinyin: 'Nǐ de yìsi wǒ dǒng le.', english: 'I understand what you mean.' }, { chinese: '你懂了吗？', pinyin: 'Nǐ dǒng le ma?', english: 'Do you understand?' }] },
+      { chinese: '对', pinyin: 'duì', english: 'adj. right; correct', sentences: [{ chinese: '你是对的，我错了。', pinyin: 'Nǐ shì duì de, wǒ cuò le.', english: 'You are right, I am wrong.' }, { chinese: '你的作业做对了。', pinyin: 'Nǐ de zuòyè zuò duì le.', english: 'You did your homework correctly.' }] },
+      { chinese: '对', pinyin: 'duì', english: 'prep. to; towards', sentences: [{ chinese: '孩子对妈妈说："妈妈，我爱你。"', pinyin: 'Háizi duì māma shuō: "Māma, wǒ ài nǐ."', english: 'The child says to mother: "Mom, I love you."' }, { chinese: '学习对你们很重要。', pinyin: 'Xuéxí duì nǐmen hěn zhòngyào.', english: 'Studying is very important for you.' }] },
+      { chinese: '房间', pinyin: 'fángjiān', english: 'n. room', sentences: [{ chinese: '我们两个人住一个房间。', pinyin: 'Wǒmen liǎng gè rén zhù yī gè fángjiān.', english: 'The two of us live in one room.' }, { chinese: '房间很干净。', pinyin: 'Fángjiān hěn gānjìng.', english: 'The room is very clean.' }] },
+      { chinese: '非常', pinyin: 'fēicháng', english: 'adv. very', sentences: [{ chinese: '奶奶非常喜欢我们送的礼物。', pinyin: 'Nǎinai fēicháng xǐhuan wǒmen sòng de lǐwù.', english: 'Grandma really likes the gift we gave her.' }, { chinese: '非常感谢。', pinyin: 'Fēicháng gǎnxiè.', english: 'Thank you very much.' }] },
+      { chinese: '服务员', pinyin: 'fúwùyuán', english: 'n. attendant; waiter', sentences: [{ chinese: '我在饭馆做服务员。', pinyin: 'Wǒ zài fànguǎn zuò fúwùyuán.', english: 'I work as a waiter in a restaurant.' }, { chinese: '服务员，点菜。', pinyin: 'Fúwùyuán, diǎn cài.', english: 'Waiter, I\'d like to order.' }] },
+      { chinese: '高', pinyin: 'gāo', english: 'adj. tall; high', sentences: [{ chinese: '我比爸爸还高。', pinyin: 'Wǒ bǐ bàba hái gāo.', english: 'I am even taller than Dad.' }, { chinese: '山很高。', pinyin: 'Shān hěn gāo.', english: 'The mountain is very high.' }] },
+      { chinese: '告诉', pinyin: 'gàosu', english: 'v. tell', sentences: [{ chinese: '你能告诉我学校怎么走吗？', pinyin: 'Nǐ néng gàosu wǒ xuéxiào zěnme zǒu ma?', english: 'Can you tell me how to get to the school?' }, { chinese: '妈妈告诉我要好好学习。', pinyin: 'Māma gàosu wǒ yào hǎohǎo xuéxí.', english: 'Mom told me to study hard.' }] },
+      { chinese: '哥哥', pinyin: 'gēge', english: 'n. elder brother', sentences: [{ chinese: '我哥哥比我大三岁。', pinyin: 'Wǒ gēge bǐ wǒ dà sān suì.', english: 'My older brother is three years older than me.' }, { chinese: '哥哥在读书。', pinyin: 'Gēge zài dú shū.', english: 'Older brother is reading.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-3',
+    level: 'HSK2',
+    lessonNumber: 3,
+    words: [
+      { chinese: '给', pinyin: 'gěi', english: 'v. give / prep. for', sentences: [{ chinese: '请把这本书给他。', pinyin: 'Qǐng bǎ zhè běn shū gěi tā.', english: 'Please give this book to him.' }, { chinese: '这是给你买的。', pinyin: 'Zhè shì gěi nǐ mǎi de.', english: 'This was bought for you.' }] },
+      { chinese: '公共汽车', pinyin: 'gōnggòng qìchē', english: 'n. bus', sentences: [{ chinese: '坐公共汽车去，要20分钟。', pinyin: 'Zuò gōnggòng qìchē qù, yào èrshí fēnzhōng.', english: 'Taking the bus there takes twenty minutes.' }, { chinese: '公共汽车来了。', pinyin: 'Gōnggòng qìchē lái le.', english: 'The bus is here.' }] },
+      { chinese: '公司', pinyin: 'gōngsī', english: 'n. company', sentences: [{ chinese: '我在一个公司上班。', pinyin: 'Wǒ zài yī gè gōngsī shàngbān.', english: 'I work at a company.' }, { chinese: '公司很大。', pinyin: 'Gōngsī hěn dà.', english: 'The company is very big.' }] },
+      { chinese: '狗', pinyin: 'gǒu', english: 'n. dog', sentences: [{ chinese: '女儿很喜欢小狗。', pinyin: 'Nǚ\'ér hěn xǐhuan xiǎo gǒu.', english: 'My daughter really likes little dogs.' }, { chinese: '狗在叫。', pinyin: 'Gǒu zài jiào.', english: 'The dog is barking.' }] },
+      { chinese: '贵', pinyin: 'guì', english: 'adj. expensive', sentences: [{ chinese: '这块手表很贵。', pinyin: 'Zhè kuài shǒubiǎo hěn guì.', english: 'This watch is very expensive.' }, { chinese: '太贵了，买不起。', pinyin: 'Tài guì le, mǎi bù qǐ.', english: 'Too expensive, can\'t afford it.' }] },
+      { chinese: '过', pinyin: 'guo', english: 'particle (past experience)', sentences: [{ chinese: '我没看过这本书。', pinyin: 'Wǒ méi kàn guo zhè běn shū.', english: 'I have not read this book.' }, { chinese: '你去过北京吗？', pinyin: 'Nǐ qù guo Běijīng ma?', english: 'Have you been to Beijing?' }] },
+      { chinese: '还', pinyin: 'hái', english: 'adv. still / in addition', sentences: [{ chinese: '他还没来呢。', pinyin: 'Tā hái méi lái ne.', english: 'He still hasn\'t come.' }, { chinese: '除了不吃肉，我还不吃鸡蛋。', pinyin: 'Chúle bù chī ròu, wǒ hái bù chī jīdàn.', english: 'Besides not eating meat, I also don\'t eat eggs.' }] },
+      { chinese: '孩子', pinyin: 'háizi', english: 'n. child; son/daughter', sentences: [{ chinese: '我有三个孩子。', pinyin: 'Wǒ yǒu sān gè háizi.', english: 'I have three children.' }, { chinese: '我们这里女孩子比男孩子多。', pinyin: 'Wǒmen zhèlǐ nǚháizi bǐ nánháizi duō.', english: 'Here we have more girls than boys.' }] },
+      { chinese: '好吃', pinyin: 'hǎochī', english: 'adj. delicious', sentences: [{ chinese: '您做的米饭真好吃。', pinyin: 'Nín zuò de mǐfàn zhēn hǎochī.', english: 'The rice you made is really delicious.' }, { chinese: '这个苹果很好吃。', pinyin: 'Zhège píngguǒ hěn hǎochī.', english: 'This apple is very tasty.' }] },
+      { chinese: '黑', pinyin: 'hēi', english: 'adj. black', sentences: [{ chinese: '我不喜欢黑颜色的衣服。', pinyin: 'Wǒ bù xǐhuan hēi yánsè de yīfu.', english: 'I don\'t like black-colored clothes.' }, { chinese: '黑色很酷。', pinyin: 'Hēisè hěn kù.', english: 'Black is very cool.' }] },
+      { chinese: '红', pinyin: 'hóng', english: 'adj. red', sentences: [{ chinese: '我的自行车是红色的。', pinyin: 'Wǒ de zìxíngchē shì hóngsè de.', english: 'My bicycle is red.' }, { chinese: '红色很好看。', pinyin: 'Hóngsè hěn hǎokàn.', english: 'Red is very nice-looking.' }] },
+      { chinese: '欢迎', pinyin: 'huānyíng', english: 'v. welcome', sentences: [{ chinese: '欢迎你们来我们家。', pinyin: 'Huānyíng nǐmen lái wǒmen jiā.', english: 'Welcome to our home.' }, { chinese: '欢迎光临。', pinyin: 'Huānyíng guānglín.', english: 'Welcome (to a store).' }] },
+      { chinese: '回答', pinyin: 'huídá', english: 'v. answer', sentences: [{ chinese: '我能回答这个问题。', pinyin: 'Wǒ néng huídá zhège wèntí.', english: 'I can answer this question.' }, { chinese: '请回答我。', pinyin: 'Qǐng huídá wǒ.', english: 'Please answer me.' }] },
+      { chinese: '火车站', pinyin: 'huǒchēzhàn', english: 'n. railway station', sentences: [{ chinese: '我下午3点去火车站。', pinyin: 'Wǒ xiàwǔ sān diǎn qù huǒchēzhàn.', english: 'I am going to the train station at three in the afternoon.' }, { chinese: '火车站很远。', pinyin: 'Huǒchēzhàn hěn yuǎn.', english: 'The train station is very far.' }] },
+      { chinese: '机场', pinyin: 'jīchǎng', english: 'n. airport', sentences: [{ chinese: '我在机场工作了三年了。', pinyin: 'Wǒ zài jīchǎng gōngzuò le sān nián le.', english: 'I have worked at the airport for three years.' }, { chinese: '机场很大。', pinyin: 'Jīchǎng hěn dà.', english: 'The airport is very big.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-4',
+    level: 'HSK2',
+    lessonNumber: 4,
+    words: [
+      { chinese: '鸡蛋', pinyin: 'jīdàn', english: 'n. egg', sentences: [{ chinese: '我每天早上都要吃个鸡蛋。', pinyin: 'Wǒ měitiān zǎoshang dōu yào chī gè jīdàn.', english: 'I eat an egg every morning.' }, { chinese: '鸡蛋很营养。', pinyin: 'Jīdàn hěn yíngyǎng.', english: 'Eggs are very nutritious.' }] },
+      { chinese: '件', pinyin: 'jiàn', english: 'nm. for clothes/things', sentences: [{ chinese: '这件衣服颜色非常好看。', pinyin: 'Zhè jiàn yīfu yánsè fēicháng hǎokàn.', english: 'The color of this clothing is very nice.' }, { chinese: '三件衣服。', pinyin: 'Sān jiàn yīfu.', english: 'Three pieces of clothing.' }] },
+      { chinese: '教室', pinyin: 'jiàoshì', english: 'n. classroom', sentences: [{ chinese: '请大家都到教室去上课。', pinyin: 'Qǐng dàjiā dōu dào jiàoshì qù shàngkè.', english: 'Please everyone go to the classroom for class.' }, { chinese: '教室很安静。', pinyin: 'Jiàoshì hěn ānjìng.', english: 'The classroom is very quiet.' }] },
+      { chinese: '姐姐', pinyin: 'jiějie', english: 'n. elder sister', sentences: [{ chinese: '我有两个姐姐。', pinyin: 'Wǒ yǒu liǎng gè jiějie.', english: 'I have two older sisters.' }, { chinese: '姐姐很漂亮。', pinyin: 'Jiějie hěn piàoliang.', english: 'Older sister is very beautiful.' }] },
+      { chinese: '介绍', pinyin: 'jièshào', english: 'v./n. introduce/introduction', sentences: [{ chinese: '我来介绍一下我的朋友。', pinyin: 'Wǒ lái jièshào yīxià wǒ de péngyou.', english: 'Let me introduce my friend.' }, { chinese: '我在报纸上看到了这个电影的介绍。', pinyin: 'Wǒ zài bàozhǐ shàng kàn dào le zhège diànyǐng de jièshào.', english: 'I saw the introduction of this movie in the newspaper.' }] },
+      { chinese: '进', pinyin: 'jìn', english: 'v. enter', sentences: [{ chinese: '我马上要进机场了。', pinyin: 'Wǒ mǎshàng yào jìn jīchǎng le.', english: 'I am about to enter the airport.' }, { chinese: '请进。', pinyin: 'Qǐng jìn.', english: 'Please come in.' }] },
+      { chinese: '近', pinyin: 'jìn', english: 'adj. close; near', sentences: [{ chinese: '我们家离公司很近。', pinyin: 'Wǒmen jiā lí gōngsī hěn jìn.', english: 'Our home is very close to the company.' }, { chinese: '学校很近。', pinyin: 'Xuéxiào hěn jìn.', english: 'The school is very near.' }] },
+      { chinese: '咖啡', pinyin: 'kāfēi', english: 'n. coffee', sentences: [{ chinese: '您想喝咖啡，还是茶？', pinyin: 'Nín xiǎng hē kāfēi, háishì chá?', english: 'Would you like to drink coffee or tea?' }, { chinese: '咖啡很苦。', pinyin: 'Kāfēi hěn kǔ.', english: 'Coffee is very bitter.' }] },
+      { chinese: '开始', pinyin: 'kāishǐ', english: 'v./n. start/beginning', sentences: [{ chinese: '我们从第十课开始学习。', pinyin: 'Wǒmen cóng dì shí kè kāishǐ xuéxí.', english: 'We start studying from lesson ten.' }, { chinese: '开始的时候，我觉得学习汉语很难。', pinyin: 'Kāishǐ de shíhou, wǒ juéde xuéxí Hànyǔ hěn nán.', english: 'In the beginning, I thought studying Chinese was very hard.' }] },
+      { chinese: '考试', pinyin: 'kǎoshì', english: 'n. exam', sentences: [{ chinese: '为了准备考试，他每天都学习到很晚。', pinyin: 'Wèile zhǔnbèi kǎoshì, tā měitiān dōu xuéxí dào hěn wǎn.', english: 'To prepare for the exam, he studies until very late every day.' }, { chinese: '考试很难。', pinyin: 'Kǎoshì hěn nán.', english: 'The exam is very hard.' }] },
+      { chinese: '可能', pinyin: 'kěnéng', english: 'aux. may; possibly', sentences: [{ chinese: '我可能不能去上班了。', pinyin: 'Wǒ kěnéng bù néng qù shàngbān le.', english: 'I may not be able to go to work.' }, { chinese: '今天可能会下雨。', pinyin: 'Jīntiān kěnéng huì xià yǔ.', english: 'It may rain today.' }] },
+      { chinese: '可以', pinyin: 'kěyǐ', english: 'aux. can / adj. not bad', sentences: [{ chinese: '你可以开我的车去上班。', pinyin: 'Nǐ kěyǐ kāi wǒ de chē qù shàngbān.', english: 'You can take my car to work.' }, { chinese: '这个菜做得还可以。', pinyin: 'Zhège cài zuò de hái kěyǐ.', english: 'This dish is not bad.' }] },
+      { chinese: '课', pinyin: 'kè', english: 'n. lesson/class', sentences: [{ chinese: '今天我们学习第一课。', pinyin: 'Jīntiān wǒmen xuéxí dì yī kè.', english: 'Today we study lesson one.' }, { chinese: '现在，我们上课。', pinyin: 'Xiànzài, wǒmen shàngkè.', english: 'Now, let\'s have class.' }] },
+      { chinese: '快', pinyin: 'kuài', english: 'adj. fast / adv. be going to', sentences: [{ chinese: '他跑得真快。', pinyin: 'Tā pǎo de zhēn kuài.', english: 'He runs really fast.' }, { chinese: '7点50了，快上课了。', pinyin: 'Qī diǎn wǔshí le, kuài shàngkè le.', english: 'It\'s 7:50, class is about to start.' }] },
+      { chinese: '快乐', pinyin: 'kuàilè', english: 'adj. happy', sentences: [{ chinese: '祝你生日快乐！', pinyin: 'Zhù nǐ shēngrì kuàilè!', english: 'Happy birthday to you!' }, { chinese: '每天都要快乐。', pinyin: 'Měitiān dōu yào kuàilè.', english: 'Be happy every day.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-5',
+    level: 'HSK2',
+    lessonNumber: 5,
+    words: [
+      { chinese: '累', pinyin: 'lèi', english: 'adj. tired', sentences: [{ chinese: '我累了，想休息。', pinyin: 'Wǒ lèi le, xiǎng xiūxi.', english: 'I am tired and want to rest.' }, { chinese: '今天很累。', pinyin: 'Jīntiān hěn lèi.', english: 'Today is very tiring.' }] },
+      { chinese: '离', pinyin: 'lí', english: 'prep. away from', sentences: [{ chinese: '我家离学校很近。', pinyin: 'Wǒ jiā lí xuéxiào hěn jìn.', english: 'My home is very close to the school.' }, { chinese: '中国离加拿大很远。', pinyin: 'Zhōngguó lí Jiānádà hěn yuǎn.', english: 'China is very far from Canada.' }] },
+      { chinese: '两', pinyin: 'liǎng', english: 'num. two', sentences: [{ chinese: '苹果两块钱一斤。', pinyin: 'Píngguǒ liǎng kuài qián yī jīn.', english: 'Apples are two yuan per jin.' }, { chinese: '两个人。', pinyin: 'Liǎng gè rén.', english: 'Two people.' }] },
+      { chinese: '路', pinyin: 'lù', english: 'n. road/bus route', sentences: [{ chinese: '我每天走路去上学。', pinyin: 'Wǒ měitiān zǒulù qù shàngxué.', english: 'I walk to school every day.' }, { chinese: '我们可以坐10路公共汽车去。', pinyin: 'Wǒmen kěyǐ zuò shí lù gōnggòng qìchē qù.', english: 'We can take bus number ten to go.' }] },
+      { chinese: '旅游', pinyin: 'lǚyóu', english: 'v. travel', sentences: [{ chinese: '我们开车去旅游。', pinyin: 'Wǒmen kāichē qù lǚyóu.', english: 'We are driving to travel.' }, { chinese: '我喜欢旅游。', pinyin: 'Wǒ xǐhuan lǚyóu.', english: 'I like traveling.' }] },
+      { chinese: '卖', pinyin: 'mài', english: 'v. sell', sentences: [{ chinese: '这个商店卖的东西比较便宜。', pinyin: 'Zhège shāngdiàn mài de dōngxi bǐjiào piányi.', english: 'The things sold at this store are relatively cheap.' }, { chinese: '他卖水果。', pinyin: 'Tā mài shuǐguǒ.', english: 'He sells fruit.' }] },
+      { chinese: '慢', pinyin: 'màn', english: 'adj. slow', sentences: [{ chinese: '我们走得很慢。', pinyin: 'Wǒmen zǒu de hěn màn.', english: 'We walk very slowly.' }, { chinese: '请慢一点。', pinyin: 'Qǐng màn yī diǎn.', english: 'Please slow down a bit.' }] },
+      { chinese: '忙', pinyin: 'máng', english: 'adj. busy / v. be busy doing', sentences: [{ chinese: '这个星期，我很忙。', pinyin: 'Zhège xīngqī, wǒ hěn máng.', english: 'This week, I am very busy.' }, { chinese: '你在忙什么呢？', pinyin: 'Nǐ zài máng shénme ne?', english: 'What are you busy with?' }] },
+      { chinese: '猫', pinyin: 'māo', english: 'n. cat', sentences: [{ chinese: '你的小猫去哪儿了？', pinyin: 'Nǐ de xiǎo māo qù nǎr le?', english: 'Where did your kitten go?' }, { chinese: '猫很可爱。', pinyin: 'Māo hěn kě\'ài.', english: 'Cats are very cute.' }] },
+      { chinese: '每', pinyin: 'měi', english: 'pron. every', sentences: [{ chinese: '你每天都看报纸吗？', pinyin: 'Nǐ měitiān dōu kàn bàozhǐ ma?', english: 'Do you read the newspaper every day?' }, { chinese: '每人一个。', pinyin: 'Měi rén yī gè.', english: 'One per person.' }] },
+      { chinese: '妹妹', pinyin: 'mèimei', english: 'n. younger sister', sentences: [{ chinese: '我有两个妹妹。', pinyin: 'Wǒ yǒu liǎng gè mèimei.', english: 'I have two younger sisters.' }, { chinese: '妹妹很小。', pinyin: 'Mèimei hěn xiǎo.', english: 'Little sister is very young.' }] },
+      { chinese: '门', pinyin: 'mén', english: 'n. door / measure word for subjects', sentences: [{ chinese: '我在门外等你。', pinyin: 'Wǒ zài mén wài děng nǐ.', english: 'I will wait for you outside the door.' }, { chinese: '今年我有五门课。', pinyin: 'Jīnnián wǒ yǒu wǔ mén kè.', english: 'This year I have five subjects.' }] },
+      { chinese: '男', pinyin: 'nán', english: 'n. man; male', sentences: [{ chinese: '我不认识那个男人。', pinyin: 'Wǒ bú rènshi nà gè nánrén.', english: 'I don\'t know that man.' }, { chinese: '男朋友。', pinyin: 'Nánpéngyou.', english: 'Boyfriend.' }] },
+      { chinese: '您', pinyin: 'nín', english: 'pron. you (respectful)', sentences: [{ chinese: '老师，您好！', pinyin: 'Lǎoshī, nín hǎo!', english: 'Hello, teacher!' }, { chinese: '您请坐。', pinyin: 'Nín qǐng zuò.', english: 'Please sit, sir/madam.' }] },
+      { chinese: '牛奶', pinyin: 'niúnǎi', english: 'n. milk', sentences: [{ chinese: '睡觉前喝杯牛奶吧。', pinyin: 'Shuìjiào qián hē bēi niúnǎi ba.', english: 'Drink a glass of milk before sleeping.' }, { chinese: '牛奶很好喝。', pinyin: 'Niúnǎi hěn hǎohē.', english: 'Milk is very tasty.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-6',
+    level: 'HSK2',
+    lessonNumber: 6,
+    words: [
+      { chinese: '女', pinyin: 'nǚ', english: 'n. woman; female', sentences: [{ chinese: '那个女人你认识吗？', pinyin: 'Nà gè nǚrén nǐ rènshi ma?', english: 'Do you know that woman?' }, { chinese: '女儿。', pinyin: 'Nǚ\'ér.', english: 'Daughter.' }] },
+      { chinese: '旁边', pinyin: 'pángbiān', english: 'n. side; nearby', sentences: [{ chinese: '爸爸在我旁边。', pinyin: 'Bàba zài wǒ pángbiān.', english: 'Dad is beside me.' }, { chinese: '学校旁边有个商店。', pinyin: 'Xuéxiào pángbiān yǒu gè shāngdiàn.', english: 'There is a store next to the school.' }] },
+      { chinese: '跑步', pinyin: 'pǎobù', english: 'v. run', sentences: [{ chinese: '我每天早上都跑步。', pinyin: 'Wǒ měitiān zǎoshang dōu pǎobù.', english: 'I run every morning.' }, { chinese: '跑步对身体好。', pinyin: 'Pǎobù duì shēntǐ hǎo.', english: 'Running is good for the body.' }] },
+      { chinese: '便宜', pinyin: 'piányi', english: 'adj. cheap', sentences: [{ chinese: '苹果很便宜，我们买点儿吧。', pinyin: 'Píngguǒ hěn piányi, wǒmen mǎi diǎnr ba.', english: 'Apples are very cheap, let\'s buy some.' }, { chinese: '这个不便宜。', pinyin: 'Zhège bù piányi.', english: 'This is not cheap.' }] },
+      { chinese: '票', pinyin: 'piào', english: 'n. ticket', sentences: [{ chinese: '我要去火车站买车票。', pinyin: 'Wǒ yào qù huǒchēzhàn mǎi chēpiào.', english: 'I am going to the train station to buy a train ticket.' }, { chinese: '票买好了吗？', pinyin: 'Piào mǎi hǎo le ma?', english: 'Have you bought the tickets?' }] },
+      { chinese: '妻子', pinyin: 'qīzi', english: 'n. wife', sentences: [{ chinese: '我妻子上班去了。', pinyin: 'Wǒ qīzi shàngbān qù le.', english: 'My wife went to work.' }, { chinese: '他妻子很漂亮。', pinyin: 'Tā qīzi hěn piàoliang.', english: 'His wife is very beautiful.' }] },
+      { chinese: '起床', pinyin: 'qǐchuáng', english: 'v. get up', sentences: [{ chinese: '我早上七点起床。', pinyin: 'Wǒ zǎoshang qī diǎn qǐchuáng.', english: 'I get up at seven in the morning.' }, { chinese: '快起床！', pinyin: 'Kuài qǐchuáng!', english: 'Get up quickly!' }] },
+      { chinese: '千', pinyin: 'qiān', english: 'num. thousand', sentences: [{ chinese: '这个手机一千元。', pinyin: 'Zhège shǒujī yī qiān yuán.', english: 'This phone is one thousand yuan.' }, { chinese: '两千块钱。', pinyin: 'Liǎng qiān kuài qián.', english: 'Two thousand yuan.' }] },
+      { chinese: '铅笔', pinyin: 'qiānbǐ', english: 'n. pencil', sentences: [{ chinese: '你看见我的铅笔了吗？', pinyin: 'Nǐ kànjiàn wǒ de qiānbǐ le ma?', english: 'Did you see my pencil?' }, { chinese: '铅笔很短。', pinyin: 'Qiānbǐ hěn duǎn.', english: 'The pencil is very short.' }] },
+      { chinese: '晴', pinyin: 'qíng', english: 'adj. fine; clear', sentences: [{ chinese: '今天是晴天。', pinyin: 'Jīntiān shì qíngtiān.', english: 'Today is a sunny day.' }, { chinese: '天气很晴。', pinyin: 'Tiānqì hěn qíng.', english: 'The weather is very clear.' }] },
+      { chinese: '去年', pinyin: 'qùnián', english: 'n. last year', sentences: [{ chinese: '我是去年8月来北京的。', pinyin: 'Wǒ shì qùnián bā yuè lái Běijīng de.', english: 'I came to Beijing in August last year.' }, { chinese: '去年很忙。', pinyin: 'Qùnián hěn máng.', english: 'Last year was very busy.' }] },
+      { chinese: '让', pinyin: 'ràng', english: 'v. let; allow; make', sentences: [{ chinese: '他爸爸不让他来。', pinyin: 'Tā bàba bú ràng tā lái.', english: 'His dad won\'t let him come.' }, { chinese: '弟弟让我开心。', pinyin: 'Dìdi ràng wǒ kāixīn.', english: 'Little brother makes me happy.' }] },
+      { chinese: '日', pinyin: 'rì', english: 'n. day; date', sentences: [{ chinese: '今天是2012年2月26日。', pinyin: 'Jīntiān shì èr líng yī èr nián èr yuè èrshíliù rì.', english: 'Today is February 26th, 2012.' }, { chinese: '星期日。', pinyin: 'Xīngqīrì.', english: 'Sunday.' }] },
+      { chinese: '上班', pinyin: 'shàngbān', english: 'v. go to work', sentences: [{ chinese: '我七点半去上班。', pinyin: 'Wǒ qī diǎn bàn qù shàngbān.', english: 'I go to work at seven thirty.' }, { chinese: '今天不上班。', pinyin: 'Jīntiān bú shàngbān.', english: 'I\'m not going to work today.' }] },
+      { chinese: '身体', pinyin: 'shēntǐ', english: 'n. body; health', sentences: [{ chinese: '今天我的身体不太舒服。', pinyin: 'Jīntiān wǒ de shēntǐ bú tài shūfu.', english: 'My body is not feeling very well today.' }, { chinese: '身体很重要。', pinyin: 'Shēntǐ hěn zhòngyào.', english: 'Health is very important.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-7',
+    level: 'HSK2',
+    lessonNumber: 7,
+    words: [
+      { chinese: '生病', pinyin: 'shēngbìng', english: 'v. fall ill', sentences: [{ chinese: '我生病了，不能去上班了。', pinyin: 'Wǒ shēngbìng le, bù néng qù shàngbān le.', english: 'I got sick and can\'t go to work.' }, { chinese: '他生病了。', pinyin: 'Tā shēngbìng le.', english: 'He is sick.' }] },
+      { chinese: '生日', pinyin: 'shēngrì', english: 'n. birthday', sentences: [{ chinese: '祝你生日快乐！', pinyin: 'Zhù nǐ shēngrì kuàilè!', english: 'Happy birthday to you!' }, { chinese: '今天是我生日。', pinyin: 'Jīntiān shì wǒ shēngrì.', english: 'Today is my birthday.' }] },
+      { chinese: '时间', pinyin: 'shíjiān', english: 'n. time', sentences: [{ chinese: '我没时间去北京。', pinyin: 'Wǒ méi shíjiān qù Běijīng.', english: 'I don\'t have time to go to Beijing.' }, { chinese: '时间过得真快。', pinyin: 'Shíjiān guò de zhēn kuài.', english: 'Time passes really fast.' }] },
+      { chinese: '事情', pinyin: 'shìqing', english: 'n. matter; affair', sentences: [{ chinese: '你下午有什么事情吗？', pinyin: 'Nǐ xiàwǔ yǒu shénme shìqing ma?', english: 'Do you have any matters this afternoon?' }, { chinese: '我下午有很重要的事情。', pinyin: 'Wǒ xiàwǔ yǒu hěn zhòngyào de shìqing.', english: 'I have very important matters this afternoon.' }] },
+      { chinese: '手表', pinyin: 'shǒubiǎo', english: 'n. watch', sentences: [{ chinese: '这块手表非常漂亮。', pinyin: 'Zhè kuài shǒubiǎo fēicháng piàoliang.', english: 'This watch is very beautiful.' }, { chinese: '我买了一块手表。', pinyin: 'Wǒ mǎi le yī kuài shǒubiǎo.', english: 'I bought a watch.' }] },
+      { chinese: '手机', pinyin: 'shǒujī', english: 'n. mobile phone', sentences: [{ chinese: '你看，我新买了一个手机。', pinyin: 'Nǐ kàn, wǒ xīn mǎi le yī gè shǒujī.', english: 'Look, I bought a new phone.' }, { chinese: '手机没电了。', pinyin: 'Shǒujī méi diàn le.', english: 'The phone has no battery.' }] },
+      { chinese: '送', pinyin: 'sòng', english: 'v. give as gift / see off', sentences: [{ chinese: '我送你一本书。', pinyin: 'Wǒ sòng nǐ yī běn shū.', english: 'I\'ll give you a book as a gift.' }, { chinese: '我去送一个朋友。', pinyin: 'Wǒ qù sòng yī gè péngyou.', english: 'I\'m going to see off a friend.' }] },
+      { chinese: '虽然……但是……', pinyin: 'suīrán…dànshì…', english: 'although…but', sentences: [{ chinese: '虽然下雨了，但是我们还是想去看电影。', pinyin: 'Suīrán xià yǔ le, dànshì wǒmen háishì xiǎng qù kàn diànyǐng.', english: 'Although it\'s raining, we still want to watch a movie.' }, { chinese: '虽然很累，但是很高兴。', pinyin: 'Suīrán hěn lèi, dànshì hěn gāoxìng.', english: 'Although very tired, (I am) very happy.' }] },
+      { chinese: '它', pinyin: 'tā', english: 'pron. it', sentences: [{ chinese: '我知道小猫在哪儿，它在桌子下面。', pinyin: 'Wǒ zhīdào xiǎo māo zài nǎr, tā zài zhuōzi xiàmiàn.', english: 'I know where the kitten is, it\'s under the table.' }, { chinese: '它很可爱。', pinyin: 'Tā hěn kě\'ài.', english: 'It is very cute.' }] },
+      { chinese: '踢足球', pinyin: 'tī zúqiú', english: 'play soccer', sentences: [{ chinese: '我和同学们在踢足球。', pinyin: 'Wǒ hé tóngxuémen zài tī zúqiú.', english: 'My classmates and I are playing soccer.' }, { chinese: '他喜欢踢足球。', pinyin: 'Tā xǐhuan tī zúqiú.', english: 'He likes playing soccer.' }] },
+      { chinese: '题', pinyin: 'tí', english: 'n. question; problem', sentences: [{ chinese: '这个题我不会做。', pinyin: 'Zhège tí wǒ bù huì zuò.', english: 'I can\'t solve this problem.' }, { chinese: '第一题很难。', pinyin: 'Dì yī tí hěn nán.', english: 'The first question is very hard.' }] },
+      { chinese: '跳舞', pinyin: 'tiàowǔ', english: 'v. dance', sentences: [{ chinese: '妹妹会唱歌，也会跳舞。', pinyin: 'Mèimei huì chànggē, yě huì tiàowǔ.', english: 'Little sister can sing and also dance.' }, { chinese: '你跳舞很好看。', pinyin: 'Nǐ tiàowǔ hěn hǎokàn.', english: 'You dance very nicely.' }] },
+      { chinese: '外', pinyin: 'wài', english: 'n. outside', sentences: [{ chinese: '外面下雨了。', pinyin: 'Wàimian xià yǔ le.', english: 'It\'s raining outside.' }, { chinese: '我在门外。', pinyin: 'Wǒ zài mén wài.', english: 'I am outside the door.' }] },
+      { chinese: '完', pinyin: 'wán', english: 'v. finish; used up', sentences: [{ chinese: '这本书我看完了。', pinyin: 'Zhè běn shū wǒ kàn wán le.', english: 'I have finished reading this book.' }, { chinese: '吃完饭后，我们去看电影。', pinyin: 'Chī wán fàn hòu, wǒmen qù kàn diànyǐng.', english: 'After finishing eating, we will go watch a movie.' }] },
+      { chinese: '晚上', pinyin: 'wǎnshang', english: 'n. evening', sentences: [{ chinese: '今天晚上我不能看电视了。', pinyin: 'Jīntiān wǎnshang wǒ bù néng kàn diànshì le.', english: 'I can\'t watch TV tonight.' }, { chinese: '晚上好。', pinyin: 'Wǎnshang hǎo.', english: 'Good evening.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-8',
+    level: 'HSK2',
+    lessonNumber: 8,
+    words: [
+      { chinese: '为什么', pinyin: 'wèishénme', english: 'why', sentences: [{ chinese: '你为什么不喝点儿水呢？', pinyin: 'Nǐ wèishénme bù hē diǎnr shuǐ ne?', english: 'Why don\'t you drink some water?' }, { chinese: '为什么迟到了？', pinyin: 'Wèishénme chídào le?', english: 'Why are you late?' }] },
+      { chinese: '问', pinyin: 'wèn', english: 'v. ask', sentences: [{ chinese: '老师，我可以问你一个问题吗？', pinyin: 'Lǎoshī, wǒ kěyǐ wèn nǐ yī gè wèntí ma?', english: 'Teacher, may I ask you a question?' }, { chinese: '我问问他。', pinyin: 'Wǒ wèn wen tā.', english: 'I\'ll ask him.' }] },
+      { chinese: '问题', pinyin: 'wèntí', english: 'n. question; problem', sentences: [{ chinese: '这个问题太难了！', pinyin: 'Zhège wèntí tài nán le!', english: 'This question is too hard!' }, { chinese: '你有什么问题？', pinyin: 'Nǐ yǒu shénme wèntí?', english: 'What questions do you have?' }] },
+      { chinese: '西瓜', pinyin: 'xīguā', english: 'n. watermelon', sentences: [{ chinese: '请吃块儿西瓜。', pinyin: 'Qǐng chī kuàir xīguā.', english: 'Please have a piece of watermelon.' }, { chinese: '西瓜很甜。', pinyin: 'Xīguā hěn tián.', english: 'Watermelon is very sweet.' }] },
+      { chinese: '希望', pinyin: 'xīwàng', english: 'v./n. hope/wish', sentences: [{ chinese: '我希望你别走了。', pinyin: 'Wǒ xīwàng nǐ bié zǒu le.', english: 'I hope you don\'t leave.' }, { chinese: '孩子是爸爸、妈妈的希望。', pinyin: 'Háizi shì bàba, māma de xīwàng.', english: 'Children are the hope of father and mother.' }] },
+      { chinese: '洗', pinyin: 'xǐ', english: 'v. wash / develop (photo)', sentences: [{ chinese: '今天我要洗很多衣服。', pinyin: 'Jīntiān wǒ yào xǐ hěn duō yīfu.', english: 'I need to wash a lot of clothes today.' }, { chinese: '照片要三天才能洗出来。', pinyin: 'Zhàopiàn yào sān tiān cái néng xǐ chūlái.', english: 'The photos need three days to be developed.' }] },
+      { chinese: '小时', pinyin: 'xiǎoshí', english: 'n. hour', sentences: [{ chinese: '我看了一小时的书。', pinyin: 'Wǒ kàn le yī xiǎoshí de shū.', english: 'I read for one hour.' }, { chinese: '两小时。', pinyin: 'Liǎng xiǎoshí.', english: 'Two hours.' }] },
+      { chinese: '笑', pinyin: 'xiào', english: 'v. laugh; smile', sentences: [{ chinese: '听到他这么说，我们都笑了。', pinyin: 'Tīng dào tā zhème shuō, wǒmen dōu xiào le.', english: 'Hearing him say that, we all laughed.' }, { chinese: '你笑起来很好看。', pinyin: 'Nǐ xiào qǐlái hěn hǎokàn.', english: 'You look very nice when you smile.' }] },
+      { chinese: '新', pinyin: 'xīn', english: 'adj. new', sentences: [{ chinese: '这是我买的新衣服。', pinyin: 'Zhè shì wǒ mǎi de xīn yīfu.', english: 'This is the new clothes I bought.' }, { chinese: '新年快乐。', pinyin: 'Xīnnián kuàilè.', english: 'Happy New Year.' }] },
+      { chinese: '姓', pinyin: 'xìng', english: 'n. surname / v. be surnamed', sentences: [{ chinese: '中国人的姓在名字的前面。', pinyin: 'Zhōngguó rén de xìng zài míngzi de qiánmiàn.', english: 'Chinese surnames come before the given name.' }, { chinese: '我姓张。', pinyin: 'Wǒ xìng Zhāng.', english: 'My surname is Zhang.' }] },
+      { chinese: '休息', pinyin: 'xiūxi', english: 'v. rest', sentences: [{ chinese: '太累了，让我休息一下。', pinyin: 'Tài lèi le, ràng wǒ xiūxi yīxià.', english: 'Too tired, let me rest a bit.' }, { chinese: '休息十分钟。', pinyin: 'Xiūxi shí fēnzhōng.', english: 'Rest ten minutes.' }] },
+      { chinese: '雪', pinyin: 'xuě', english: 'n. snow', sentences: [{ chinese: '今年冬天下了几次大雪。', pinyin: 'Jīnnián dōngtiān xià le jǐ cì dà xuě.', english: 'There were several big snows this winter.' }, { chinese: '雪很美。', pinyin: 'Xuě hěn měi.', english: 'Snow is very beautiful.' }] },
+      { chinese: '颜色', pinyin: 'yánsè', english: 'n. color', sentences: [{ chinese: '你喜欢哪种颜色？', pinyin: 'Nǐ xǐhuan nǎ zhǒng yánsè?', english: 'Which color do you like?' }, { chinese: '红色是我的颜色。', pinyin: 'Hóngsè shì wǒ de yánsè.', english: 'Red is my color.' }] },
+      { chinese: '眼睛', pinyin: 'yǎnjing', english: 'n. eye', sentences: [{ chinese: '我的眼睛是黑色的。', pinyin: 'Wǒ de yǎnjing shì hēisè de.', english: 'My eyes are black.' }, { chinese: '眼睛很大。', pinyin: 'Yǎnjing hěn dà.', english: 'The eyes are very big.' }] },
+      { chinese: '羊肉', pinyin: 'yángròu', english: 'n. mutton', sentences: [{ chinese: '有些人不爱吃羊肉。', pinyin: 'Yǒuxiē rén bú ài chī yángròu.', english: 'Some people don\'t like eating mutton.' }, { chinese: '羊肉很贵。', pinyin: 'Yángròu hěn guì.', english: 'Mutton is very expensive.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-9',
+    level: 'HSK2',
+    lessonNumber: 9,
+    words: [
+      { chinese: '药', pinyin: 'yào', english: 'n. medicine', sentences: [{ chinese: '这个药一天吃三次。', pinyin: 'Zhège yào yī tiān chī sān cì.', english: 'Take this medicine three times a day.' }, { chinese: '你吃药了吗？', pinyin: 'Nǐ chī yào le ma?', english: 'Did you take your medicine?' }] },
+      { chinese: '要', pinyin: 'yào', english: 'aux. want to / should / be going to / v. cost', sentences: [{ chinese: '我要去北京。', pinyin: 'Wǒ yào qù Běijīng.', english: 'I want to go to Beijing.' }, { chinese: '妈妈要我买菜。', pinyin: 'Māma yào wǒ mǎi cài.', english: 'Mom wants me to buy vegetables.' }] },
+      { chinese: '也', pinyin: 'yě', english: 'adv. also', sentences: [{ chinese: '你去，我也去。', pinyin: 'Nǐ qù, wǒ yě qù.', english: 'You go, I\'ll also go.' }, { chinese: '她学习汉语，我也学习汉语。', pinyin: 'Tā xuéxí Hànyǔ, wǒ yě xuéxí Hànyǔ.', english: 'She studies Chinese, I also study Chinese.' }] },
+      { chinese: '一下', pinyin: 'yíxià', english: 'vm. once; in a short while', sentences: [{ chinese: '请等我一下。', pinyin: 'Qǐng děng wǒ yīxià.', english: 'Please wait for me a moment.' }, { chinese: '你看一下。', pinyin: 'Nǐ kàn yīxià.', english: 'Take a look.' }] },
+      { chinese: '一起', pinyin: 'yìqǐ', english: 'adv. together', sentences: [{ chinese: '我和你一起去北京。', pinyin: 'Wǒ hé nǐ yìqǐ qù Běijīng.', english: 'I will go to Beijing together with you.' }, { chinese: '我们一起吃饭吧。', pinyin: 'Wǒmen yìqǐ chīfàn ba.', english: 'Let\'s eat together.' }] },
+      { chinese: '已经', pinyin: 'yǐjīng', english: 'adv. already', sentences: [{ chinese: '我们已经吃完饭了。', pinyin: 'Wǒmen yǐjīng chī wán fàn le.', english: 'We have already finished eating.' }, { chinese: '他已经走了。', pinyin: 'Tā yǐjīng zǒu le.', english: 'He has already left.' }] },
+      { chinese: '意思', pinyin: 'yìsi', english: 'n. meaning / opinion / fun', sentences: [{ chinese: '这个词是什么意思？', pinyin: 'Zhège cí shì shénme yìsi?', english: 'What does this word mean?' }, { chinese: '把你的意思告诉我吧。', pinyin: 'Bǎ nǐ de yìsi gàosu wǒ ba.', english: 'Tell me your opinion.' }] },
+      { chinese: '因为……所以……', pinyin: 'yīnwèi…suǒyǐ…', english: 'because…so', sentences: [{ chinese: '因为下雨了，所以我没去跑步。', pinyin: 'Yīnwèi xià yǔ le, suǒyǐ wǒ méi qù pǎobù.', english: 'Because it was raining, so I didn\'t go running.' }, { chinese: '因为我头疼，所以我不去旅游了。', pinyin: 'Yīnwèi wǒ tóuténg, suǒyǐ wǒ bú qù lǚyóu le.', english: 'Because I have a headache, so I\'m not going traveling.' }] },
+      { chinese: '阴', pinyin: 'yīn', english: 'adj. cloudy', sentences: [{ chinese: '今天是阴天。', pinyin: 'Jīntiān shì yīntiān.', english: 'Today is a cloudy day.' }, { chinese: '天气很阴。', pinyin: 'Tiānqì hěn yīn.', english: 'The weather is very cloudy.' }] },
+      { chinese: '游泳', pinyin: 'yóuyǒng', english: 'v. swim', sentences: [{ chinese: '我会游泳了。', pinyin: 'Wǒ huì yóuyǒng le.', english: 'I can swim now.' }, { chinese: '我们去游泳吧。', pinyin: 'Wǒmen qù yóuyǒng ba.', english: 'Let\'s go swimming.' }] },
+      { chinese: '右边', pinyin: 'yòubiān', english: 'n. right side', sentences: [{ chinese: '王医生右边那个人是谁？', pinyin: 'Wáng yīshēng yòubiān nà gè rén shì shéi?', english: 'Who is that person to the right of Doctor Wang?' }, { chinese: '请靠右边走。', pinyin: 'Qǐng kào yòubiān zǒu.', english: 'Please walk on the right side.' }] },
+      { chinese: '鱼', pinyin: 'yú', english: 'n. fish', sentences: [{ chinese: '水里有很多鱼。', pinyin: 'Shuǐ lǐ yǒu hěn duō yú.', english: 'There are many fish in the water.' }, { chinese: '我喜欢吃鱼。', pinyin: 'Wǒ xǐhuan chī yú.', english: 'I like eating fish.' }] },
+      { chinese: '远', pinyin: 'yuǎn', english: 'adj. far', sentences: [{ chinese: '我家离公司很远。', pinyin: 'Wǒ jiā lí gōngsī hěn yuǎn.', english: 'My home is very far from the company.' }, { chinese: '学校很远。', pinyin: 'Xuéxiào hěn yuǎn.', english: 'The school is very far.' }] },
+      { chinese: '运动', pinyin: 'yùndòng', english: 'v. take exercise', sentences: [{ chinese: '我们都很喜欢运动。', pinyin: 'Wǒmen dōu hěn xǐhuan yùndòng.', english: 'We all like exercising.' }, { chinese: '有时间的时候，可以运动一下。', pinyin: 'Yǒu shíjiān de shíhou, kěyǐ yùndòng yīxià.', english: 'When you have time, you can exercise a bit.' }] },
+      { chinese: '再', pinyin: 'zài', english: 'adv. again / more', sentences: [{ chinese: '我吃完饭再去商店。', pinyin: 'Wǒ chī wán fàn zài qù shāngdiàn.', english: 'I\'ll go to the store again after finishing eating.' }, { chinese: '再高点儿，现在太低了。', pinyin: 'Zài gāo diǎnr, xiànzài tài dī le.', english: 'A bit higher, now it\'s too low.' }] }
+    ]
+  },
+  {
+    id: 'hsk2-lesson-10',
+    level: 'HSK2',
+    lessonNumber: 10,
+    words: [
+      { chinese: '远', pinyin: 'yuǎn', english: 'adj. far', sentences: [{ chinese: '我家离公司很远。', pinyin: 'Wǒ jiā lí gōngsī hěn yuǎn.', english: 'My home is very far from the company.' }, { chinese: '学校很远。', pinyin: 'Xuéxiào hěn yuǎn.', english: 'The school is very far.' }] },
+      { chinese: '运动', pinyin: 'yùndòng', english: 'v. take exercise', sentences: [{ chinese: '我们都很喜欢运动。', pinyin: 'Wǒmen dōu hěn xǐhuan yùndòng.', english: 'We all like exercising.' }, { chinese: '有时间的时候，可以运动一下。', pinyin: 'Yǒu shíjiān de shíhou, kěyǐ yùndòng yīxià.', english: 'When you have time, you can exercise a bit.' }] },
+      { chinese: '再', pinyin: 'zài', english: 'adv. again / more', sentences: [{ chinese: '我吃完饭再去商店。', pinyin: 'Wǒ chī wán fàn zài qù shāngdiàn.', english: 'I\'ll go to the store again after finishing eating.' }, { chinese: '再高点儿，现在太低了。', pinyin: 'Zài gāo diǎnr, xiànzài tài dī le.', english: 'A bit higher, now it\'s too low.' }] },
+      { chinese: '早上', pinyin: 'zǎoshang', english: 'n. morning', sentences: [{ chinese: '我早上看见过他。', pinyin: 'Wǒ zǎoshang kànjiàn guo tā.', english: 'I saw him in the morning.' }, { chinese: '早上好。', pinyin: 'Zǎoshang hǎo.', english: 'Good morning.' }] },
+      { chinese: '丈夫', pinyin: 'zhàngfu', english: 'n. husband', sentences: [{ chinese: '我丈夫在医院工作。', pinyin: 'Wǒ zhàngfu zài yīyuàn gōngzuò.', english: 'My husband works at a hospital.' }, { chinese: '她丈夫很高。', pinyin: 'Tā zhàngfu hěn gāo.', english: 'Her husband is very tall.' }] },
+      { chinese: '找', pinyin: 'zhǎo', english: 'v. look for', sentences: [{ chinese: '他想找一个工作。', pinyin: 'Tā xiǎng zhǎo yī gè gōngzuò.', english: 'He wants to look for a job.' }, { chinese: '你找谁？', pinyin: 'Nǐ zhǎo shéi?', english: 'Who are you looking for?' }] },
+      { chinese: '着', pinyin: 'zhe', english: 'particle (continuing action)', sentences: [{ chinese: '他笑着说："你不认识我，但是我认识你。"', pinyin: 'Tā xiào zhe shuō: "Nǐ bú rènshi wǒ, dànshì wǒ rènshi nǐ."', english: 'He said smiling: "You don\'t know me, but I know you."' }, { chinese: '老师站着上课。', pinyin: 'Lǎoshī zhàn zhe shàngkè.', english: 'The teacher stands while teaching class.' }] },
+      { chinese: '真', pinyin: 'zhēn', english: 'adv. really', sentences: [{ chinese: '这个人真高。', pinyin: 'Zhège rén zhēn gāo.', english: 'This person is really tall.' }, { chinese: '真好！', pinyin: 'Zhēn hǎo!', english: 'Really good!' }] },
+      { chinese: '正在', pinyin: 'zhèngzài', english: 'adv. in progress', sentences: [{ chinese: '弟弟正在打篮球。', pinyin: 'Dìdi zhèngzài dǎ lánqiú.', english: 'Little brother is playing basketball.' }, { chinese: '我正在吃饭。', pinyin: 'Wǒ zhèngzài chīfàn.', english: 'I am eating.' }] },
+      { chinese: '知道', pinyin: 'zhīdào', english: 'v. know', sentences: [{ chinese: '我不知道他现在在哪里。', pinyin: 'Wǒ bù zhīdào tā xiànzài zài nǎlǐ.', english: 'I don\'t know where he is now.' }, { chinese: '你知道了吗？', pinyin: 'Nǐ zhīdào le ma?', english: 'Do you know now?' }] },
+      { chinese: '准备', pinyin: 'zhǔnbèi', english: 'v./n. prepare/preparation', sentences: [{ chinese: '我准备星期日去北京。', pinyin: 'Wǒ zhǔnbèi xīngqīrì qù Běijīng.', english: 'I plan to go to Beijing on Sunday.' }, { chinese: '我在为考试做准备。', pinyin: 'Wǒ zài wèi kǎoshì zuò zhǔnbèi.', english: 'I am preparing for the exam.' }] },
+      { chinese: '自行车', pinyin: 'zìxíngchē', english: 'n. bicycle', sentences: [{ chinese: '这是我新买的自行车。', pinyin: 'Zhè shì wǒ xīn mǎi de zìxíngchē.', english: 'This is my newly bought bicycle.' }, { chinese: '骑自行车去。', pinyin: 'Qí zìxíngchē qù.', english: 'Go by bicycle.' }] },
+      { chinese: '走', pinyin: 'zǒu', english: 'v. walk / leave', sentences: [{ chinese: '我女儿9个月就会走了。', pinyin: 'Wǒ nǚ\'ér jiǔ gè yuè jiù huì zǒu le.', english: 'My daughter could walk at nine months old.' }, { chinese: '我走了，再见！', pinyin: 'Wǒ zǒu le, zàijiàn!', english: 'I\'m leaving, goodbye!' }] },
+      { chinese: '最', pinyin: 'zuì', english: 'adv. most', sentences: [{ chinese: '她是我最好的朋友。', pinyin: 'Tā shì wǒ zuì hǎo de péngyou.', english: 'She is my best friend.' }, { chinese: '最漂亮。', pinyin: 'Zuì piàoliang.', english: 'The most beautiful.' }] },
+      { chinese: '左边', pinyin: 'zuǒbiān', english: 'n. left side', sentences: [{ chinese: '左边的那个杯子是你的，右边的是我的。', pinyin: 'Zuǒbiān de nà gè bēizi shì nǐ de, yòubiān de shì wǒ de.', english: 'The cup on the left is yours, the one on the right is mine.' }, { chinese: '靠左边走。', pinyin: 'Kào zuǒbiān zǒu.', english: 'Walk on the left side.' }] }
+    ]
+  }
+]
