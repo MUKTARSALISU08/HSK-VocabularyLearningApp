@@ -1,0 +1,3273 @@
+# HSK Vocabulary Learning — Full Application Specification
+
+Create a modern, premium, responsive, and highly interactive Chinese learning web application called:
+
+# “HSK Vocabulary Learning”
+
+The application is focused on helping students master HSK Chinese vocabulary naturally through:
+
+* Vocabulary learning
+* Sentence examples
+* Pinyin support
+* Audio pronunciation
+* Flashcard learning
+* Interactive quizzes
+* Timed challenges
+* Progress tracking
+* Gamified learning
+
+The application must feel like a professional EdTech platform similar to:
+
+* Duolingo
+* Memrise
+* LingQ
+* Modern SaaS dashboards
+
+The application must work perfectly on:
+
+* Desktop
+* Tablet
+* Mobile devices
+
+---
+
+# Core Learning Structure
+
+## HSK 1 — Beginner Level 1
+
+* 150 vocabulary words
+* 10 lessons
+* 15 words per lesson
+* 30 sentence examples per lesson
+* Include pinyin for:
+
+  * vocabulary
+  * sentence examples
+
+## HSK 2 — Beginner Level 2
+
+* 150 vocabulary words
+* 10 lessons
+* 15 words per lesson
+* 30 sentence examples per lesson
+* Include pinyin for:
+
+  * vocabulary
+  * sentence examples
+
+## HSK 3 — Intermediate Level 1
+
+* 300 vocabulary words
+* 20 lessons
+* 15 words per lesson
+* 30 sentence examples per lesson
+* NO pinyin anywhere
+* Only:
+
+  * Chinese characters
+  * English meaning
+  * English sentence translation
+
+---
+
+# Data Format
+
+## HSK1 & HSK2 Example
+
+Chinese: 爱
+Pinyin: ài
+English: v. love / like doing sth.
+
+Sentence 1:
+妈妈，我爱你。
+Māma, wǒ ài nǐ.
+Mom, I love you.
+
+Sentence 2:
+我爱吃米饭。
+Wǒ ài chī mǐfàn.
+I like eating rice.
+
+---
+
+## HSK3 Example
+
+Chinese: 被
+English: prep. (passive voice marker)
+
+Sentence 1:
+词典被王老师拿走了。
+The dictionary was taken away by Teacher Wang.
+
+Sentence 2:
+他被打败了。
+He was defeated.
+
+---
+
+# Main Goal
+
+The application should help learners:
+
+* Learn vocabulary naturally
+* Understand sentence structure
+* Improve pronunciation
+* Practice recognition
+* Improve memory retention
+* Stay motivated daily
+
+The learning experience should feel:
+
+* Beautiful
+* Smooth
+* Addictive
+* Professional
+* Interactive
+* Educational
+* Modern
+
+---
+
+# Design Requirements
+
+Create a premium modern UI with:
+
+* Beautiful dark mode
+* Elegant gradients
+* Modern typography
+* Glassmorphism effects
+* Smooth animations
+* Responsive layout
+* Professional spacing
+* Rounded cards
+* Interactive hover effects
+* Clean dashboard UI
+* Premium flashcards
+* Sidebar navigation
+* Progress indicators
+
+Do NOT make the UI childish.
+
+Design aesthetic:
+
+* Modern SaaS
+* EdTech premium platform
+* Clean and minimal
+* High-quality animations
+* Strong visual hierarchy
+
+---
+
+# Tech Stack
+
+## Runtime & Tooling
+
+| Tool           | Purpose                      |
+| -------------- | ---------------------------- |
+| Node.js 24     | JavaScript runtime           |
+| pnpm           | Package manager              |
+| TypeScript 5.9 | Static typing                |
+| Vite 7.x       | Development server & bundler |
+
+---
+
+## Core Framework
+
+| Package   | Purpose       |
+| --------- | ------------- |
+| react     | UI framework  |
+| react-dom | DOM rendering |
+
+---
+
+## Routing
+
+| Package | Purpose                         |
+| ------- | ------------------------------- |
+| wouter  | Lightweight client-side routing |
+
+---
+
+## Styling
+
+| Package                  | Purpose                   |
+| ------------------------ | ------------------------- |
+| tailwindcss              | Utility-first CSS         |
+| tw-animate-css           | Animation utilities       |
+| @tailwindcss/typography  | Typography plugin         |
+| @tailwindcss/vite        | Tailwind Vite integration |
+| tailwind-merge           | Tailwind class merging    |
+| clsx                     | Conditional classes       |
+| class-variance-authority | Variant styling           |
+
+---
+
+## UI Components
+
+Use:
+
+* shadcn/ui
+* Radix UI primitives
+
+Important components:
+
+* Dialog
+* Accordion
+* Tabs
+* Tooltip
+* Progress
+* Toast
+* Dropdown Menu
+* Scroll Area
+* Select
+* Card
+* Badge
+* Switch
+
+---
+
+## Icons
+
+| Package      | Purpose               |
+| ------------ | --------------------- |
+| lucide-react | Primary icon system   |
+| react-icons  | Extended icon library |
+
+---
+
+## Animation
+
+| Package         | Purpose                            |
+| --------------- | ---------------------------------- |
+| framer-motion   | Page transitions & card animations |
+| canvas-confetti | Quiz celebration effects           |
+
+---
+
+## Forms & Validation
+
+| Package             | Purpose            |
+| ------------------- | ------------------ |
+| react-hook-form     | Form handling      |
+| zod                 | Schema validation  |
+| @hookform/resolvers | Validation adapter |
+
+---
+
+## Charts & Statistics
+
+| Package  | Purpose           |
+| -------- | ----------------- |
+| recharts | Statistics charts |
+| date-fns | Date utilities    |
+
+---
+
+## Notifications & UI Utilities
+
+| Package              | Purpose             |
+| -------------------- | ------------------- |
+| sonner               | Toast notifications |
+| cmdk                 | Command palette     |
+| embla-carousel-react | Carousel system     |
+| vaul                 | Drawer component    |
+| next-themes          | Dark/light mode     |
+
+---
+
+# Audio System
+
+Use:
+
+* Web Speech API (SpeechSynthesis)
+
+Requirements:
+
+* Natural Mandarin pronunciation
+* lang="zh-CN"
+* Audio for:
+
+  * vocabulary words
+  * sentence examples
+
+IMPORTANT:
+Sentence examples MUST also have audio playback.
+
+---
+
+# Fonts
+
+Use Google Fonts:
+
+* Inter → UI text
+* Noto Sans SC → Chinese rendering
+* Noto Serif → pinyin rendering
+
+Pinyin must display beautifully with Unicode tone marks.
+
+---
+
+# Pinyin Rules
+
+IMPORTANT:
+
+HSK1 and HSK2:
+
+* MUST include proper tone marks
+
+Examples:
+
+* ài
+* mǐfàn
+* liú lǎn qì
+
+Never display:
+
+* ai
+* mifan
+* liu lan qi
+
+HSK3:
+
+* NO pinyin anywhere
+
+---
+
+# Lesson System
+
+Each lesson should include:
+
+* 15 vocabulary words
+* Word cards
+* Chinese characters
+* English meanings
+* Pinyin (HSK1 & HSK2 only)
+* 2 sentence examples per word
+* Audio playback
+* Expandable sentence sections
+* Flashcard mode
+* Favorite/save feature
+* Lesson progress tracking
+
+Each word card should include:
+
+* Smooth hover animation
+* Beautiful card transitions
+* Audio button
+* Clean typography
+* Responsive layout
+
+---
+
+# Quiz System
+
+At the end of every lesson:
+Generate a quiz with:
+
+* 10 random questions
+* Questions only from the current lesson
+
+Question types:
+
+* Chinese → English
+* English → Chinese
+* Sentence meaning
+* Match pinyin
+* Fill in blank
+* Multiple choice
+* Select correct Chinese word
+
+Quiz features:
+
+* Correct/wrong sounds
+* Animated feedback
+* Progress bar
+* XP rewards
+* Retry mode
+* Celebration animation
+
+---
+
+# Test Your Knowledge Section
+
+Create a dedicated challenge section with:
+
+## 1. Random Quiz Mode
+
+Generate random quizzes using:
+
+* all 600 words
+* all sentence examples
+
+Allow:
+
+* 5 questions
+* 10 questions
+* 20 questions
+* 50 questions
+
+Question types:
+
+* Vocabulary meaning
+* Sentence meaning
+* Chinese recognition
+* Pinyin recognition
+* Matching questions
+* Multiple choice
+
+---
+
+## 2. Time Challenge Mode
+
+Example:
+
+* 10 questions
+* 3 minute timer
+
+Features:
+
+* Countdown timer
+* Score tracking
+* Combo streak
+* XP rewards
+* Sound effects
+* Animated transitions
+* Performance summary
+
+---
+
+# Engagement Features
+
+Add:
+
+* XP system
+* Daily streak
+* Progress tracking
+* Lesson completion badges
+* Continue Learning section
+* Favorite words
+* Review mistakes mode
+* Study statistics
+* Word of the Day
+* Motivational messages
+
+---
+
+# State Management
+
+Use:
+
+* React Context API
+* localStorage persistence
+
+Persist:
+
+* XP
+* streak
+* completed lessons
+* favorite words
+* quiz mistakes
+* lesson progress
+* achievements
+
+---
+
+# Data Architecture
+
+Store all lesson data using:
+
+* JSON or TypeScript typed arrays
+
+Suggested structure:
+
+* hsk1/
+* hsk2/
+* hsk3/
+
+Each lesson file should contain:
+
+* vocabulary
+* pinyin
+* English meaning
+* sentence examples
+* audio metadata
+
+---
+
+# Project Structure
+
+/src
+/assets
+/components
+/common
+/layout
+/lessons
+/quiz
+/dashboard
+/pages
+/contexts
+/hooks
+/services
+/utils
+/styles
+/types
+/data
+/hsk1
+/hsk2
+/hsk3
+/lib
+/router
+
+---
+
+# Required Pages
+
+* Home
+* Lessons
+* Lesson Detail
+* Quiz
+* Challenge
+* Stats
+* Favorites
+* Search
+* Not Found
+
+---
+
+# Performance Requirements
+
+The application must:
+
+* Load quickly
+* Work smoothly on mobile
+* Use reusable components
+* Be production-ready
+* Have clean architecture
+* Follow TypeScript best practices
+
+---
+
+# README Requirements
+
+Generate a professional README.md containing:
+
+* Project overview
+* Features
+* Tech stack
+* Installation guide
+* Folder structure
+* Scripts
+* Deployment guide
+* Libraries used
+
+---
+
+# Important Development Instructions
+
+Build the application in phases.
+
+Phase 1:
+
+* Core layout
+* Routing
+* Sidebar
+* Dashboard
+* Theme system
+
+Phase 2:
+
+* Lesson system
+* Vocabulary cards
+* Audio
+* Flashcards
+
+Phase 3:
+
+* Quiz engine
+* Challenge system
+* Timer mode
+
+Phase 4:
+
+* Statistics
+* Progress tracking
+* Achievements
+
+# Design System & Color Theme
+
+Use the SAME visual color style and design atmosphere as the previous project.
+
+The teacher already approved and liked the previous interface design, so this new HSK Vocabulary Learning application should maintain a very similar visual identity, color palette, and overall UI feeling.
+
+---
+
+# Overall Design Mood
+
+The interface should feel:
+
+* Premium
+* Modern
+* Elegant
+* Professional
+* Minimal
+* Smooth
+* Futuristic
+* Educational
+
+The design should resemble:
+
+* Modern SaaS dashboards
+* Premium EdTech platforms
+* High-quality learning applications
+
+The UI must NOT look:
+
+* childish
+* cartoonish
+* overly colorful
+* outdated
+
+---
+
+# Primary Color Style
+
+Use a modern Electric Indigo / Violet primary theme.
+
+Main accent color:
+
+* Electric Indigo
+* Similar to: `#6366f1`
+
+This color should be used for:
+
+* Primary buttons
+* Active navigation
+* Progress highlights
+* Quiz actions
+* XP indicators
+* Interactive elements
+* Hover states
+* Selected cards
+
+The interface should maintain a clean blue-violet futuristic learning atmosphere.
+
+---
+
+# Dark Mode Style (Default)
+
+Dark mode should be the default appearance.
+
+Main dark colors:
+
+* Deep navy blue backgrounds
+* Slate blue surfaces
+* Indigo accents
+* Soft borders
+* Smooth contrast
+
+Visual feeling:
+
+* Clean
+* Comfortable on eyes
+* Modern
+* Premium
+
+Approximate palette:
+
+* Background: deep navy/slate (`#0f172a`)
+* Cards: dark slate (`#1e293b`)
+* Borders: subtle dark blue-gray
+* Text: soft white/light gray
+* Primary accent: electric indigo (`#6366f1`)
+
+Do NOT use pure black backgrounds.
+
+---
+
+# Light Mode Style
+
+Light mode should still maintain the same premium feeling.
+
+Use:
+
+* Soft gray-white backgrounds
+* Clean white cards
+* Slate text
+* Indigo accent colors
+* Minimal borders
+
+Approximate palette:
+
+* Background: `#f8fafc`
+* Card: `#ffffff`
+* Border: `#e2e8f0`
+* Text: `#0f172a`
+* Accent: `#6366f1`
+
+---
+
+# Typography
+
+Use:
+
+* Inter → UI font
+* Noto Sans SC → Chinese characters
+* Noto Serif → Pinyin rendering
+
+Requirements:
+
+* Pinyin must render crisply with Unicode tone marks
+* Chinese characters must have proper CJK support
+* Typography should feel elegant and premium
+
+Pinyin style:
+
+* Italic serif font
+* Slight letter spacing
+* Clean tone mark rendering
+
+---
+
+# Visual Effects
+
+Use:
+
+* Soft shadows
+* Smooth hover animations
+* Subtle glow effects
+* Glassmorphism where appropriate
+* Rounded corners
+* Elevated cards
+* Smooth transitions
+
+Avoid:
+
+* Harsh neon effects
+* Overly bright gradients
+* Excessive animations
+
+---
+
+# Card Design
+
+Vocabulary cards should include:
+
+* Rounded corners
+* Soft elevation
+* Smooth hover effects
+* Elegant spacing
+* Interactive transitions
+
+Quiz cards and lesson cards should feel:
+
+* Clean
+* Premium
+* Modern
+* Interactive
+
+---
+
+# Navigation Style
+
+Use:
+
+* Modern sidebar navigation
+* Active indigo highlight
+* Smooth transitions
+* Professional spacing
+* Responsive mobile drawer
+
+---
+
+# UI Experience Goal
+
+The user should immediately feel:
+“This is a premium modern Chinese learning platform.”
+
+
+Do NOT leave placeholder UI.
+Generate production-ready code and fully functional pages.
+
+
+
+The complete lesson data  HSK1, HSK2, and HSK3.
+
+
+HSK 1 - 150 WORDS (10 LESSONS EACH LESSON 15 WORDS 30 SENTENCE EXAMPLE)
+
+LESSON 1
+
+Chinese: 爱 Pinyin: ài English: v. love / like doing sth.
+Sentence 1: 妈妈，我爱你。 Māma, wǒ ài nǐ. Mom, I love you.
+Sentence 2: 我爱吃米饭。 Wǒ ài chī mǐfàn. I like eating rice.
+
+Chinese: 八 Pinyin: bā English: num. eight
+Sentence 1: 他儿子今年八岁了。 Tā érzi jīnnián bā suì le. His son is eight years old this year.
+Sentence 2: 我们八点上课。 Wǒmen bā diǎn shàngkè. We have class at eight o'clock.
+
+Chinese: 爸爸 Pinyin: bàba English: n. father
+Sentence 1: 我爸爸是医生。 Wǒ bàba shì yīshēng. My father is a doctor.
+Sentence 2: 爸爸每天去上班。 Bàba měitiān qù shàngbān. Dad goes to work every day.
+
+Chinese: 杯子 Pinyin: bēizi English: n. cup; glass
+Sentence 1: 杯子里有茶。 Bēizi lǐ yǒu chá. There is tea in the cup.
+Sentence 2: 这个杯子很漂亮。 Zhège bēizi hěn piàoliang. This cup is very beautiful.
+
+Chinese: 北京 Pinyin: Běijīng English: n. Beijing
+Sentence 1: 我住在北京。 Wǒ zhù zài Běijīng. I live in Beijing.
+Sentence 2: 北京是中国的首都。 Běijīng shì Zhōngguó de shǒudū. Beijing is the capital of China.
+
+Chinese: 本 Pinyin: běn English: nm. copy; issue (for books)
+Sentence 1: 桌子上有一本书。 Zhuōzi shàng yǒu yī běn shū. There is a book on the table.
+Sentence 2: 我买了两本词典。 Wǒ mǎi le liǎng běn cídiǎn. I bought two dictionaries.
+
+Chinese: 不客气 Pinyin: bú kèqi English: You're welcome
+Sentence 1: 甲：谢谢你！乙：不客气。 Jiǎ: Xièxie nǐ! Yǐ: Bú kèqi. A: Thank you! B: You're welcome.
+Sentence 2: 帮助你是应该的，不客气。 Bāngzhù nǐ shì yīnggāi de, bú kèqi. Helping you is only right, you're welcome.
+
+Chinese: 不 Pinyin: bù English: adv. not; no
+Sentence 1: 我不是学生。 Wǒ bú shì xuésheng. I am not a student.
+Sentence 2: 今天不冷。 Jīntiān bù lěng. Today is not cold.
+
+Chinese: 菜 Pinyin: cài English: n. vegetable / dish
+Sentence 1: 我去超市买点儿菜。 Wǒ qù chāoshì mǎi diǎnr cài. I'm going to the supermarket to buy some vegetables.
+Sentence 2: 今天我做了三个菜。 Jīntiān wǒ zuò le sān gè cài. Today I made three dishes.
+
+Chinese: 茶 Pinyin: chá English: n. tea
+Sentence 1: 请喝杯茶吧。 Qǐng hē bēi chá ba. Please have a cup of tea.
+Sentence 2: 我喜欢喝绿茶。 Wǒ xǐhuan hē lǜchá. I like drinking green tea.
+
+Chinese: 吃 Pinyin: chī English: v. eat
+Sentence 1: 请吃点儿米饭。 Qǐng chī diǎnr mǐfàn. Please eat some rice.
+Sentence 2: 你吃苹果吗？ Nǐ chī píngguǒ ma? Do you eat apples?
+
+Chinese: 出租车 Pinyin: chūzūchē English: n. taxi
+Sentence 1: 我们坐出租车去火车站。 Wǒmen zuò chūzūchē qù huǒchēzhàn. We are taking a taxi to the train station.
+Sentence 2: 门口有一辆出租车。 Ménkǒu yǒu yī liàng chūzūchē. There is a taxi at the door.
+
+Chinese: 打电话 Pinyin: dǎ diànhuà English: make a phone call
+Sentence 1: 他在打电话呢。 Tā zài dǎ diànhuà ne. He is making a phone call.
+Sentence 2: 晚上我给你打电话。 Wǎnshàng wǒ gěi nǐ dǎ diànhuà. I will call you in the evening.
+
+Chinese: 大 Pinyin: dà English: adj. big; large
+Sentence 1: 这个苹果很大。 Zhège píngguǒ hěn dà. This apple is very big.
+Sentence 2: 他的房子非常大。 Tā de fángzi fēicháng dà. His house is extremely large.
+
+Chinese: 的 Pinyin: de English: particle (attributive/emphasis)
+Sentence 1: 这是我的书。 Zhè shì wǒ de shū. This is my book.
+Sentence 2: 我是坐飞机来中国的。 Wǒ shì zuò fēijī lái Zhōngguó de. I came to China by plane.
+
+LESSON 2
+
+
+Chinese: 点 Pinyin: diǎn English: n. o'clock / v. order
+Sentence 1: 现在是下午三点。 Xiànzài shì xiàwǔ sān diǎn. It is now three o'clock in the afternoon.
+Sentence 2: 先生，您什么时候点菜？ Xiānsheng, nín shénme shíhou diǎn cài? Sir, when would you like to order?
+Sentence 3: 你想喝点什么？我来点。 Nǐ xiǎng hē diǎn shénme? Wǒ lái diǎn. What would you like to drink? I'll order.
+
+Chinese: 电脑 Pinyin: diànnǎo English: n. computer
+Sentence 1: 我买了个电脑。 Wǒ mǎi le gè diànnǎo. I bought a computer.
+Sentence 2: 他每天用电脑工作。 Tā měitiān yòng diànnǎo gōngzuò. He uses the computer to work every day.
+
+Chinese: 电视 Pinyin: diànshì English: n. television
+Sentence 1: 妈妈在看电视。 Māma zài kàn diànshì. Mom is watching TV.
+Sentence 2: 这台电视很大。 Zhè tái diànshì hěn dà. This TV is very big.
+
+Chinese: 电影 Pinyin: diànyǐng English: n. movie; film
+Sentence 1: 我喜欢看电影。 Wǒ xǐhuan kàn diànyǐng. I like watching movies.
+Sentence 2: 今晚我们去看电影吧。 Jīnwǎn wǒmen qù kàn diànyǐng ba. Let's go watch a movie tonight.
+
+Chinese: 东西 Pinyin: dōngxi English: n. thing; object
+Sentence 1: 我在商店买了很多东西。 Wǒ zài shāngdiàn mǎi le hěn duō dōngxi. I bought a lot of things at the store.
+Sentence 2: 这是什么东西？ Zhè shì shénme dōngxi? What is this thing?
+
+Chinese: 都 Pinyin: dōu English: adv. all / already / emphasis
+Sentence 1: 我们都来了。 Wǒmen dōu lái le. We all came.
+Sentence 2: 我都快吃完了。 Wǒ dōu kuài chī wán le. I'm almost finished eating.
+Sentence 3: 现在都三点了。 Xiànzài dōu sān diǎn le. It's already three o'clock.
+
+Chinese: 读 Pinyin: dú English: v. read
+Sentence 1: 你会读这个汉字吗？ Nǐ huì dú zhège Hànzì ma? Can you read this Chinese character?
+Sentence 2: 你喜欢读书吗？ Nǐ xǐhuan dú shū ma? Do you like reading books?
+
+Chinese: 对不起 Pinyin: duìbuqǐ English: I'm sorry
+Sentence 1: 甲：对不起。乙：没关系。 Jiǎ: Duìbuqǐ. Yǐ: Méi guānxi. A: I'm sorry. B: It's okay.
+Sentence 2: 对不起，我迟到了。 Duìbuqǐ, wǒ chídào le. I'm sorry, I'm late.
+
+Chinese: 多 Pinyin: duō English: adj. many / adv. how (degree)
+Sentence 1: 这里的人很多。 Zhèlǐ de rén hěn duō. There are many people here.
+Sentence 2: 你儿子多大了？ Nǐ érzi duō dà le? How old is your son?
+
+Chinese: 多少 Pinyin: duōshǎo English: pron. how many; how much
+Sentence 1: 你们学校有多少学生？ Nǐmen xuéxiào yǒu duōshǎo xuésheng? How many students are in your school?
+Sentence 2: 这个苹果多少钱？ Zhège píngguǒ duōshǎo qián? How much is this apple?
+
+Chinese: 儿子 Pinyin: érzi English: n. son
+Sentence 1: 我儿子三岁了。 Wǒ érzi sān suì le. My son is three years old.
+Sentence 2: 他的儿子很聪明。 Tā de érzi hěn cōngming. His son is very smart.
+
+Chinese: 二 Pinyin: èr English: num. two
+Sentence 1: 现在十二点了。 Xiànzài shí èr diǎn le. It's twelve o'clock now.
+Sentence 2: 我有二个妹妹。 Wǒ yǒu èr gè mèimei. I have two younger sisters.
+
+Chinese: 饭店 Pinyin: fàndiàn English: n. restaurant; hotel
+Sentence 1: 中午我们去饭店吃吧。 Zhōngwǔ wǒmen qù fàndiàn chī ba. Let's go eat at a restaurant at noon.
+Sentence 2: 这个饭店的菜很好吃。 Zhège fàndiàn de cài hěn hǎochī. This restaurant's dishes are very delicious.
+
+Chinese: 飞机 Pinyin: fēijī English: n. plane
+Sentence 1: 我坐飞机去北京。 Wǒ zuò fēijī qù Běijīng. I am taking a plane to Beijing.
+Sentence 2: 飞机飞得很高。 Fēijī fēi de hěn gāo. The plane flies very high.
+
+Chinese: 分钟 Pinyin: fēnzhōng English: n. minute
+Sentence 1: 我想休息几分钟。 Wǒ xiǎng xiūxi jǐ fēnzhōng. I want to rest for a few minutes.
+Sentence 2: 还有二十分钟上课。 Hái yǒu èrshí fēnzhōng shàngkè. There are still twenty minutes until class.
+LESSON 3
+
+Chinese: 高兴 Pinyin: gāoxìng English: adj. happy; glad
+Sentence 1: 今天我很高兴。 Jīntiān wǒ hěn gāoxìng. I am very happy today.
+Sentence 2: 见到你非常高兴。 Jiàn dào nǐ fēicháng gāoxìng. Very happy to see you.
+
+Chinese: 个 Pinyin: gè English: m. general measure word
+Sentence 1: 我是一个学生。 Wǒ shì yī gè xuésheng. I am a student.
+Sentence 2: 有三个苹果。 Yǒu sān gè píngguǒ. There are three apples.
+
+Chinese: 工作 Pinyin: gōngzuò English: n. job / v. work
+Sentence 1: 我很喜欢现在的工作。 Wǒ hěn xǐhuan xiànzài de gōngzuò. I really like my current job.
+Sentence 2: 我在医院工作。 Wǒ zài yīyuàn gōngzuò. I work at a hospital.
+
+Chinese: 汉语 Pinyin: Hànyǔ English: n. Chinese language
+Sentence 1: 他在学习汉语。 Tā zài xuéxí Hànyǔ. He is learning Chinese.
+Sentence 2: 你的汉语说得很好。 Nǐ de Hànyǔ shuō de hěn hǎo. Your Chinese is very good.
+
+Chinese: 好 Pinyin: hǎo English: adj. good / adv. very / ok
+Sentence 1: 今天天气很好。 Jīntiān tiānqì hěn hǎo. Today's weather is very good.
+Sentence 2: 你听我说，好吗？ Nǐ tīng wǒ shuō, hǎo ma? Listen to me, okay?
+Sentence 3: 你的衣服好漂亮啊！ Nǐ de yīfu hǎo piàoliang a! Your clothes are so beautiful!
+
+Chinese: 号 Pinyin: hào English: n. date / number
+Sentence 1: 今天是2002年1月1号。 Jīntiān shì èr líng líng èr nián yī yuè yī hào. Today is January 1st, 2002.
+Sentence 2: 你的房间号是多少？ Nǐ de fángjiān hào shì duōshǎo? What is your room number?
+
+Chinese: 喝 Pinyin: hē English: v. drink
+Sentence 1: 我想喝水。 Wǒ xiǎng hē shuǐ. I want to drink water.
+Sentence 2: 他喜欢喝咖啡。 Tā xǐhuan hē kāfēi. He likes drinking coffee.
+
+Chinese: 和 Pinyin: hé English: conj. and
+Sentence 1: 爸爸和妈妈都在家。 Bàba hé māma dōu zài jiā. Dad and mom are both at home.
+Sentence 2: 我和他是朋友。 Wǒ hé tā shì péngyou. He and I are friends.
+
+Chinese: 很 Pinyin: hěn English: adv. very
+Sentence 1: 李小姐很漂亮。 Lǐ xiǎojie hěn piàoliang. Miss Li is very beautiful.
+Sentence 2: 今天很热。 Jīntiān hěn rè. Today is very hot.
+
+Chinese: 后面 Pinyin: hòumiàn English: n. at the back; behind / later
+Sentence 1: 商店在学校后面。 Shāngdiàn zài xuéxiào hòumiàn. The store is behind the school.
+Sentence 2: 关于这个问题，后面我还会详细说。 Guānyú zhège wèntí, hòumiàn wǒ hái huì xiángxì shuō. Regarding this question, I will explain in detail later.
+
+Chinese: 回 Pinyin: huí English: v. go back / times
+Sentence 1: 我八点回家。 Wǒ bā diǎn huí jiā. I go back home at eight o'clock.
+Sentence 2: 我去过一回北京。 Wǒ qù guò yī huí Běijīng. I have been to Beijing once.
+
+Chinese: 会 Pinyin: huì English: aux. can / may / be capable of
+Sentence 1: 我会开车。 Wǒ huì kāichē. I can drive.
+Sentence 2: 我学会了汉语。 Wǒ xuéhuì le Hànyǔ. I have learned Chinese.
+Sentence 3: 明天是不会下雨的。 Míngtiān shì bù huì xià yǔ de. It won't rain tomorrow.
+
+Chinese: 几 Pinyin: jǐ English: pron. how many / a few
+Sentence 1: 你有几个儿子？ Nǐ yǒu jǐ gè érzi? How many sons do you have?
+Sentence 2: 我家里来了几个人。 Wǒ jiālǐ lái le jǐ gè rén. A few people came to my home.
+
+Chinese: 家 Pinyin: jiā English: n. home; family / m.
+Sentence 1: 我家在北京。 Wǒ jiā zài Běijīng. My home is in Beijing.
+Sentence 2: 我哥哥开了一家公司。 Wǒ gēge kāi le yī jiā gōngsī. My older brother opened a company.
+
+Chinese: 叫 Pinyin: jiào English: v. call (named)
+Sentence 1: 我的名字叫李明。 Wǒ de míngzi jiào Lǐ Míng. My name is Li Ming.
+Sentence 2: 他叫小王。 Tā jiào Xiǎo Wáng. He is called Xiao Wang.
+
+LESSON 4
+
+Chinese: 今天 Pinyin: jīntiān English: n. today
+Sentence 1: 我今天去北京。 Wǒ jīntiān qù Běijīng. I am going to Beijing today.
+Sentence 2: 今天很冷。 Jīntiān hěn lěng. Today is very cold.
+
+Chinese: 九 Pinyin: jiǔ English: num. nine
+Sentence 1: 今天是八月九日。 Jīntiān shì bā yuè jiǔ rì. Today is August ninth.
+Sentence 2: 我有九本书。 Wǒ yǒu jiǔ běn shū. I have nine books.
+
+Chinese: 开 Pinyin: kāi English: v. drive / open / found / hold
+Sentence 1: 我开了三年出租车了。 Wǒ kāi le sān nián chūzūchē le. I have driven a taxi for three years.
+Sentence 2: 我爸爸开了一个小公司。 Wǒ bàba kāi le yī gè xiǎo gōngsī. My dad opened a small company.
+Sentence 3: 请开门。 Qǐng kāi mén. Please open the door.
+Sentence 4: 我们学校每年夏天开运动会。 Wǒmen xuéxiào měi nián xiàtiān kāi yùndònghuì. Our school holds sports games every summer.
+
+Chinese: 看 Pinyin: kàn English: v. look; watch / read
+Sentence 1: 你看，那本书在桌子上。 Nǐ kàn, nà běn shū zài zhuōzi shàng. Look, that book is on the table.
+Sentence 2: 我在看书呢。 Wǒ zài kàn shū ne. I am reading a book.
+
+Chinese: 看见 Pinyin: kànjiàn English: v. see
+Sentence 1: 我没看见他。 Wǒ méi kànjiàn tā. I didn't see him.
+Sentence 2: 你看见我的手机了吗？ Nǐ kànjiàn wǒ de shǒujī le ma? Did you see my phone?
+
+Chinese: 块 Pinyin: kuài English: nm. RMB yuan / piece / together
+Sentence 1: 这本书三十块钱。 Zhè běn shū sānshí kuài qián. This book is thirty yuan.
+Sentence 2: 来吃块西瓜吧。 Lái chī kuài xīguā ba. Come have a piece of watermelon.
+
+Chinese: 来 Pinyin: lái English: v. come / indicate action
+Sentence 1: 他是昨天来这儿的。 Tā shì zuótiān lái zhèr de. He came here yesterday.
+Sentence 2: 再来点儿水果，怎么样？ Zài lái diǎnr shuǐguǒ, zěnme yàng? How about some more fruit?
+
+Chinese: 老师 Pinyin: lǎoshī English: n. teacher
+Sentence 1: 他就是我们的汉语老师。 Tā jiùshì wǒmen de Hànyǔ lǎoshī. He is our Chinese teacher.
+Sentence 2: 老师好！ Lǎoshī hǎo! Hello, teacher!
+
+Chinese: 了 Pinyin: le English: particle (change/completion)
+Sentence 1: 昨天下雨了。 Zuótiān xià yǔ le. It rained yesterday.
+Sentence 2: 我吃了饭就去你那里。 Wǒ chī le fàn jiù qù nǐ nàlǐ. I will go to your place after I eat.
+
+Chinese: 冷 Pinyin: lěng English: adj. cold
+Sentence 1: 今天太冷了。 Jīntiān tài lěng le. Today is too cold.
+Sentence 2: 冬天很冷。 Dōngtiān hěn lěng. Winter is very cold.
+
+Chinese: 里 Pinyin: lǐ English: n. interior; inside
+Sentence 1: 我们都在学校里。 Wǒmen dōu zài xuéxiào lǐ. We are all inside the school.
+Sentence 2: 盒子里有什么？ Hézi lǐ yǒu shénme? What is inside the box?
+
+Chinese: 零 Pinyin: líng English: num. zero
+Sentence 1: 今年是二零一二年。 Jīnnián shì èr líng yī èr nián. This year is 2012.
+Sentence 2: 温度是零度。 Wēndù shì líng dù. The temperature is zero degrees.
+
+Chinese: 六 Pinyin: liù English: num. six
+Sentence 1: 桌子上有六个杯子。 Zhuōzi shàng yǒu liù gè bēizi. There are six cups on the table.
+Sentence 2: 他六岁。 Tā liù suì. He is six years old.
+
+Chinese: 妈妈 Pinyin: māma English: n. mother
+Sentence 1: 我妈妈不在家。 Wǒ māma bú zài jiā. My mom is not at home.
+Sentence 2: 妈妈爱我。 Māma ài wǒ. Mom loves me.
+
+Chinese: 吗 Pinyin: ma English: interrogative particle
+Sentence 1: 你是中国人吗？ Nǐ shì Zhōngguó rén ma? Are you Chinese?
+Sentence 2: 你喜欢这个吗？ Nǐ xǐhuan zhège ma? Do you like this?
+
+LESSON 5
+
+Chinese: 买 Pinyin: mǎi English: v. buy
+Sentence 1: 我买了一些苹果。 Wǒ mǎi le yīxiē píngguǒ. I bought some apples.
+Sentence 2: 你想买什么？ Nǐ xiǎng mǎi shénme? What do you want to buy?
+
+Chinese: 没关系 Pinyin: méi guānxi English: That's all right
+Sentence 1: 甲：对不起！乙：没关系。 Jiǎ: Duìbuqǐ! Yǐ: Méi guānxi. A: I'm sorry! B: It's okay.
+Sentence 2: 没关系，别担心。 Méi guānxi, bié dānxīn. It's okay, don't worry.
+
+Chinese: 没有 Pinyin: méiyǒu English: v. not have / not as...as
+Sentence 1: 我家里没有人。 Wǒ jiālǐ méiyǒu rén. There is no one at my home.
+Sentence 2: 我没有他高。 Wǒ méiyǒu tā gāo. I am not as tall as him.
+
+Chinese: 米饭 Pinyin: mǐfàn English: n. cooked rice
+Sentence 1: 我爱吃米饭。 Wǒ ài chī mǐfàn. I love eating rice.
+Sentence 2: 米饭很香。 Mǐfàn hěn xiāng. The rice is very fragrant.
+
+Chinese: 明天 Pinyin: míngtiān English: n. tomorrow
+Sentence 1: 今天星期日，明天是星期一。 Jīntiān xīngqīrì, míngtiān shì xīngqīyī. Today is Sunday, tomorrow is Monday.
+Sentence 2: 明天见。 Míngtiān jiàn. See you tomorrow.
+
+Chinese: 名字 Pinyin: míngzi English: n. name
+Sentence 1: 我的名字叫李明。 Wǒ de míngzi jiào Lǐ Míng. My name is Li Ming.
+Sentence 2: 你叫什么名字？ Nǐ jiào shénme míngzi? What is your name?
+
+Chinese: 哪 Pinyin: nǎ English: pron. which (before m.)
+Sentence 1: 哪个杯子是你的？ Nǎ gè bēizi shì nǐ de? Which cup is yours?
+Sentence 2: 你喜欢哪个国家？ Nǐ xǐhuan nǎ gè guójiā? Which country do you like?
+
+Chinese: 哪儿 Pinyin: nǎr English: pron. where
+Sentence 1: 你家在哪儿？ Nǐ jiā zài nǎr? Where is your home?
+Sentence 2: 你去哪儿？ Nǐ qù nǎr? Where are you going?
+
+Chinese: 那（那儿） Pinyin: nà (nàr) English: pron. that / there
+Sentence 1: 我不认识那个人。 Wǒ bú rènshi nà gè rén. I don't know that person.
+Sentence 2: 我们的车在那儿。 Wǒmen de chē zài nàr. Our car is there.
+
+Chinese: 呢 Pinyin: ne English: interrogative/statement particle
+Sentence 1: 你们家有几个人呢？ Nǐmen jiā yǒu jǐ gè rén ne? How many people are in your family?
+Sentence 2: 我在睡觉呢。 Wǒ zài shuìjiào ne. I am sleeping.
+
+Chinese: 能 Pinyin: néng English: aux. can; may
+Sentence 1: 我能坐在这儿吗？ Wǒ néng zuò zài zhèr ma? Can I sit here?
+Sentence 2: 我能说汉语。 Wǒ néng shuō Hànyǔ. I can speak Chinese.
+
+
+Chinese: 你 Pinyin: nǐ English: pron. you
+Sentence 1: 你认识这个人吗？ Nǐ rènshi zhège rén ma? Do you know this person?
+Sentence 2: 你好吗？ Nǐ hǎo ma? How are you?
+
+Chinese: 年 Pinyin: nián English: n. year
+Sentence 1: 我在中国住了三年。 Wǒ zài Zhōngguó zhù le sān nián. I have lived in China for three years.
+Sentence 2: 明年我二十岁。 Míngnián wǒ èrshí suì. Next year I will be twenty years old.
+
+Chinese: 女儿 Pinyin: nǚ'ér English: n. daughter
+Sentence 1: 我有两个女儿。 Wǒ yǒu liǎng gè nǚ'ér. I have two daughters.
+Sentence 2: 女儿像妈妈。 Nǚ'ér xiàng māma. The daughter looks like her mother.
+
+Chinese: 朋友 Pinyin: péngyou English: n. friend
+Sentence 1: 他是我的好朋友。 Tā shì wǒ de hǎo péngyou. He is my good friend.
+Sentence 2: 我有很多朋友。 Wǒ yǒu hěn duō péngyou. I have many friends.
+LESSON 6
+
+Chinese: 漂亮 Pinyin: piàoliang English: adj. pretty; beautiful
+Sentence 1: 你的衣服真漂亮。 Nǐ de yīfu zhēn piàoliang. Your clothes are really beautiful.
+Sentence 2: 这些花儿真漂亮。 Zhèxiē huār zhēn piàoliang. These flowers are really beautiful.
+
+Chinese: 苹果 Pinyin: píngguǒ English: n. apple
+Sentence 1: 你想不想吃个苹果？ Nǐ xiǎng bù xiǎng chī gè píngguǒ? Do you want to eat an apple?
+Sentence 2: 苹果很甜。 Píngguǒ hěn tián. Apples are very sweet.
+
+Chinese: 七 Pinyin: qī English: num. seven
+Sentence 1: 一个星期有七天。 Yī gè xīngqī yǒu qī tiān. There are seven days in a week.
+Sentence 2: 七点了。 Qī diǎn le. It's seven o'clock.
+
+Chinese: 钱 Pinyin: qián English: n. money
+Sentence 1: 一个苹果三块钱。 Yī gè píngguǒ sān kuài qián. One apple is three yuan.
+Sentence 2: 我没有钱了。 Wǒ méiyǒu qián le. I have no money left.
+
+Chinese: 前面 Pinyin: qiánmiàn English: n. before; in front
+Sentence 1: 前面那个人是我的同学。 Qiánmiàn nà gè rén shì wǒ de tóngxué. The person in front is my classmate.
+Sentence 2: 请往前走。 Qǐng wǎng qián zǒu. Please go forward.
+
+Chinese: 请 Pinyin: qǐng English: v. please / invite / treat
+Sentence 1: 请坐在椅子上。 Qǐng zuò zài yǐzi shàng. Please sit on the chair.
+Sentence 2: 我去请老师帮忙。 Wǒ qù qǐng lǎoshī bāngmáng. I will go invite the teacher to help.
+
+
+Chinese: 去 Pinyin: qù English: v. go / remove / tendency
+Sentence 1: 我星期三去中国。 Wǒ xīngqīsān qù Zhōngguó. I am going to China on Wednesday.
+Sentence 2: 我去韩国旅游。 Wǒ qù Hánguó lǚyóu. I am going to travel to South Korea.
+
+
+Chinese: 热 Pinyin: rè English: adj. hot / v. heat up
+Sentence 1: 今天很热。 Jīntiān hěn rè. Today is very hot.
+Sentence 2: 我去热一下米饭。 Wǒ qù rè yīxià mǐfàn. I will go heat up the rice.
+
+Chinese: 人 Pinyin: rén English: n. person
+Sentence 1: 商店里有很多人。 Shāngdiàn lǐ yǒu hěn duō rén. There are many people in the store.
+Sentence 2: 你是好人。 Nǐ shì hǎo rén. You are a good person.
+
+Chinese: 认识 Pinyin: rènshi English: v. know (someone)
+Sentence 1: 认识你很高兴。 Rènshi nǐ hěn gāoxìng. Nice to meet you.
+Sentence 2: 你认识多少汉字？ Nǐ rènshi duōshǎo Hànzì? How many Chinese characters do you know?
+
+Chinese: 三 Pinyin: sān English: num. three
+Sentence 1: 我有三本书。 Wǒ yǒu sān běn shū. I have three books.
+Sentence 2: 三个人。 Sān gè rén. Three people.
+
+Chinese: 商店 Pinyin: shāngdiàn English: n. shop
+Sentence 1: 她去商店买东西了。 Tā qù shāngdiàn mǎi dōngxi le. She went to the store to buy things.
+Sentence 2: 商店九点开门。 Shāngdiàn jiǔ diǎn kāimén. The store opens at nine o'clock.
+
+Chinese: 上 Pinyin: shàng English: n. upper / v. go up / attend
+Sentence 1: 水果在桌子上。 Shuǐguǒ zài zhuōzi shàng. The fruit is on the table.
+Sentence 2: 我们八点去上学。 Wǒmen bā diǎn qù shàngxué. We go to school at eight o'clock.
+
+
+Chinese: 上午 Pinyin: shàngwǔ English: n. morning
+Sentence 1: 现在是上午10点。 Xiànzài shì shàngwǔ shí diǎn. It is now ten o'clock in the morning.
+Sentence 2: 我上午开会。 Wǒ shàngwǔ kāihuì. I have a meeting in the morning.
+
+Chinese: 少 Pinyin: shǎo English: adj. few / v. lack
+Sentence 1: 杯子里的水很少。 Bēizi lǐ de shuǐ hěn shǎo. There is very little water in the cup.
+Sentence 2: 我还少本书。 Wǒ hái shǎo běn shū. I am still short one book.
+
+LESSON 7
+
+Chinese: 谁 Pinyin: shéi English: pron. who
+Sentence 1: 那个人是谁？ Nà gè rén shì shéi? Who is that person?
+Sentence 2: 谁来了？ Shéi lái le? Who came?
+
+Chinese: 什么 Pinyin: shénme English: pron. what / whatever
+Sentence 1: 你看见了什么？ Nǐ kànjiàn le shénme? What did you see?
+Sentence 2: 你真棒，什么都会！ Nǐ zhēn bàng, shénme dōu huì! You're really great, you can do everything!
+
+Chinese: 十 Pinyin: shí English: num. ten
+Sentence 1: 现在是十月。 Xiànzài shì shí yuè. It is now October.
+Sentence 2: 十个人。 Shí gè rén. Ten people.
+
+Chinese: 时候 Pinyin: shíhou English: n. time; moment
+Sentence 1: 我回家的时候，他在睡觉。 Wǒ huí jiā de shíhou, tā zài shuìjiào. When I came home, he was sleeping.
+Sentence 2: 什么时候出发？ Shénme shíhou chūfā? What time to depart?
+
+Chinese: 是 Pinyin: shì English: v. be / yes
+Sentence 1: 他不是学生。 Tā bú shì xuésheng. He is not a student.
+Sentence 2: 甲：你是中国人吗？乙：是。 Jiǎ: Nǐ shì Zhōngguó rén ma? Yǐ: Shì. A: Are you Chinese? B: Yes.
+
+Chinese: 书 Pinyin: shū English: n. book
+Sentence 1: 我喜欢读书。 Wǒ xǐhuan dú shū. I like reading books.
+Sentence 2: 这本书很好。 Zhè běn shū hěn hǎo. This book is very good.
+
+Chinese: 水 Pinyin: shuǐ English: n. water
+Sentence 1: 杯子里还有水吗？ Bēizi lǐ hái yǒu shuǐ ma? Is there still water in the cup?
+Sentence 2: 我想喝水。 Wǒ xiǎng hē shuǐ. I want to drink water.
+
+Chinese: 水果 Pinyin: shuǐguǒ English: n. fruit
+Sentence 1: 我想去商店买水果。 Wǒ xiǎng qù shāngdiàn mǎi shuǐguǒ. I want to go to the store to buy fruit.
+Sentence 2: 水果很新鲜。 Shuǐguǒ hěn xīnxiān. The fruit is very fresh.
+
+Chinese: 睡觉 Pinyin: shuìjiào English: v. sleep
+Sentence 1: 儿子在睡觉呢。 Érzi zài shuìjiào ne. Son is sleeping.
+Sentence 2: 我十点睡觉。 Wǒ shí diǎn shuìjiào. I sleep at ten o'clock.
+
+Chinese: 说 Pinyin: shuō English: v. speak; say
+Sentence 1: 你在说什么？ Nǐ zài shuō shénme? What are you saying?
+Sentence 2: 请说汉语。 Qǐng shuō Hànyǔ. Please speak Chinese.
+
+Chinese: 说话 Pinyin: shuōhuà English: v. speak; talk
+Sentence 1: 他们在说话。 Tāmen zài shuōhuà. They are talking.
+Sentence 2: 上课不要说话。 Shàngkè bú yào shuōhuà. Don't talk in class.
+
+Chinese: 四 Pinyin: sì English: num. four
+Sentence 1: 我们四个人去看电影。 Wǒmen sì gè rén qù kàn diànyǐng. The four of us are going to watch a movie.
+Sentence 2: 四个苹果。 Sì gè píngguǒ. Four apples.
+
+Chinese: 岁 Pinyin: suì English: nm. year (age)
+Sentence 1: 李医生今年40岁。 Lǐ yīshēng jīnnián sìshí suì. Doctor Li is 40 years old this year.
+Sentence 2: 我五岁了。 Wǒ wǔ suì le. I am five years old.
+
+Chinese: 他 Pinyin: tā English: pron. he; him
+Sentence 1: 他是我们的老师。 Tā shì wǒmen de lǎoshī. He is our teacher.
+Sentence 2: 我认识他。 Wǒ rènshi tā. I know him.
+
+Chinese: 她 Pinyin: tā English: pron. she; her
+Sentence 1: 我认识她的妈妈。 Wǒ rènshi tā de māma. I know her mother.
+Sentence 2: 她很高兴。 Tā hěn gāoxìng. She is very happy.
+
+LESSON 8
+
+Chinese: 太 Pinyin: tài English: adv. too; very
+Sentence 1: 这个学校太大了。 Zhège xuéxiào tài dà le. This school is too big.
+Sentence 2: 太好了！ Tài hǎo le! Very good!
+
+Chinese: 天气 Pinyin: tiānqì English: n. weather
+Sentence 1: 今天的天气非常好。 Jīntiān de tiānqì fēicháng hǎo. Today's weather is very good.
+Sentence 2: 天气热了。 Tiānqì rè le. The weather has become hot.
+
+Chinese: 听 Pinyin: tīng English: v. hear; listen / obey
+Sentence 1: 你听，谁来了？ Nǐ tīng, shéi lái le? Listen, who is coming?
+Sentence 2: 这件事，我听你的。 Zhè jiàn shì, wǒ tīng nǐ de. I will listen to you on this matter.
+
+Chinese: 同学 Pinyin: tóngxué English: n. classmate
+Sentence 1: 同学们，你们好！ Tóngxuémen, nǐmen hǎo! Hello, classmates!
+Sentence 2: 我和他是同学。 Wǒ hé tā shì tóngxué. He and I are classmates.
+
+Chinese: 喂 Pinyin: wèi English: int. hello (on phone)
+Sentence 1: 喂，李老师在吗？ Wèi, Lǐ lǎoshī zài ma? Hello, is Teacher Li there?
+Sentence 2: 喂，你好。 Wèi, nǐ hǎo. Hello, hi.
+
+Chinese: 我 Pinyin: wǒ English: pron. I; me
+Sentence 1: 我是一个学生。 Wǒ shì yī gè xuésheng. I am a student.
+Sentence 2: 我爱我家。 Wǒ ài wǒ jiā. I love my home.
+
+Chinese: 我们 Pinyin: wǒmen English: pron. we; us
+Sentence 1: 我们都是学生。 Wǒmen dōu shì xuésheng. We are all students.
+Sentence 2: 我们走吧。 Wǒmen zǒu ba. Let's go.
+
+Chinese: 五 Pinyin: wǔ English: num. five
+Sentence 1: 今天星期五。 Jīntiān xīngqīwǔ. Today is Friday.
+Sentence 2: 五本书。 Wǔ běn shū. Five books.
+
+Chinese: 喜欢 Pinyin: xǐhuan English: v. like
+Sentence 1: 我喜欢学汉语。 Wǒ xǐhuan xué Hànyǔ. I like learning Chinese.
+Sentence 2: 你喜欢什么颜色？ Nǐ xǐhuan shénme yánsè? What color do you like?
+
+Chinese: 下 Pinyin: xià English: n. under / v. fall / next / go down / finish
+Sentence 1: 小猫在桌子下面。 Xiǎo māo zài zhuōzi xiàmiàn. The kitten is under the table.
+Sentence 2: 今天下雨了。 Jīntiān xià yǔ le. It rained today.
+
+Chinese: 下午 Pinyin: xiàwǔ English: n. afternoon
+Sentence 1: 我今天下午不去学校了。 Wǒ jīntiān xiàwǔ bú qù xuéxiào le. I am not going to school this afternoon.
+Sentence 2: 下午好。 Xiàwǔ hǎo. Good afternoon.
+
+Chinese: 下雨 Pinyin: xià yǔ English: v. rain
+Sentence 1: 昨天下雨了。 Zuótiān xià yǔ le. It rained yesterday.
+Sentence 2: 今天不下雨。 Jīntiān bú xià yǔ. It's not raining today.
+
+Chinese: 先生 Pinyin: xiānsheng English: n. Mr.; sir
+Sentence 1: 你也认识王先生？ Nǐ yě rènshi Wáng xiānsheng? Do you know Mr. Wang too?
+Sentence 2: 先生，请问几点？ Xiānsheng, qǐngwèn jǐ diǎn? Sir, may I ask what time it is?
+
+Chinese: 现在 Pinyin: xiànzài English: n. now
+Sentence 1: 现在是12点。 Xiànzài shì shí èr diǎn. It is now twelve o'clock.
+Sentence 2: 我现在很忙。 Wǒ xiànzài hěn máng. I am very busy now.
+
+Chinese: 想 Pinyin: xiǎng English: aux. want to / v. think / miss
+Sentence 1: 我想星期六去北京。 Wǒ xiǎng xīngqīliù qù Běijīng. I want to go to Beijing on Saturday.
+Sentence 2: 妈妈，你在想什么呢？ Māma, nǐ zài xiǎng shénme ne? Mom, what are you thinking about?
+
+
+LESSON 9
+
+Chinese: 小 Pinyin: xiǎo English: adj. small / v. become smaller
+Sentence 1: 这个苹果太小了。 Zhège píngguǒ tài xiǎo le. This apple is too small.
+Sentence 2: 雨小了，我们走吧。 Yǔ xiǎo le, wǒmen zǒu ba. The rain has become lighter, let's go.
+
+Chinese: 小姐 Pinyin: xiǎojie English: n. Miss
+Sentence 1: 小姐，你叫什么名字？ Xiǎojie, nǐ jiào shénme míngzi? Miss, what is your name?
+Sentence 2: 小姐，你好。 Xiǎojie, nǐ hǎo. Hello, Miss.
+
+Chinese: 些 Pinyin: xiē English: nm. some / a little
+Sentence 1: 我买了些苹果。 Wǒ mǎi le xiē píngguǒ. I bought some apples.
+Sentence 2: 我的病好些了。 Wǒ de bìng hǎo xiē le. My illness has gotten a little better.
+
+Chinese: 写 Pinyin: xiě English: v. write
+Sentence 1: 你写的字很漂亮。 Nǐ xiě de zì hěn piàoliang. The characters you write are very beautiful.
+Sentence 2: 请写下来。 Qǐng xiě xiàlái. Please write it down.
+
+Chinese: 谢谢 Pinyin: xièxie English: v. thank
+Sentence 1: 甲：谢谢你。乙：不客气。 Jiǎ: Xièxie nǐ. Yǐ: Bú kèqi. A: Thank you. B: You're welcome.
+Sentence 2: 谢谢你的帮助。 Xièxie nǐ de bāngzhù. Thank you for your help.
+
+Chinese: 星期 Pinyin: xīngqī English: n. week
+Sentence 1: 一个星期有七天。 Yī gè xīngqī yǒu qī tiān. There are seven days in a week.
+Sentence 2: 你星期几去？ Nǐ xīngqī jǐ qù? Which day of the week are you going?
+
+Chinese: 学生 Pinyin: xuésheng English: n. student
+Sentence 1: 我们学校里的学生很多。 Wǒmen xuéxiào lǐ de xuésheng hěn duō. There are many students in our school.
+Sentence 2: 他是个好学生。 Tā shì gè hǎo xuésheng. He is a good student.
+
+Chinese: 学习 Pinyin: xuéxí English: v. study
+Sentence 1: 你喜欢学习汉语吗？ Nǐ xǐhuan xuéxí Hànyǔ ma? Do you like studying Chinese?
+Sentence 2: 他学习很努力。 Tā xuéxí hěn nǔlì. He studies very hard.
+
+Chinese: 学校 Pinyin: xuéxiào English: n. school
+Sentence 1: 我们学校很大。 Wǒmen xuéxiào hěn dà. Our school is very big.
+Sentence 2: 学校很远。 Xuéxiào hěn yuǎn. The school is very far.
+
+Chinese: 一 Pinyin: yī English: num. one / between reduplicated verb
+Sentence 1: 这儿一个人都没有。 Zhèr yī gè rén dōu méiyǒu. There is not a single person here.
+Sentence 2: 请让我看一看。 Qǐng ràng wǒ kàn yī kàn. Please let me have a look.
+
+Chinese: 一点儿 Pinyin: yīdiǎnr English: n. a little
+Sentence 1: 我只有一点儿钱。 Wǒ zhǐ yǒu yīdiǎnr qián. I only have a little money.
+Sentence 2: 请慢一点儿。 Qǐng màn yīdiǎnr. Please slow down a little.
+
+Chinese: 衣服 Pinyin: yīfu English: n. clothes
+Sentence 1: 我在商店买了很多衣服。 Wǒ zài shāngdiàn mǎi le hěn duō yīfu. I bought a lot of clothes at the store.
+Sentence 2: 这件衣服很漂亮。 Zhè jiàn yīfu hěn piàoliang. This piece of clothing is very beautiful.
+
+Chinese: 医生 Pinyin: yīshēng English: n. doctor
+Sentence 1: 他是这个医院里的医生。 Tā shì zhège yīyuàn lǐ de yīshēng. He is a doctor in this hospital.
+Sentence 2: 我想当医生。 Wǒ xiǎng dāng yīshēng. I want to become a doctor.
+
+Chinese: 医院 Pinyin: yīyuàn English: n. hospital
+Sentence 1: 这是一个大医院。 Zhè shì yī gè dà yīyuàn. This is a big hospital.
+Sentence 2: 他去医院了。 Tā qù yīyuàn le. He went to the hospital.
+
+Chinese: 椅子 Pinyin: yǐzi English: n. chair
+Sentence 1: 小狗在椅子下面呢。 Xiǎo gǒu zài yǐzi xiàmiàn ne. The little dog is under the chair.
+Sentence 2: 请坐在椅子上。 Qǐng zuò zài yǐzi shàng. Please sit on the chair.
+
+LESSON 10
+
+Chinese: 有 Pinyin: yǒu English: v. have / there be
+Sentence 1: 我有一个女儿。 Wǒ yǒu yī gè nǚ'ér. I have one daughter.
+Sentence 2: 桌子上有本书。 Zhuōzi shàng yǒu běn shū. There is a book on the table.
+
+Chinese: 月 Pinyin: yuè English: n. month
+Sentence 1: 一年有12个月。 Yī nián yǒu shí èr gè yuè. There are twelve months in a year.
+Sentence 2: 二月很短。 Èr yuè hěn duǎn. February is very short.
+
+Chinese: 再见 Pinyin: zàijiàn English: goodbye
+Sentence 1: 妈妈，我去学校了，再见。 Māma, wǒ qù xuéxiào le, zàijiàn. Mom, I'm going to school, goodbye.
+Sentence 2: 明天再见。 Míngtiān zàijiàn. See you tomorrow.
+
+Chinese: 在 Pinyin: zài English: v. be at / adv. in progress
+Sentence 1: 书在桌子上。 Shū zài zhuōzi shàng. The book is on the table.
+Sentence 2: 我在吃饭呢。 Wǒ zài chīfàn ne. I am eating.
+
+Chinese: 怎么 Pinyin: zěnme English: pron. how (inquiry)
+Sentence 1: 你怎么去北京？ Nǐ zěnme qù Běijīng? How are you going to Beijing?
+Sentence 2: 这个字怎么读？ Zhège zì zěnme dú? How do you read this character?
+
+Chinese: 怎么样 Pinyin: zěnme yàng English: how about…?
+Sentence 1: 我们去看电影，怎么样？ Wǒmen qù kàn diànyǐng, zěnme yàng? How about we go watch a movie?
+Sentence 2: 你觉得这个怎么样？ Nǐ juéde zhège zěnme yàng? How do you like this?
+
+Chinese: 这（这儿） Pinyin: zhè (zhèr) English: pron. this / here
+Sentence 1: 这个人是我的同学。 Zhège rén shì wǒ de tóngxué. This person is my classmate.
+Sentence 2: 我能坐在这儿吗？ Wǒ néng zuò zài zhèr ma? Can I sit here?
+
+Chinese: 中国 Pinyin: Zhōngguó English: n. China
+Sentence 1: 我在中国学汉语。 Wǒ zài Zhōngguó xué Hànyǔ. I study Chinese in China.
+Sentence 2: 中国很大。 Zhōngguó hěn dà. China is very big.
+
+Chinese: 中午 Pinyin: zhōngwǔ English: n. noon
+Sentence 1: 我今天中午去火车站。 Wǒ jīntiān zhōngwǔ qù huǒchēzhàn. I am going to the train station at noon today.
+Sentence 2: 中午吃了吗？ Zhōngwǔ chī le ma? Have you eaten lunch?
+
+Chinese: 住 Pinyin: zhù English: v. live; stay
+Sentence 1: 他在北京住了很多年。 Tā zài Běijīng zhù le hěn duō nián. He has lived in Beijing for many years.
+Sentence 2: 你住在哪儿？ Nǐ zhù zài nǎr? Where do you live?
+
+Chinese: 桌子 Pinyin: zhuōzi English: n. desk; table
+Sentence 1: 电脑在桌子上。 Diànnǎo zài zhuōzi shàng. The computer is on the table.
+Sentence 2: 桌子很干净。 Zhuōzi hěn gānjìng. The table is very clean.
+
+Chinese: 字 Pinyin: zì English: n. character
+Sentence 1: 这个字你认识吗？ Zhège zì nǐ rènshi ma? Do you know this character?
+Sentence 2: 你的字很漂亮。 Nǐ de zì hěn piàoliang. Your handwriting is very beautiful.
+
+Chinese: 昨天 Pinyin: zuótiān English: n. yesterday
+Sentence 1: 他昨天没去学校。 Tā zuótiān méi qù xuéxiào. He didn't go to school yesterday.
+Sentence 2: 昨天很冷。 Zuótiān hěn lěng. Yesterday was very cold.
+
+Chinese: 坐 Pinyin: zuò English: v. sit / travel by
+Sentence 1: 他一个下午都坐在电视前。 Tā yī gè xiàwǔ dōu zuò zài diànshì qián. He sat in front of the TV all afternoon.
+Sentence 2: 我坐飞机去中国。 Wǒ zuò fēijī qù Zhōngguó. I am taking a plane to China.
+
+Chinese: 做 Pinyin: zuò English: v. make / do / be (job)
+Sentence 1: 今天妈妈做了很多菜。 Jīntiān māma zuò le hěn duō cài. Today mom made many dishes.
+Sentence 2: 你是做什么工作的？ Nǐ shì zuò shénme gōngzuò de? What work do you do?
+Sentence 3: 我每天做作业。 Wǒ měitiān zuò zuòyè. I do homework every day.
+
+
+HSK 2 - 150 WORDS (10 LESSONS EACH LESSON 15 WORDS 30 SENTENCE EXAMPLE)
+LESSON 1
+Chinese: 吧 Pinyin: ba English: particle (suggestion/speculation)
+Sentence 1: 你是个学生吧？ Nǐ shì gè xuésheng ba? You are a student, right?
+Sentence 2: 请你走吧！ Qǐng nǐ zǒu ba! Please go!
+
+Chinese: 白 Pinyin: bái English: adj. white
+Sentence 1: 我很爱穿那件白衣服。 Wǒ hěn ài chuān nà jiàn bái yīfu. I really love wearing that white clothing.
+Sentence 2: 白色很干净。 Báisè hěn gānjìng. White is very clean.
+
+Chinese: 百 Pinyin: bǎi English: num. one hundred
+Sentence 1: 这个自行车五百多元。 Zhège zìxíngchē wǔ bǎi duō yuán. This bicycle is over five hundred yuan.
+Sentence 2: 一百块钱。 Yī bǎi kuài qián. One hundred yuan.
+
+Chinese: 帮助 Pinyin: bāngzhù English: v. help
+Sentence 1: 请帮助我找一家搬家公司，好吗？ Qǐng bāngzhù wǒ zhǎo yī jiā bānjiā gōngsī, hǎo ma? Please help me find a moving company, okay?
+Sentence 2: 谢谢你帮助我。 Xièxie nǐ bāngzhù wǒ. Thank you for helping me.
+
+Chinese: 报纸 Pinyin: bàozhǐ English: n. newspaper
+Sentence 1: 我每天早上都要读报纸。 Wǒ měitiān zǎoshang dōu yào dú bàozhǐ. I read the newspaper every morning.
+Sentence 2: 报纸上有什么新闻？ Bàozhǐ shàng yǒu shénme xīnwén? What news is in the newspaper?
+
+Chinese: 比 Pinyin: bǐ English: prep. than (comparison)
+Sentence 1: 我的孩子比我高。 Wǒ de háizi bǐ wǒ gāo. My child is taller than me.
+Sentence 2: 今天比昨天热。 Jīntiān bǐ zuótiān rè. Today is hotter than yesterday.
+
+Chinese: 别 Pinyin: bié English: adv. don't
+Sentence 1: 太晚了，别看电视了。 Tài wǎn le, bié kàn diànshì le. It's too late, don't watch TV.
+Sentence 2: 别客气。 Bié kèqi. Don't be polite (You're welcome).
+
+Chinese: 长 Pinyin: cháng English: adj. long
+Sentence 1: 姐姐的腿长，跑得快。 Jiějie de tuǐ cháng, pǎo de kuài. Older sister's legs are long, she runs fast.
+Sentence 2: 她的头发很长。 Tā de tóufa hěn cháng. Her hair is very long.
+
+Chinese: 唱歌 Pinyin: chànggē English: v. sing
+Sentence 1: 我最爱唱歌了，我给你们唱一个。 Wǒ zuì ài chànggē le, wǒ gěi nǐmen chàng yī gè. I love singing the most, I'll sing one for you.
+Sentence 2: 她唱歌很好听。 Tā chànggē hěn hǎotīng. She sings very nicely.
+
+Chinese: 出 Pinyin: chū English: v. exit; go out
+Sentence 1: 我已经走出火车站了。 Wǒ yǐjīng zǒu chū huǒchēzhàn le. I have already walked out of the train station.
+Sentence 2: 请出来。 Qǐng chūlái. Please come out.
+
+Chinese: 穿 Pinyin: chuān English: v. wear; put on
+Sentence 1: 天冷了，多穿些衣服吧。 Tiān lěng le, duō chuān xiē yīfu ba. It's cold, wear more clothes.
+Sentence 2: 你今天穿得很漂亮。 Nǐ jīntiān chuān de hěn piàoliang. You are dressed very beautifully today.
+
+Chinese: 次 Pinyin: cì English: nm./vm. number of times
+Sentence 1: 我去过一次北京。 Wǒ qù guò yī cì Běijīng. I have been to Beijing once.
+Sentence 2: 这次不行。 Zhè cì bù xíng. This time won't work.
+
+Chinese: 从 Pinyin: cóng English: prep. from; since
+Sentence 1: 从我家到公司，开车要20分钟。 Cóng wǒ jiā dào gōngsī, kāichē yào èrshí fēnzhōng. From my home to the company, driving takes twenty minutes.
+Sentence 2: 我从北京来。 Wǒ cóng Běijīng lái. I come from Beijing.
+
+Chinese: 错 Pinyin: cuò English: adj. wrong; incorrect
+Sentence 1: 对不起，我错了。 Duìbuqǐ, wǒ cuò le. Sorry, I was wrong.
+Sentence 2: 这个答案错了。 Zhège dá'àn cuò le. This answer is wrong.
+
+Chinese: 打篮球 Pinyin: dǎ lánqiú English: play basketball
+Sentence 1: 我每天下午都去打篮球。 Wǒ měitiān xiàwǔ dōu qù dǎ lánqiú. I go play basketball every afternoon.
+Sentence 2: 他喜欢打篮球。 Tā xǐhuan dǎ lánqiú. He likes playing basketball.
+LESSON 2
+Chinese: 大家 Pinyin: dàjiā English: pron. everyone
+Sentence 1: 请大家不要等我了。 Qǐng dàjiā bú yào děng wǒ le. Please don't wait for me, everyone.
+Sentence 2: 大家好！ Dàjiā hǎo! Hello everyone!
+
+Chinese: 到 Pinyin: dào English: v. arrive; reach
+Sentence 1: 我早上9点到公司。 Wǒ zǎoshang jiǔ diǎn dào gōngsī. I arrive at the company at nine in the morning.
+Sentence 2: 到北京了吗？ Dào Běijīng le ma? Have you arrived in Beijing?
+
+Chinese: 得 Pinyin: de English: complement marker
+Sentence 1: 你走得太快了。 Nǐ zǒu de tài kuài le. You walk too fast.
+Sentence 2: 他说得很好。 Tā shuō de hěn hǎo. He speaks very well.
+
+Chinese: 等 Pinyin: děng English: v. wait
+Sentence 1: 你还要再等我10分钟。 Nǐ hái yào zài děng wǒ shí fēnzhōng. You still need to wait for me ten more minutes.
+Sentence 2: 请等一下。 Qǐng děng yīxià. Please wait a moment.
+
+Chinese: 弟弟 Pinyin: dìdi English: n. younger brother
+Sentence 1: 在我们家，我最大，下面还有两个弟弟。 Zài wǒmen jiā, wǒ zuì dà, xiàmian hái yǒu liǎng gè dìdi. In our family, I'm the oldest, below me there are two younger brothers.
+Sentence 2: 弟弟很小。 Dìdi hěn xiǎo. Little brother is very young.
+
+Chinese: 第一 Pinyin: dì-yī English: num. first
+Sentence 1: 这是我第一次见到他。 Zhè shì wǒ dì-yī cì jiàn dào tā. This is the first time I have seen him.
+Sentence 2: 他考了第一名。 Tā kǎo le dì-yī míng. He got first place.
+
+Chinese: 懂 Pinyin: dǒng English: v. understand
+Sentence 1: 你的意思我懂了。 Nǐ de yìsi wǒ dǒng le. I understand what you mean.
+Sentence 2: 你懂了吗？ Nǐ dǒng le ma? Do you understand?
+
+Chinese: 对 Pinyin: duì English: adj. right; correct
+Sentence 1: 你是对的，我错了。 Nǐ shì duì de, wǒ cuò le. You are right, I am wrong.
+Sentence 2: 你的作业做对了。 Nǐ de zuòyè zuò duì le. You did your homework correctly.
+
+Chinese: 对 Pinyin: duì English: prep. to; towards
+Sentence 1: 孩子对妈妈说：“妈妈，我爱你。” Háizi duì māma shuō: "Māma, wǒ ài nǐ." The child says to mother: "Mom, I love you."
+Sentence 2: 学习对你们很重要。 Xuéxí duì nǐmen hěn zhòngyào. Studying is very important for you.
+
+Chinese: 房间 Pinyin: fángjiān English: n. room
+Sentence 1: 我们两个人住一个房间。 Wǒmen liǎng gè rén zhù yī gè fángjiān. The two of us live in one room.
+Sentence 2: 房间很干净。 Fángjiān hěn gānjìng. The room is very clean.
+
+Chinese: 非常 Pinyin: fēicháng English: adv. very
+Sentence 1: 奶奶非常喜欢我们送的礼物。 Nǎinai fēicháng xǐhuan wǒmen sòng de lǐwù. Grandma really likes the gift we gave her.
+Sentence 2: 非常感谢。 Fēicháng gǎnxiè. Thank you very much.
+
+Chinese: 服务员 Pinyin: fúwùyuán English: n. attendant; waiter
+Sentence 1: 我在饭馆做服务员。 Wǒ zài fànguǎn zuò fúwùyuán. I work as a waiter in a restaurant.
+Sentence 2: 服务员，点菜。 Fúwùyuán, diǎn cài. Waiter, I'd like to order.
+
+Chinese: 高 Pinyin: gāo English: adj. tall; high
+Sentence 1: 我比爸爸还高。 Wǒ bǐ bàba hái gāo. I am even taller than Dad.
+Sentence 2: 山很高。 Shān hěn gāo. The mountain is very high.
+
+Chinese: 告诉 Pinyin: gàosu English: v. tell
+Sentence 1: 你能告诉我学校怎么走吗？ Nǐ néng gàosu wǒ xuéxiào zěnme zǒu ma? Can you tell me how to get to the school?
+Sentence 2: 妈妈告诉我要好好学习。 Māma gàosu wǒ yào hǎohǎo xuéxí. Mom told me to study hard.
+
+Chinese: 哥哥 Pinyin: gēge English: n. elder brother
+Sentence 1: 我哥哥比我大三岁。 Wǒ gēge bǐ wǒ dà sān suì. My older brother is three years older than me.
+Sentence 2: 哥哥在读书。 Gēge zài dú shū. Older brother is reading.
+
+LESSON 3
+
+Chinese: 给 Pinyin: gěi English: v. give / prep. for
+Sentence 1: 请把这本书给他。 Qǐng bǎ zhè běn shū gěi tā. Please give this book to him.
+Sentence 2: 这是给你买的。 Zhè shì gěi nǐ mǎi de. This was bought for you.
+
+Chinese: 公共汽车 Pinyin: gōnggòng qìchē English: n. bus
+Sentence 1: 坐公共汽车去，要20分钟。 Zuò gōnggòng qìchē qù, yào èrshí fēnzhōng. Taking the bus there takes twenty minutes.
+Sentence 2: 公共汽车来了。 Gōnggòng qìchē lái le. The bus is here.
+
+Chinese: 公司 Pinyin: gōngsī English: n. company
+Sentence 1: 我在一个公司上班。 Wǒ zài yī gè gōngsī shàngbān. I work at a company.
+Sentence 2: 公司很大。 Gōngsī hěn dà. The company is very big.
+
+Chinese: 狗 Pinyin: gǒu English: n. dog
+Sentence 1: 女儿很喜欢小狗。 Nǚ'ér hěn xǐhuan xiǎo gǒu. My daughter really likes little dogs.
+Sentence 2: 狗在叫。 Gǒu zài jiào. The dog is barking.
+
+Chinese: 贵 Pinyin: guì English: adj. expensive
+Sentence 1: 这块手表很贵。 Zhè kuài shǒubiǎo hěn guì. This watch is very expensive.
+Sentence 2: 太贵了，买不起。 Tài guì le, mǎi bù qǐ. Too expensive, can't afford it.
+
+Chinese: 过 Pinyin: guo English: particle (past experience)
+Sentence 1: 我没看过这本书。 Wǒ méi kàn guo zhè běn shū. I have not read this book.
+Sentence 2: 你去过北京吗？ Nǐ qù guo Běijīng ma? Have you been to Beijing?
+
+Chinese: 还 Pinyin: hái English: adv. still / in addition
+Sentence 1: 他还没来呢。 Tā hái méi lái ne. He still hasn't come.
+Sentence 2: 除了不吃肉，我还不吃鸡蛋。 Chúle bù chī ròu, wǒ hái bù chī jīdàn. Besides not eating meat, I also don't eat eggs.
+
+Chinese: 孩子 Pinyin: háizi English: n. child; son/daughter
+Sentence 1: 我有三个孩子。 Wǒ yǒu sān gè háizi. I have three children.
+Sentence 2: 我们这里女孩子比男孩子多。 Wǒmen zhèlǐ nǚháizi bǐ nánháizi duō. Here we have more girls than boys.
+
+Chinese: 好吃 Pinyin: hǎochī English: adj. delicious
+Sentence 1: 您做的米饭真好吃。 Nín zuò de mǐfàn zhēn hǎochī. The rice you made is really delicious.
+Sentence 2: 这个苹果很好吃。 Zhège píngguǒ hěn hǎochī. This apple is very tasty.
+
+Chinese: 黑 Pinyin: hēi English: adj. black
+Sentence 1: 我不喜欢黑颜色的衣服。 Wǒ bù xǐhuan hēi yánsè de yīfu. I don't like black-colored clothes.
+Sentence 2: 黑色很酷。 Hēisè hěn kù. Black is very cool.
+
+Chinese: 红 Pinyin: hóng English: adj. red
+Sentence 1: 我的自行车是红色的。 Wǒ de zìxíngchē shì hóngsè de. My bicycle is red.
+Sentence 2: 红色很好看。 Hóngsè hěn hǎokàn. Red is very nice-looking.
+
+Chinese: 欢迎 Pinyin: huānyíng English: v. welcome
+Sentence 1: 欢迎你们来我们家。 Huānyíng nǐmen lái wǒmen jiā. Welcome to our home.
+Sentence 2: 欢迎光临。 Huānyíng guānglín. Welcome (to a store).
+
+Chinese: 回答 Pinyin: huídá English: v. answer
+Sentence 1: 我能回答这个问题。 Wǒ néng huídá zhège wèntí. I can answer this question.
+Sentence 2: 请回答我。 Qǐng huídá wǒ. Please answer me.
+
+Chinese: 火车站 Pinyin: huǒchēzhàn English: n. railway station
+Sentence 1: 我下午3点去火车站。 Wǒ xiàwǔ sān diǎn qù huǒchēzhàn. I am going to the train station at three in the afternoon.
+Sentence 2: 火车站很远。 Huǒchēzhàn hěn yuǎn. The train station is very far.
+
+Chinese: 机场 Pinyin: jīchǎng English: n. airport
+Sentence 1: 我在机场工作了三年了。 Wǒ zài jīchǎng gōngzuò le sān nián le. I have worked at the airport for three years.
+Sentence 2: 机场很大。 Jīchǎng hěn dà. The airport is very big.
+LESSON 4
+Chinese: 鸡蛋 Pinyin: jīdàn English: n. egg
+Sentence 1: 我每天早上都要吃个鸡蛋。 Wǒ měitiān zǎoshang dōu yào chī gè jīdàn. I eat an egg every morning.
+Sentence 2: 鸡蛋很营养。 Jīdàn hěn yíngyǎng. Eggs are very nutritious.
+
+Chinese: 件 Pinyin: jiàn English: nm. for clothes/things
+Sentence 1: 这件衣服颜色非常好看。 Zhè jiàn yīfu yánsè fēicháng hǎokàn. The color of this clothing is very nice.
+Sentence 2: 三件衣服。 Sān jiàn yīfu. Three pieces of clothing.
+
+Chinese: 教室 Pinyin: jiàoshì English: n. classroom
+Sentence 1: 请大家都到教室去上课。 Qǐng dàjiā dōu dào jiàoshì qù shàngkè. Please everyone go to the classroom for class.
+Sentence 2: 教室很安静。 Jiàoshì hěn ānjìng. The classroom is very quiet.
+
+Chinese: 姐姐 Pinyin: jiějie English: n. elder sister
+Sentence 1: 我有两个姐姐。 Wǒ yǒu liǎng gè jiějie. I have two older sisters.
+Sentence 2: 姐姐很漂亮。 Jiějie hěn piàoliang. Older sister is very beautiful.
+
+Chinese: 介绍 Pinyin: jièshào English: v./n. introduce/introduction
+Sentence 1: 我来介绍一下我的朋友。 Wǒ lái jièshào yīxià wǒ de péngyou. Let me introduce my friend.
+Sentence 2: 我在报纸上看到了这个电影的介绍。 Wǒ zài bàozhǐ shàng kàn dào le zhège diànyǐng de jièshào. I saw the introduction of this movie in the newspaper.
+
+Chinese: 进 Pinyin: jìn English: v. enter
+Sentence 1: 我马上要进机场了。 Wǒ mǎshàng yào jìn jīchǎng le. I am about to enter the airport.
+Sentence 2: 请进。 Qǐng jìn. Please come in.
+
+Chinese: 近 Pinyin: jìn English: adj. close; near
+Sentence 1: 我们家离公司很近。 Wǒmen jiā lí gōngsī hěn jìn. Our home is very close to the company.
+Sentence 2: 学校很近。 Xuéxiào hěn jìn. The school is very near.
+
+Chinese: 就 Pinyin: jiù English: adv. right away / exactly / emphasis
+Sentence 1: 我就知道他会来的。 Wǒ jiù zhīdào tā huì lái de. I just knew he would come.
+Sentence 2: 我一到家就给他打电话。 Wǒ yī dào jiā jiù gěi tā dǎ diànhuà. I will call him as soon as I get home.
+
+Chinese: 觉得 Pinyin: juéde English: v. feel; think
+Sentence 1: 你觉得这本书怎么样？ Nǐ juéde zhè běn shū zěnme yàng? What do you think of this book?
+Sentence 2: 我觉得很好。 Wǒ juéde hěn hǎo. I think it's very good.
+
+Chinese: 咖啡 Pinyin: kāfēi English: n. coffee
+Sentence 1: 您想喝咖啡，还是茶？ Nín xiǎng hē kāfēi, háishì chá? Would you like to drink coffee or tea?
+Sentence 2: 咖啡很苦。 Kāfēi hěn kǔ. Coffee is very bitter.
+
+Chinese: 开始 Pinyin: kāishǐ English: v./n. start/beginning
+Sentence 1: 我们从第十课开始学习。 Wǒmen cóng dì shí kè kāishǐ xuéxí. We start studying from lesson ten.
+Sentence 2: 开始的时候，我觉得学习汉语很难。 Kāishǐ de shíhou, wǒ juéde xuéxí Hànyǔ hěn nán. In the beginning, I thought studying Chinese was very hard.
+
+Chinese: 考试 Pinyin: kǎoshì English: n. exam
+Sentence 1: 为了准备考试，他每天都学习到很晚。 Wèile zhǔnbèi kǎoshì, tā měitiān dōu xuéxí dào hěn wǎn. To prepare for the exam, he studies until very late every day.
+Sentence 2: 考试很难。 Kǎoshì hěn nán. The exam is very hard.
+
+Chinese: 可能 Pinyin: kěnéng English: aux. may; possibly
+Sentence 1: 我可能不能去上班了。 Wǒ kěnéng bù néng qù shàngbān le. I may not be able to go to work.
+Sentence 2: 今天可能会下雨。 Jīntiān kěnéng huì xià yǔ. It may rain today.
+
+Chinese: 可以 Pinyin: kěyǐ English: aux. can / adj. not bad
+Sentence 1: 你可以开我的车去上班。 Nǐ kěyǐ kāi wǒ de chē qù shàngbān. You can take my car to work.
+Sentence 2: 这个菜做得还可以。 Zhège cài zuò de hái kěyǐ. This dish is not bad.
+
+Chinese: 课 Pinyin: kè English: n. lesson/class
+Sentence 1: 今天我们学习第一课。 Jīntiān wǒmen xuéxí dì yī kè. Today we study lesson one.
+Sentence 2: 现在，我们上课。 Xiànzài, wǒmen shàngkè. Now, let's have class.
+LESSON 5
+Chinese: 快 Pinyin: kuài English: adj. fast / adv. be going to
+Sentence 1: 他跑得真快。 Tā pǎo de zhēn kuài. He runs really fast.
+Sentence 2: 7点50了，快上课了。 Qī diǎn wǔshí le, kuài shàngkè le. It's 7:50, class is about to start.
+
+Chinese: 快乐 Pinyin: kuàilè English: adj. happy
+Sentence 1: 祝你生日快乐！ Zhù nǐ shēngrì kuàilè! Happy birthday to you!
+Sentence 2: 每天都要快乐。 Měitiān dōu yào kuàilè. Be happy every day.
+
+Chinese: 累 Pinyin: lèi English: adj. tired
+Sentence 1: 我累了，想休息。 Wǒ lèi le, xiǎng xiūxi. I am tired and want to rest.
+Sentence 2: 今天很累。 Jīntiān hěn lèi. Today is very tiring.
+
+Chinese: 离 Pinyin: lí English: prep. away from
+Sentence 1: 我家离学校很近。 Wǒ jiā lí xuéxiào hěn jìn. My home is very close to the school.
+Sentence 2: 中国离加拿大很远。 Zhōngguó lí Jiānádà hěn yuǎn. China is very far from Canada.
+
+Chinese: 两 Pinyin: liǎng English: num. two
+Sentence 1: 苹果两块钱一斤。 Píngguǒ liǎng kuài qián yī jīn. Apples are two yuan per jin.
+Sentence 2: 两个人。 Liǎng gè rén. Two people.
+
+Chinese: 路 Pinyin: lù English: n. road/bus route
+Sentence 1: 我每天走路去上学。 Wǒ měitiān zǒulù qù shàngxué. I walk to school every day.
+Sentence 2: 我们可以坐10路公共汽车去。 Wǒmen kěyǐ zuò shí lù gōnggòng qìchē qù. We can take bus number ten to go.
+
+Chinese: 旅游 Pinyin: lǚyóu English: v. travel
+Sentence 1: 我们开车去旅游。 Wǒmen kāichē qù lǚyóu. We are driving to travel.
+Sentence 2: 我喜欢旅游。 Wǒ xǐhuan lǚyóu. I like traveling.
+
+Chinese: 卖 Pinyin: mài English: v. sell
+Sentence 1: 这个商店卖的东西比较便宜。 Zhège shāngdiàn mài de dōngxi bǐjiào piányi. The things sold at this store are relatively cheap.
+Sentence 2: 他卖水果。 Tā mài shuǐguǒ. He sells fruit.
+
+Chinese: 慢 Pinyin: màn English: adj. slow
+Sentence 1: 我们走得很慢。 Wǒmen zǒu de hěn màn. We walk very slowly.
+Sentence 2: 请慢一点。 Qǐng màn yī diǎn. Please slow down a bit.
+
+Chinese: 忙 Pinyin: máng English: adj. busy / v. be busy doing
+Sentence 1: 这个星期，我很忙。 Zhège xīngqī, wǒ hěn máng. This week, I am very busy.
+Sentence 2: 你在忙什么呢？ Nǐ zài máng shénme ne? What are you busy with?
+
+Chinese: 猫 Pinyin: māo English: n. cat
+Sentence 1: 你的小猫去哪儿了？ Nǐ de xiǎo māo qù nǎr le? Where did your kitten go?
+Sentence 2: 猫很可爱。 Māo hěn kě'ài. Cats are very cute.
+
+Chinese: 每 Pinyin: měi English: pron. every
+Sentence 1: 你每天都看报纸吗？ Nǐ měitiān dōu kàn bàozhǐ ma? Do you read the newspaper every day?
+Sentence 2: 每人一个。 Měi rén yī gè. One per person.
+
+Chinese: 妹妹 Pinyin: mèimei English: n. younger sister
+Sentence 1: 我有两个妹妹。 Wǒ yǒu liǎng gè mèimei. I have two younger sisters.
+Sentence 2: 妹妹很小。 Mèimei hěn xiǎo. Little sister is very young.
+
+Chinese: 门 Pinyin: mén English: n. door / measure word for subjects
+Sentence 1: 我在门外等你。 Wǒ zài mén wài děng nǐ. I will wait for you outside the door.
+Sentence 2: 今年我有五门课。 Jīnnián wǒ yǒu wǔ mén kè. This year I have five subjects.
+
+Chinese: 男 Pinyin: nán English: n. man; male
+Sentence 1: 我不认识那个男人。 Wǒ bú rènshi nà gè nánrén. I don't know that man.
+Sentence 2: 男朋友。 Nánpéngyou. Boyfriend.
+LESSON 6
+Chinese: 您 Pinyin: nín English: pron. you (respectful)
+Sentence 1: 老师，您好！ Lǎoshī, nín hǎo! Hello, teacher!
+Sentence 2: 您请坐。 Nín qǐng zuò. Please sit, sir/madam.
+
+Chinese: 牛奶 Pinyin: niúnǎi English: n. milk
+Sentence 1: 睡觉前喝杯牛奶吧。 Shuìjiào qián hē bēi niúnǎi ba. Drink a glass of milk before sleeping.
+Sentence 2: 牛奶很好喝。 Niúnǎi hěn hǎohē. Milk is very tasty.
+
+Chinese: 女 Pinyin: nǚ English: n. woman; female
+Sentence 1: 那个女人你认识吗？ Nà gè nǚrén nǐ rènshi ma? Do you know that woman?
+Sentence 2: 女儿。 Nǚ'ér. Daughter.
+
+Chinese: 旁边 Pinyin: pángbiān English: n. side; nearby
+Sentence 1: 爸爸在我旁边。 Bàba zài wǒ pángbiān. Dad is beside me.
+Sentence 2: 学校旁边有个商店。 Xuéxiào pángbiān yǒu gè shāngdiàn. There is a store next to the school.
+
+Chinese: 跑步 Pinyin: pǎobù English: v. run
+Sentence 1: 我每天早上都跑步。 Wǒ měitiān zǎoshang dōu pǎobù. I run every morning.
+Sentence 2: 跑步对身体好。 Pǎobù duì shēntǐ hǎo. Running is good for the body.
+
+Chinese: 便宜 Pinyin: piányi English: adj. cheap
+Sentence 1: 苹果很便宜，我们买点儿吧。 Píngguǒ hěn piányi, wǒmen mǎi diǎnr ba. Apples are very cheap, let's buy some.
+Sentence 2: 这个不便宜。 Zhège bù piányi. This is not cheap.
+
+Chinese: 票 Pinyin: piào English: n. ticket
+Sentence 1: 我要去火车站买车票。 Wǒ yào qù huǒchēzhàn mǎi chēpiào. I am going to the train station to buy a train ticket.
+Sentence 2: 票买好了吗？ Piào mǎi hǎo le ma? Have you bought the tickets?
+
+Chinese: 妻子 Pinyin: qīzi English: n. wife
+Sentence 1: 我妻子上班去了。 Wǒ qīzi shàngbān qù le. My wife went to work.
+Sentence 2: 他妻子很漂亮。 Tā qīzi hěn piàoliang. His wife is very beautiful.
+
+Chinese: 起床 Pinyin: qǐchuáng English: v. get up
+Sentence 1: 我早上七点起床。 Wǒ zǎoshang qī diǎn qǐchuáng. I get up at seven in the morning.
+Sentence 2: 快起床！ Kuài qǐchuáng! Get up quickly!
+
+Chinese: 千 Pinyin: qiān English: num. thousand
+Sentence 1: 这个手机一千元。 Zhège shǒujī yī qiān yuán. This phone is one thousand yuan.
+Sentence 2: 两千块钱。 Liǎng qiān kuài qián. Two thousand yuan.
+
+Chinese: 铅笔 Pinyin: qiānbǐ English: n. pencil
+Sentence 1: 你看见我的铅笔了吗？ Nǐ kànjiàn wǒ de qiānbǐ le ma? Did you see my pencil?
+Sentence 2: 铅笔很短。 Qiānbǐ hěn duǎn. The pencil is very short.
+
+Chinese: 晴 Pinyin: qíng English: adj. fine; clear
+Sentence 1: 今天是晴天。 Jīntiān shì qíngtiān. Today is a sunny day.
+Sentence 2: 天气很晴。 Tiānqì hěn qíng. The weather is very clear.
+
+Chinese: 去年 Pinyin: qùnián English: n. last year
+Sentence 1: 我是去年8月来北京的。 Wǒ shì qùnián bā yuè lái Běijīng de. I came to Beijing in August last year.
+Sentence 2: 去年很忙。 Qùnián hěn máng. Last year was very busy.
+
+Chinese: 让 Pinyin: ràng English: v. let; allow; make
+Sentence 1: 他爸爸不让他来。 Tā bàba bú ràng tā lái. His dad won't let him come.
+Sentence 2: 弟弟让我开心。 Dìdi ràng wǒ kāixīn. Little brother makes me happy.
+
+Chinese: 日 Pinyin: rì English: n. day; date
+Sentence 1: 今天是2012年2月26日。 Jīntiān shì èr líng yī èr nián èr yuè èrshíliù rì. Today is February 26th, 2012.
+Sentence 2: 星期日。 Xīngqīrì. Sunday.
+LESSON 7
+Chinese: 上班 Pinyin: shàngbān English: v. go to work
+Sentence 1: 我七点半去上班。 Wǒ qī diǎn bàn qù shàngbān. I go to work at seven thirty.
+Sentence 2: 今天不上班。 Jīntiān bú shàngbān. I'm not going to work today.
+
+Chinese: 身体 Pinyin: shēntǐ English: n. body; health
+Sentence 1: 今天我的身体不太舒服。 Jīntiān wǒ de shēntǐ bú tài shūfu. My body is not feeling very well today.
+Sentence 2: 身体很重要。 Shēntǐ hěn zhòngyào. Health is very important.
+
+Chinese: 生病 Pinyin: shēngbìng English: v. fall ill
+Sentence 1: 我生病了，不能去上班了。 Wǒ shēngbìng le, bù néng qù shàngbān le. I got sick and can't go to work.
+Sentence 2: 他生病了。 Tā shēngbìng le. He is sick.
+
+Chinese: 生日 Pinyin: shēngrì English: n. birthday
+Sentence 1: 祝你生日快乐！ Zhù nǐ shēngrì kuàilè! Happy birthday to you!
+Sentence 2: 今天是我生日。 Jīntiān shì wǒ shēngrì. Today is my birthday.
+
+Chinese: 时间 Pinyin: shíjiān English: n. time
+Sentence 1: 我没时间去北京。 Wǒ méi shíjiān qù Běijīng. I don't have time to go to Beijing.
+Sentence 2: 时间过得真快。 Shíjiān guò de zhēn kuài. Time passes really fast.
+
+Chinese: 事情 Pinyin: shìqing English: n. matter; affair
+Sentence 1: 你下午有什么事情吗？ Nǐ xiàwǔ yǒu shénme shìqing ma? Do you have any matters this afternoon?
+Sentence 2: 我下午有很重要的事情。 Wǒ xiàwǔ yǒu hěn zhòngyào de shìqing. I have very important matters this afternoon.
+
+Chinese: 手表 Pinyin: shǒubiǎo English: n. watch
+Sentence 1: 这块手表非常漂亮。 Zhè kuài shǒubiǎo fēicháng piàoliang. This watch is very beautiful.
+Sentence 2: 我买了一块手表。 Wǒ mǎi le yī kuài shǒubiǎo. I bought a watch.
+
+Chinese: 手机 Pinyin: shǒujī English: n. mobile phone
+Sentence 1: 你看，我新买了一个手机。 Nǐ kàn, wǒ xīn mǎi le yī gè shǒujī. Look, I bought a new phone.
+Sentence 2: 手机没电了。 Shǒujī méi diàn le. The phone has no battery.
+
+Chinese: 送 Pinyin: sòng English: v. give as gift / see off
+Sentence 1: 我送你一本书。 Wǒ sòng nǐ yī běn shū. I'll give you a book as a gift.
+Sentence 2: 我去送一个朋友。 Wǒ qù sòng yī gè péngyou. I'm going to see off a friend.
+
+Chinese: 虽然……但是…… Pinyin: suīrán…dànshì… English: although…but
+Sentence 1: 虽然下雨了，但是我们还是想去看电影。 Suīrán xià yǔ le, dànshì wǒmen háishì xiǎng qù kàn diànyǐng. Although it's raining, we still want to watch a movie.
+Sentence 2: 虽然很累，但是很高兴。 Suīrán hěn lèi, dànshì hěn gāoxìng. Although very tired, (I am) very happy.
+
+Chinese: 它 Pinyin: tā English: pron. it
+Sentence 1: 我知道小猫在哪儿，它在桌子下面。 Wǒ zhīdào xiǎo māo zài nǎr, tā zài zhuōzi xiàmiàn. I know where the kitten is, it's under the table.
+Sentence 2: 它很可爱。 Tā hěn kě'ài. It is very cute.
+
+Chinese: 踢足球 Pinyin: tī zúqiú English: play soccer
+Sentence 1: 我和同学们在踢足球。 Wǒ hé tóngxuémen zài tī zúqiú. My classmates and I are playing soccer.
+Sentence 2: 他喜欢踢足球。 Tā xǐhuan tī zúqiú. He likes playing soccer.
+
+Chinese: 题 Pinyin: tí English: n. question; problem
+Sentence 1: 这个题我不会做。 Zhège tí wǒ bù huì zuò. I can't solve this problem.
+Sentence 2: 第一题很难。 Dì yī tí hěn nán. The first question is very hard.
+
+Chinese: 跳舞 Pinyin: tiàowǔ English: v. dance
+Sentence 1: 妹妹会唱歌，也会跳舞。 Mèimei huì chànggē, yě huì tiàowǔ. Little sister can sing and also dance.
+Sentence 2: 你跳舞很好看。 Nǐ tiàowǔ hěn hǎokàn. You dance very nicely.
+
+Chinese: 外 Pinyin: wài English: n. outside
+Sentence 1: 外面下雨了。 Wàimian xià yǔ le. It's raining outside.
+Sentence 2: 我在门外。 Wǒ zài mén wài. I am outside the door.
+
+LESSON 8
+
+Chinese: 完 Pinyin: wán English: v. finish; used up
+Sentence 1: 这本书我看完了。 Zhè běn shū wǒ kàn wán le. I have finished reading this book.
+Sentence 2: 吃完饭后，我们去看电影。 Chī wán fàn hòu, wǒmen qù kàn diànyǐng. After finishing eating, we will go watch a movie.
+
+Chinese: 晚上 Pinyin: wǎnshang English: n. evening
+Sentence 1: 今天晚上我不能看电视了。 Jīntiān wǎnshang wǒ bù néng kàn diànshì le. I can't watch TV tonight.
+Sentence 2: 晚上好。 Wǎnshang hǎo. Good evening.
+
+Chinese: 为什么 Pinyin: wèishénme English: why
+Sentence 1: 你为什么不喝点儿水呢？ Nǐ wèishénme bù hē diǎnr shuǐ ne? Why don't you drink some water?
+Sentence 2: 为什么迟到了？ Wèishénme chídào le? Why are you late?
+
+Chinese: 问 Pinyin: wèn English: v. ask
+Sentence 1: 老师，我可以问你一个问题吗？ Lǎoshī, wǒ kěyǐ wèn nǐ yī gè wèntí ma? Teacher, may I ask you a question?
+Sentence 2: 我问问他。 Wǒ wèn wen tā. I'll ask him.
+
+Chinese: 问题 Pinyin: wèntí English: n. question; problem
+Sentence 1: 这个问题太难了！ Zhège wèntí tài nán le! This question is too hard!
+Sentence 2: 你有什么问题？ Nǐ yǒu shénme wèntí? What questions do you have?
+
+Chinese: 西瓜 Pinyin: xīguā English: n. watermelon
+Sentence 1: 请吃块儿西瓜。 Qǐng chī kuàir xīguā. Please have a piece of watermelon.
+Sentence 2: 西瓜很甜。 Xīguā hěn tián. Watermelon is very sweet.
+
+Chinese: 希望 Pinyin: xīwàng English: v./n. hope/wish
+Sentence 1: 我希望你别走了。 Wǒ xīwàng nǐ bié zǒu le. I hope you don't leave.
+Sentence 2: 孩子是爸爸、妈妈的希望。 Háizi shì bàba, māma de xīwàng. Children are the hope of father and mother.
+
+Chinese: 洗 Pinyin: xǐ English: v. wash / develop (photo)
+Sentence 1: 今天我要洗很多衣服。 Jīntiān wǒ yào xǐ hěn duō yīfu. I need to wash a lot of clothes today.
+Sentence 2: 照片要三天才能洗出来。 Zhàopiàn yào sān tiān cái néng xǐ chūlái. The photos need three days to be developed.
+
+Chinese: 小时 Pinyin: xiǎoshí English: n. hour
+Sentence 1: 我看了一小时的书。 Wǒ kàn le yī xiǎoshí de shū. I read for one hour.
+Sentence 2: 两小时。 Liǎng xiǎoshí. Two hours.
+
+Chinese: 笑 Pinyin: xiào English: v. laugh; smile
+Sentence 1: 听到他这么说，我们都笑了。 Tīng dào tā zhème shuō, wǒmen dōu xiào le. Hearing him say that, we all laughed.
+Sentence 2: 你笑起来很好看。 Nǐ xiào qǐlái hěn hǎokàn. You look very nice when you smile.
+
+Chinese: 新 Pinyin: xīn English: adj. new
+Sentence 1: 这是我买的新衣服。 Zhè shì wǒ mǎi de xīn yīfu. This is the new clothes I bought.
+Sentence 2: 新年快乐。 Xīnnián kuàilè. Happy New Year.
+
+Chinese: 姓 Pinyin: xìng English: n. surname / v. be surnamed
+Sentence 1: 中国人的姓在名字的前面。 Zhōngguó rén de xìng zài míngzi de qiánmiàn. Chinese surnames come before the given name.
+Sentence 2: 我姓张。 Wǒ xìng Zhāng. My surname is Zhang.
+
+Chinese: 休息 Pinyin: xiūxi English: v. rest
+Sentence 1: 太累了，让我休息一下。 Tài lèi le, ràng wǒ xiūxi yīxià. Too tired, let me rest a bit.
+Sentence 2: 休息十分钟。 Xiūxi shí fēnzhōng. Rest ten minutes.
+
+Chinese: 雪 Pinyin: xuě English: n. snow
+Sentence 1: 今年冬天下了几次大雪。 Jīnnián dōngtiān xià le jǐ cì dà xuě. There were several big snows this winter.
+Sentence 2: 雪很美。 Xuě hěn měi. Snow is very beautiful.
+
+LESSON 9
+
+Chinese: 颜色 Pinyin: yánsè English: n. color
+Sentence 1: 你喜欢哪种颜色？ Nǐ xǐhuan nǎ zhǒng yánsè? Which color do you like?
+Sentence 2: 红色是我的颜色。 Hóngsè shì wǒ de yánsè. Red is my color.
+
+Chinese: 眼睛 Pinyin: yǎnjing English: n. eye
+Sentence 1: 我的眼睛是黑色的。 Wǒ de yǎnjing shì hēisè de. My eyes are black.
+Sentence 2: 眼睛很大。 Yǎnjing hěn dà. The eyes are very big.
+
+Chinese: 羊肉 Pinyin: yángròu English: n. mutton
+Sentence 1: 有些人不爱吃羊肉。 Yǒuxiē rén bú ài chī yángròu. Some people don't like eating mutton.
+Sentence 2: 羊肉很贵。 Yángròu hěn guì. Mutton is very expensive.
+
+Chinese: 药 Pinyin: yào English: n. medicine
+Sentence 1: 这个药一天吃三次。 Zhège yào yī tiān chī sān cì. Take this medicine three times a day.
+Sentence 2: 你吃药了吗？ Nǐ chī yào le ma? Did you take your medicine?
+
+Chinese: 要 Pinyin: yào English: aux. want to / should / be going to / v. cost
+Sentence 1: 我要去北京。 Wǒ yào qù Běijīng. I want to go to Beijing.
+Sentence 2: 妈妈要我买菜。 Māma yào wǒ mǎi cài. Mom wants me to buy vegetables.
+
+Chinese: 也 Pinyin: yě English: adv. also
+Sentence 1: 你去，我也去。 Nǐ qù, wǒ yě qù. You go, I'll also go.
+Sentence 2: 她学习汉语，我也学习汉语。 Tā xuéxí Hànyǔ, wǒ yě xuéxí Hànyǔ. She studies Chinese, I also study Chinese.
+
+Chinese: 一下 Pinyin: yíxià English: vm. once; in a short while
+Sentence 1: 请等我一下。 Qǐng děng wǒ yīxià. Please wait for me a moment.
+Sentence 2: 你看一下。 Nǐ kàn yīxià. Take a look.
+
+Chinese: 一起 Pinyin: yìqǐ English: adv. together
+Sentence 1: 我和你一起去北京。 Wǒ hé nǐ yìqǐ qù Běijīng. I will go to Beijing together with you.
+Sentence 2: 我们一起吃饭吧。 Wǒmen yìqǐ chīfàn ba. Let's eat together.
+
+Chinese: 已经 Pinyin: yǐjīng English: adv. already
+Sentence 1: 我们已经吃完饭了。 Wǒmen yǐjīng chī wán fàn le. We have already finished eating.
+Sentence 2: 他已经走了。 Tā yǐjīng zǒu le. He has already left.
+
+Chinese: 意思 Pinyin: yìsi English: n. meaning / opinion / fun
+Sentence 1: 这个词是什么意思？ Zhège cí shì shénme yìsi? What does this word mean?
+Sentence 2: 把你的意思告诉我吧。 Bǎ nǐ de yìsi gàosu wǒ ba. Tell me your opinion.
+
+
+Chinese: 因为……所以…… Pinyin: yīnwèi…suǒyǐ… English: because…so
+Sentence 1: 因为下雨了，所以我没去跑步。 Yīnwèi xià yǔ le, suǒyǐ wǒ méi qù pǎobù. Because it was raining, so I didn't go running.
+Sentence 2: 因为我头疼，所以我不去旅游了。 Yīnwèi wǒ tóuténg, suǒyǐ wǒ bú qù lǚyóu le. Because I have a headache, so I'm not going traveling.
+
+Chinese: 阴 Pinyin: yīn English: adj. cloudy
+Sentence 1: 今天是阴天。 Jīntiān shì yīntiān. Today is a cloudy day.
+Sentence 2: 天气很阴。 Tiānqì hěn yīn. The weather is very cloudy.
+
+Chinese: 游泳 Pinyin: yóuyǒng English: v. swim
+Sentence 1: 我会游泳了。 Wǒ huì yóuyǒng le. I can swim now.
+Sentence 2: 我们去游泳吧。 Wǒmen qù yóuyǒng ba. Let's go swimming.
+
+Chinese: 右边 Pinyin: yòubiān English: n. right side
+Sentence 1: 王医生右边那个人是谁？ Wáng yīshēng yòubiān nà gè rén shì shéi? Who is that person to the right of Doctor Wang?
+Sentence 2: 请靠右边走。 Qǐng kào yòubiān zǒu. Please walk on the right side.
+
+Chinese: 鱼 Pinyin: yú English: n. fish
+Sentence 1: 水里有很多鱼。 Shuǐ lǐ yǒu hěn duō yú. There are many fish in the water.
+Sentence 2: 我喜欢吃鱼。 Wǒ xǐhuan chī yú. I like eating fish.
+LESSON 10
+Chinese: 远 Pinyin: yuǎn English: adj. far
+Sentence 1: 我家离公司很远。 Wǒ jiā lí gōngsī hěn yuǎn. My home is very far from the company.
+Sentence 2: 学校很远。 Xuéxiào hěn yuǎn. The school is very far.
+
+Chinese: 运动 Pinyin: yùndòng English: v. take exercise
+Sentence 1: 我们都很喜欢运动。 Wǒmen dōu hěn xǐhuan yùndòng. We all like exercising.
+Sentence 2: 有时间的时候，可以运动一下。 Yǒu shíjiān de shíhou, kěyǐ yùndòng yīxià. When you have time, you can exercise a bit.
+
+Chinese: 再 Pinyin: zài English: adv. again / more
+Sentence 1: 我吃完饭再去商店。 Wǒ chī wán fàn zài qù shāngdiàn. I'll go to the store again after finishing eating.
+Sentence 2: 再高点儿，现在太低了。 Zài gāo diǎnr, xiànzài tài dī le. A bit higher, now it's too low.
+
+Chinese: 早上 Pinyin: zǎoshang English: n. morning
+Sentence 1: 我早上看见过他。 Wǒ zǎoshang kànjiàn guo tā. I saw him in the morning.
+Sentence 2: 早上好。 Zǎoshang hǎo. Good morning.
+
+Chinese: 丈夫 Pinyin: zhàngfu English: n. husband
+Sentence 1: 我丈夫在医院工作。 Wǒ zhàngfu zài yīyuàn gōngzuò. My husband works at a hospital.
+Sentence 2: 她丈夫很高。 Tā zhàngfu hěn gāo. Her husband is very tall.
+
+Chinese: 找 Pinyin: zhǎo English: v. look for
+Sentence 1: 他想找一个工作。 Tā xiǎng zhǎo yī gè gōngzuò. He wants to look for a job.
+Sentence 2: 你找谁？ Nǐ zhǎo shéi? Who are you looking for?
+
+Chinese: 着 Pinyin: zhe English: particle (continuing action)
+Sentence 1: 他笑着说：“你不认识我，但是我认识你。” Tā xiào zhe shuō: "Nǐ bú rènshi wǒ, dànshì wǒ rènshi nǐ." He said smiling: "You don't know me, but I know you."
+Sentence 2: 老师站着上课。 Lǎoshī zhàn zhe shàngkè. The teacher stands while teaching class.
+
+Chinese: 真 Pinyin: zhēn English: adv. really
+Sentence 1: 这个人真高。 Zhège rén zhēn gāo. This person is really tall.
+Sentence 2: 真好！ Zhēn hǎo! Really good!
+
+Chinese: 正在 Pinyin: zhèngzài English: adv. in progress
+Sentence 1: 弟弟正在打篮球。 Dìdi zhèngzài dǎ lánqiú. Little brother is playing basketball.
+Sentence 2: 我正在吃饭。 Wǒ zhèngzài chīfàn. I am eating.
+
+Chinese: 知道 Pinyin: zhīdào English: v. know
+Sentence 1: 我不知道他现在在哪里。 Wǒ bù zhīdào tā xiànzài zài nǎlǐ. I don't know where he is now.
+Sentence 2: 你知道了吗？ Nǐ zhīdào le ma? Do you know now?
+
+Chinese: 准备 Pinyin: zhǔnbèi English: v./n. prepare/preparation
+Sentence 1: 我准备星期日去北京。 Wǒ zhǔnbèi xīngqīrì qù Běijīng. I plan to go to Beijing on Sunday.
+Sentence 2: 我在为考试做准备。 Wǒ zài wèi kǎoshì zuò zhǔnbèi. I am preparing for the exam.
+
+Chinese: 自行车 Pinyin: zìxíngchē English: n. bicycle
+Sentence 1: 这是我新买的自行车。 Zhè shì wǒ xīn mǎi de zìxíngchē. This is my newly bought bicycle.
+Sentence 2: 骑自行车去。 Qí zìxíngchē qù. Go by bicycle.
+
+Chinese: 走 Pinyin: zǒu English: v. walk / leave
+Sentence 1: 我女儿9个月就会走了。 Wǒ nǚ'ér jiǔ gè yuè jiù huì zǒu le. My daughter could walk at nine months old.
+Sentence 2: 我走了，再见！ Wǒ zǒu le, zàijiàn! I'm leaving, goodbye!
+
+Chinese: 最 Pinyin: zuì English: adv. most
+Sentence 1: 她是我最好的朋友。 Tā shì wǒ zuì hǎo de péngyou. She is my best friend.
+Sentence 2: 最漂亮。 Zuì piàoliang. The most beautiful.
+
+Chinese: 左边 Pinyin: zuǒbiān English: n. left side
+Sentence 1: 左边的那个杯子是你的，右边的是我的。 Zuǒbiān de nà gè bēizi shì nǐ de, yòubiān de shì wǒ de. The cup on the left is yours, the one on the right is mine.
+Sentence 2: 靠左边走。 Kào zuǒbiān zǒu. Walk on the left side.
+
+HSK 3 - 300 WORDS (20 LESSONS EACH LESSON 15 WORDS 30 SENTENCE EXAMPLE)
+LESSON 1
+
+Chinese: 阿姨 English: n. aunt
+Sentence 1: 阿姨，附近有地铁站吗？ Auntie, is there a subway station nearby?
+Sentence 2: 阿姨好。 Hello, auntie.
+
+Chinese: 啊 English: int. (surprise, exclamation)
+Sentence 1: 啊，这儿的环境多么好啊！ Ah, the environment here is so good!
+Sentence 2: 你们家住在哪儿啊？ Where does your family live?
+
+Chinese: 矮 English: adj. short (height)
+Sentence 1: 弟弟的个子比我矮。 Little brother's height is shorter than mine.
+Sentence 2: 他很矮。 He is very short.
+
+Chinese: 爱好 English: n. hobby
+Sentence 1: 我最大的爱好就是打篮球。 My biggest hobby is playing basketball.
+Sentence 2: 我的爱好是跳舞。 My hobby is dancing.
+
+Chinese: 安静 English: adj. quiet / v. quiet down
+Sentence 1: 她是一个安静的女孩。 She is a quiet girl.
+Sentence 2: 因为教室里没什么人，所以很安静。 Because there aren't many people in the classroom, it's very quiet.
+
+
+Chinese: 把 English: prep. (object marker) / nm. for handle objects
+Sentence 1: 请把桌子上的铅笔给我。 Please give me the pencil on the table.
+Sentence 2: 房间里有四把椅子。 There are four chairs in the room.
+
+Chinese: 班 English: n. class
+Sentence 1: 我在三年级二班。 I am in class two of third grade.
+Sentence 2: 留学生班。 International student class.
+
+Chinese: 搬 English: v. carry; move
+Sentence 1: 请帮我把这张桌子搬到楼下好吗？ Please help me move this table downstairs, okay?
+Sentence 2: 搬家很累。 Moving house is very tiring.
+
+Chinese: 办法 English: n. way; method
+Sentence 1: 你别急，我们再想想办法。 Don't worry, let's think of a way.
+Sentence 2: 没办法。 There's no way.
+
+Chinese: 办公室 English: n. office
+Sentence 1: 请问，校长办公室怎么走？ Excuse me, how do I get to the principal's office?
+Sentence 2: 办公室很大。 The office is very big.
+
+Chinese: 半 English: num. half
+Sentence 1: 现在是三点半。 It is now half past three.
+Sentence 2: 一半。 One half.
+
+Chinese: 帮忙 English: v. help
+Sentence 1: 因为有你帮忙，这件事情处理得很好。 Because you helped, this matter was handled very well.
+Sentence 2: 请帮我一个忙。 Please do me a favor.
+
+Chinese: 包 English: n. bag
+Sentence 1: 我的包忘在房间里了。 I forgot my bag in the room.
+Sentence 2: 书包很重。 The schoolbag is very heavy.
+
+Chinese: 饱 English: adj. full (not hungry)
+Sentence 1: 我已经吃饱了。 I am already full.
+Sentence 2: 吃得很饱。 Ate until very full.
+
+Chinese: 北方 English: n. north
+Sentence 1: 冬天，北方比南方冷多了。 In winter, the north is much colder than the south.
+Sentence 2: 北方人。 Northerner.
+
+LESSON 2
+
+Chinese: 被 English: prep. (passive voice marker)
+Sentence 1: 词典被王老师拿走了。 The dictionary was taken away by Teacher Wang.
+Sentence 2: 他被打败了。 He was defeated.
+
+Chinese: 鼻子 English: n. nose
+Sentence 1: 姐姐的鼻子很高，很漂亮。 Older sister's nose is very high and very beautiful.
+Sentence 2: 鼻子疼。 Nose hurts.
+
+Chinese: 比较 English: adv. fairly; quite
+Sentence 1: 今天天气比较冷。 Today's weather is fairly cold.
+Sentence 2: 比较好。 Fairly good.
+
+Chinese: 比赛 English: n./v. competition/compete
+Sentence 1: 今天晚上有足球比赛。 There is a soccer competition tonight.
+Sentence 2: 我们比赛跑步吧。 Let's compete in running.
+
+Chinese: 笔记本 English: n. notebook/laptop
+Sentence 1: 老师讲的内容，我都写在笔记本上了。 I write all the content the teacher talks about in my notebook.
+Sentence 2: 你看，这是我新买的笔记本。 Look, this is my newly bought laptop.
+
+Chinese: 必须 English: adv. must
+Sentence 1: 我今天必须去上班。 I must go to work today.
+Sentence 2: 必须完成。 Must complete.
+
+Chinese: 变化 English: n./v. change
+Sentence 1: 十年不见，他好像没什么变化。 Not seen for ten years, he seems to have no change.
+Sentence 2: 城市变化得太快了。 The city changes too fast.
+
+Chinese: 别人 English: pron. other people
+Sentence 1: 别人都走了，为什么你还在这里？ Other people all left, why are you still here?
+Sentence 2: 别管别人。 Don't mind other people.
+
+Chinese: 宾馆 English: n. hotel
+Sentence 1: 这是我们这儿最大的宾馆，可以住300个客人。 This is the biggest hotel here, can accommodate 300 guests.
+Sentence 2: 宾馆很贵。 The hotel is very expensive.
+
+Chinese: 冰箱 English: n. refrigerator
+Sentence 1: 妈妈把刚买的鱼放进了冰箱。 Mom put the freshly bought fish into the refrigerator.
+Sentence 2: 冰箱里有牛奶。 There is milk in the refrigerator.
+
+Chinese: 不但……而且…… English: not only…but also
+Sentence 1: 妹妹不但喜欢唱歌，而且爱跳舞。 Little sister not only likes singing, but also loves dancing.
+Sentence 2: 他不但聪明，而且努力。 He is not only smart, but also hardworking.
+
+Chinese: 才 English: adv. not until / only
+Sentence 1: 他30岁才读完大学。 He didn't finish university until age thirty.
+Sentence 2: 只有他才能做好。 Only he can do it well.
+
+Chinese: 菜单 English: n. menu
+Sentence 1: 服务员，请帮我拿一下菜单。 Waiter, please help me get the menu.
+Sentence 2: 看一下菜单。 Take a look at the menu.
+
+Chinese: 参加 English: v. join; take part in
+Sentence 1: 这次会议有两百多人参加。 Over two hundred people took part in this meeting.
+Sentence 2: 你想参加吗？ Do you want to join?
+
+Chinese: 草 English: n. grass
+Sentence 1: 春天来了，小草绿了。 Spring has come, the little grass has turned green.
+Sentence 2: 草地上有花。 There are flowers on the grass.
+
+LESSON 3
+
+Chinese: 层 English: nm. layer; floor
+Sentence 1: 我住在三层，306。 I live on the third floor, 306.
+Sentence 2: 两层楼。 Two floors.
+
+Chinese: 差 English: adj. bad / v. fall short of
+Sentence 1: 我这次考试考得很差。 I did very poorly on this exam.
+Sentence 2: 现在是差5分12点。 It's now five minutes to twelve.
+
+Chinese: 长 English: adj. long
+Sentence 1: 姐姐的头发又黑又长。 Older sister's hair is both black and long.
+Sentence 2: 长城很长。 The Great Wall is very long.
+
+Chinese: 超市 English: n. supermarket
+Sentence 1: 这家超市里的东西比较便宜。 Things in this supermarket are relatively cheap.
+Sentence 2: 去超市买东西。 Go to the supermarket to buy things.
+
+Chinese: 衬衫 English: n. shirt
+Sentence 1: 今天我穿这件衬衫。 I am wearing this shirt today.
+Sentence 2: 白衬衫很好看。 The white shirt is very nice-looking.
+
+Chinese: 成绩 English: n. score; grade
+Sentence 1: 我们可以在网上查到考试成绩。 We can check exam scores online.
+Sentence 2: 成绩很好。 The grades are very good.
+
+Chinese: 城市 English: n. city
+Sentence 1: 我已经喜欢上了这个城市。 I have already come to like this city.
+Sentence 2: 城市很大。 The city is very big.
+
+Chinese: 迟到 English: v. be late
+Sentence 1: 对不起，我今天又迟到了。 Sorry, I am late again today.
+Sentence 2: 不要迟到。 Don't be late.
+
+Chinese: 出现 English: v. appear; happen
+Sentence 1: 我们等了他一个小时，他也没有出现。 We waited for him for an hour, and he still didn't appear.
+Sentence 2: 我们工作中出现了不少问题。 Quite a few problems appeared in our work.
+
+Chinese: 除了 English: prep. except; besides
+Sentence 1: 除了小王，其他人都来了。 Except for Xiao Wang, everyone else came.
+Sentence 2: 除了中国，我还去过英国。 Besides China, I have also been to England.
+
+Chinese: 船 English: n. boat; ship
+Sentence 1: 你可以坐船去上海。 You can take a boat to Shanghai.
+Sentence 2: 船很大。 The boat is very big.
+
+Chinese: 春 English: n. spring
+Sentence 1: 春天是一年的开始。 Spring is the start of the year.
+Sentence 2: 春天很暖和。 Spring is very warm.
+
+Chinese: 词典 English: n. dictionary
+Sentence 1: 这本词典对我的学习很有帮助。 This dictionary is very helpful for my studies.
+Sentence 2: 查词典。 Look up in the dictionary.
+
+Chinese: 聪明 English: adj. bright; clever
+Sentence 1: 弟弟不但很聪明，而且很爱学习。 Little brother is not only very clever, but also loves studying.
+Sentence 2: 真聪明！ Really clever!
+
+Chinese: 打扫 English: v. clean
+Sentence 1: 我准备周末把房间打扫一下。 I plan to clean the room on the weekend.
+Sentence 2: 打扫卫生。 Clean up.
+
+LESSON 4
+
+Chinese: 打算 English: v./n. plan
+Sentence 1: 我打算下个星期去旅游。 I plan to travel next week.
+Sentence 2: 我还没有结婚的打算。 I don't have plans to get married yet.
+
+Chinese: 带 English: v. carry; take; bring
+Sentence 1: 我今天忘记带钱包了。 I forgot to bring my wallet today.
+Sentence 2: 带伞了吗？ Did you bring an umbrella?
+
+Chinese: 担心 English: v. worry
+Sentence 1: 爷爷住院了，我很担心。 Grandpa is in the hospital, I am very worried.
+Sentence 2: 别担心。 Don't worry.
+
+Chinese: 蛋糕 English: n. cake
+Sentence 1: 你饿了吗？先吃块蛋糕吧。 Are you hungry? Have a piece of cake first.
+Sentence 2: 生日蛋糕。 Birthday cake.
+
+Chinese: 当然 English: adv. of course
+Sentence 1: 你生病了，我当然要来看看你。 You are sick, of course I need to come see you.
+Sentence 2: 当然可以。 Of course.
+
+Chinese: 灯 English: n. lamp; light
+Sentence 1: 房间里的灯怎么不亮了？ Why isn't the light in the room on?
+Sentence 2: 开灯。 Turn on the light.
+
+Chinese: 地 English: adv. marker
+Sentence 1: 天慢慢地黑了。 The sky slowly became dark.
+Sentence 2: 高兴地笑了。 Laughed happily.
+
+Chinese: 地方 English: n. place
+Sentence 1: 这个地方我来过三次了。 I have been to this place three times.
+Sentence 2: 好地方。 Good place.
+
+Chinese: 地铁 English: n. subway
+Sentence 1: 我们先坐三站地铁，再走一会儿就到了。 We'll take the subway for three stops first, then walk a bit and we'll arrive.
+Sentence 2: 坐地铁很快。 Taking the subway is very fast.
+
+Chinese: 地图 English: n. map
+Sentence 1: 我的手机上有电子地图。 I have an electronic map on my phone.
+Sentence 2: 看地图。 Look at the map.
+
+Chinese: 电梯 English: n. elevator
+Sentence 1: 我们坐电梯上去吧。 Let's take the elevator up.
+Sentence 2: 电梯坏了。 The elevator is broken.
+
+Chinese: 电子邮件 English: n. email
+Sentence 1: 我晚上再给你发个电子邮件。 I'll send you an email later in the evening.
+Sentence 2: 收到电子邮件了吗？ Did you receive the email?
+
+Chinese: 东 English: n. east
+Sentence 1: 你一直向东走就到了。 Just keep walking east and you'll arrive.
+Sentence 2: 东方。 The East.
+
+Chinese: 冬 English: n. winter
+Sentence 1: 北方的冬天很冷。 The winter in the north is very cold.
+Sentence 2: 冬天穿棉衣。 In winter, wear cotton-padded clothes.
+
+Chinese: 动物园 English: n. zoo
+Sentence 1: 动物园里有一百多种动物。 There are over one hundred types of animals in the zoo.
+Sentence 2: 去动物园看熊猫。 Go to the zoo to see the pandas.
+
+LESSON 5
+
+Chinese: 短 English: adj. short (length)
+Sentence 1: 这件事在短时间内很难做完。 This matter is hard to finish in a short time.
+Sentence 2: 头发很短。 The hair is very short.
+
+Chinese: 段 English: nm. passage; period; section
+Sentence 1: 这段时间我很快乐。 I am very happy during this period of time.
+Sentence 2: 一段路。 A section of road.
+
+Chinese: 锻炼 English: v. exercise
+Sentence 1: 我每天早上都去锻炼身体。 I go exercise every morning.
+Sentence 2: 多锻炼对身体好。 More exercise is good for the body.
+
+Chinese: 多么 English: adv. how (exclamatory)
+Sentence 1: 这里多么漂亮啊！ How beautiful here is!
+Sentence 2: 多么好啊！ How good!
+
+Chinese: 饿 English: adj. hungry
+Sentence 1: 我饿了，想吃点东西。 I am hungry and want to eat something.
+Sentence 2: 你饿了吗？ Are you hungry?
+
+Chinese: 耳朵 English: n. ear
+Sentence 1: 我的耳朵有点疼，要去医院看看。 My ears hurt a bit, I need to go to the hospital to have them checked.
+Sentence 2: 耳朵大。 Big ears.
+
+Chinese: 发 English: v. send
+Sentence 1: 你给我发电子邮件了吗？ Did you send me an email?
+Sentence 2: 发短信。 Send a text message.
+
+Chinese: 发烧 English: v. have a fever
+Sentence 1: 我身体不舒服，发烧了。 My body feels unwell, I have a fever.
+Sentence 2: 你发烧了吗？ Do you have a fever?
+
+Chinese: 发现 English: v. find; discover
+Sentence 1: 我发现他瘦了很多。 I discovered that he has lost a lot of weight.
+Sentence 2: 发现一个问题。 Discover a problem.
+
+Chinese: 方便 English: adj. convenient
+Sentence 1: 我坐地铁去上班很方便。 Taking the subway to work is very convenient for me.
+Sentence 2: 很方便。 Very convenient.
+
+Chinese: 放 English: v. put; place
+Sentence 1: 把书放在桌子上吧。 Put the book on the table.
+Sentence 2: 放这里。 Put it here.
+
+Chinese: 放心 English: v. be assured
+Sentence 1: 请放心，我会把事情办好的。 Please be assured, I will handle the matter well.
+Sentence 2: 你放心。 You can rest assured.
+
+Chinese: 分 English: n. minute / mark / v. split
+Sentence 1: 现在8点30分。 It is now 8:30.
+Sentence 2: 这次考试，我得了85分。 I got 85 points on this exam.
+
+
+Chinese: 附近 English: n. nearby
+Sentence 1: 他家就住在公司附近。 His home is right near the company.
+Sentence 2: 附近有商店吗？ Is there a store nearby?
+
+Chinese: 复习 English: v. review
+Sentence 1: 考试前要好好地复习。 Before the exam, review well.
+Sentence 2: 复习功课。 Review lessons.
+
+LESSON 6
+
+Chinese: 干净 English: adj. clean
+Sentence 1: 我把衣服洗干净了。 I washed the clothes clean.
+Sentence 2: 很干净。 Very clean.
+
+Chinese: 感冒 English: v. catch a cold
+Sentence 1: 我感冒了，要吃点儿药。 I caught a cold, need to take some medicine.
+Sentence 2: 小心感冒。 Be careful not to catch a cold.
+
+Chinese: 感兴趣 English: be interested in
+Sentence 1: 小王对音乐很感兴趣。 Xiao Wang is very interested in music.
+Sentence 2: 我对汉语感兴趣。 I am interested in Chinese.
+
+Chinese: 刚才 English: n. a moment ago
+Sentence 1: 刚才是谁来的电话？ Who called just now?
+Sentence 2: 他刚才还在。 He was still here a moment ago.
+
+Chinese: 个子 English: n. height
+Sentence 1: 哥哥比我个子高。 Older brother is taller than me.
+Sentence 2: 个子很高。 Height is very tall.
+
+Chinese: 根据 English: prep./n. according to/basis
+Sentence 1: 请根据这篇文章谈一谈自己的想法。 Please talk about your own thoughts based on this article.
+Sentence 2: 他这么说，是有根据的。 He says so, and there is a basis for it.
+
+Chinese: 跟 English: v. follow / prep. with
+Sentence 1: 散步的时候，小狗一直跟在我身后。 When walking, the little dog keeps following behind me.
+Sentence 2: 姐姐跟妈妈一起去公园了。 Older sister went to the park with mom.
+
+Chinese: 更 English: adv. more
+Sentence 1: 他比我更喜欢游泳。 He likes swimming more than I do.
+Sentence 2: 更好。 Better.
+
+Chinese: 公斤 English: nm. kilogram
+Sentence 1: 我买了一公斤鸡蛋。 I bought one kilogram of eggs.
+Sentence 2: 五公斤。 Five kilograms.
+
+Chinese: 公园 English: n. park
+Sentence 1: 我家附近有个公园，我常去那里散步。 There is a park near my home, I often go there for walks.
+Sentence 2: 公园很美。 The park is very beautiful.
+
+Chinese: 故事 English: n. story
+Sentence 1: 睡觉前，我都给女儿讲故事。 Before sleeping, I always tell stories to my daughter.
+Sentence 2: 好听的故事。 A nice story to listen to.
+
+Chinese: 刮风 English: v. blow (wind)
+Sentence 1: 今天刮风了，别骑自行车了。 Today is windy, don't ride the bike.
+Sentence 2: 外面刮风。 It's windy outside.
+
+Chinese: 关 English: v. close; turn off
+Sentence 1: 他关上了门。 He closed the door.
+Sentence 2: 我把电视关了。 I turned off the TV.
+
+Chinese: 关系 English: n. relation
+Sentence 1: 这件事和她没有关系。 This matter has no relation to her.
+Sentence 2: 没关系。 It doesn't matter.
+
+Chinese: 关心 English: v./n. care for/concern
+Sentence 1: 爸爸很关心我的学习。 Dad cares a lot about my studies.
+Sentence 2: 谢谢你的关心，我的身体好多了。 Thank you for your concern, my health is much better.
+
+LESSON 7
+
+Chinese: 关于 English: prep. with regard to
+Sentence 1: 关于这个问题，我们还要再想一想。 Regarding this issue, we need to think about it more.
+Sentence 2: 关于这件事，我不知道。 Regarding this matter, I don't know.
+
+Chinese: 国家 English: n. country
+Sentence 1: 我爱旅游，去过几十个国家。 I love traveling, have been to dozens of countries.
+Sentence 2: 我们的国家很大。 Our country is very big.
+
+Chinese: 过 English: v. spend (time); pass
+Sentence 1: 今天我过生日，朋友们都来了。 I'm celebrating my birthday today, and all my friends came.
+Sentence 2: 时间过得真快。 Time passes really fast.
+
+Chinese: 过去 English: n. the past
+Sentence 1: 奶奶经常给我讲过去的事情。 Grandma often tells me about past matters.
+Sentence 2: 过去很穷。 In the past, (we) were very poor.
+
+Chinese: 还是 English: adv. still / had better / or
+Sentence 1: 我还是在北京，没去其他地方。 I am still in Beijing, haven't gone anywhere else.
+Sentence 2: 你还是吃点儿水果吧。 You'd better eat some fruit.
+
+
+Chinese: 害怕 English: v. be afraid
+Sentence 1: 我害怕一个人晚上出门。 I am afraid to go out alone at night.
+Sentence 2: 别害怕。 Don't be afraid.
+
+Chinese: 航班 English: n. flight
+Sentence 1: 各位顾客，欢迎您乘坐我们的航班。 Dear passengers, welcome aboard our flight.
+Sentence 2: 航班晚点了。 The flight is delayed.
+
+Chinese: 黑板 English: n. blackboard
+Sentence 1: 请大家看黑板。 Please everyone look at the blackboard.
+Sentence 2: 黑板上写着字。 Characters are written on the blackboard.
+
+Chinese: 后来 English: adv. later; afterwards
+Sentence 1: 后来我再也没见过他。 Afterwards, I never saw him again.
+Sentence 2: 后来怎么样了？ What happened afterwards?
+
+Chinese: 护照 English: n. passport
+Sentence 1: 你的护照办好了吗？ Is your passport ready?
+Sentence 2: 带护照。 Bring the passport.
+
+Chinese: 花 English: v. spend / n. flower
+Sentence 1: 今天我花了不少钱。 I spent quite a lot of money today.
+Sentence 2: 今天是妈妈的生日，我们送一些花给她吧。 Today is mom's birthday, let's give her some flowers.
+
+Chinese: 画 English: v. draw / n. picture
+Sentence 1: 我从小就喜欢画画儿。 I have liked drawing since I was little.
+Sentence 2: 他的画儿很受大家欢迎。 His pictures are very popular with everyone.
+
+Chinese: 坏 English: adj. bad; broken
+Sentence 1: 面包很新鲜，没有坏。 The bread is very fresh, not bad.
+Sentence 2: 手机坏了。 The phone is broken.
+
+Chinese: 还 English: v. return
+Sentence 1: 我把书还给图书馆了。 I returned the book to the library.
+Sentence 2: 还钱。 Return money.
+
+LESSON 8
+
+Chinese: 环境 English: n. environment
+Sentence 1: 这里的环境很不错，在这里住很舒服。 The environment here is very good, living here is very comfortable.
+Sentence 2: 环境很好。 The environment is very good.
+
+Chinese: 换 English: v. change / exchange
+Sentence 1: 你等我一下，我去换件衣服。 Wait for me a moment, I'll go change clothes.
+Sentence 2: 我去银行换点儿钱。 I'm going to the bank to exchange some money.
+
+Chinese: 黄河 English: n. the Yellow River
+Sentence 1: 黄河是中国的第二大河。 The Yellow River is China's second longest river.
+Sentence 2: 黄河很长。 The Yellow River is very long.
+
+Chinese: 会议 English: n. meeting
+Sentence 1: 我们下午有个会议。 We have a meeting this afternoon.
+Sentence 2: 开会。 Have a meeting.
+
+Chinese: 或者 English: conj. or
+Sentence 1: 你去，或者我去，都可以。 You go, or I go, either is fine.
+Sentence 2: 喝茶或者咖啡？ Drink tea or coffee?
+
+Chinese: 几乎 English: adv. nearly; almost
+Sentence 1: 我感动得几乎要流泪了。 I was so moved that I almost cried.
+Sentence 2: 几乎都到了。 Almost everyone has arrived.
+
+Chinese: 机会 English: n. chance; opportunity
+Sentence 1: 我希望有机会参加比赛。 I hope to have the opportunity to participate in the competition.
+Sentence 2: 好机会。 Good chance.
+
+Chinese: 极 English: adv. extremely
+Sentence 1: 他对音乐极感兴趣。 He is extremely interested in music.
+Sentence 2: 今天的节目好看极了。 Today's show was extremely good.
+
+Chinese: 记得 English: v. remember
+Sentence 1: 我不记得他住在哪儿了。 I don't remember where he lives.
+Sentence 2: 记得带钥匙。 Remember to bring the keys.
+
+Chinese: 季节 English: n. season
+Sentence 1: 一年有四个季节。 There are four seasons in a year.
+Sentence 2: 春天是我最喜欢的季节。 Spring is my favorite season.
+
+Chinese: 检查 English: v. inspect; check
+Sentence 1: 你去医院检查一下身体吧。 Go to the hospital to get a check-up.
+Sentence 2: 检查作业。 Check homework.
+
+Chinese: 简单 English: adj. easy; simple
+Sentence 1: 这些题对他来说很简单。 These questions are very easy for him.
+Sentence 2: 很简单。 Very simple.
+
+Chinese: 见面 English: v. meet
+Sentence 1: 上次和他见面，已经是去年了。 The last time I met him was already last year.
+Sentence 2: 明天见面。 Meet tomorrow.
+
+Chinese: 健康 English: adj. healthy
+Sentence 1: 爸爸的身体特别健康。 Dad's body is especially healthy.
+Sentence 2: 健康很重要。 Health is very important.
+
+Chinese: 讲 English: v. speak; tell
+Sentence 1: 李老师的课讲得很有趣。 Teacher Li's lessons are very interesting.
+Sentence 2: 讲故事。 Tell a story.
+
+LESSON 9
+
+Chinese: 降落 English: v. land; descend
+Sentence 1: 飞机马上就要降落了。 The plane is about to land.
+Sentence 2: 安全降落。 Land safely.
+
+Chinese: 角 English: nm. tenth of one Yuan
+Sentence 1: 桌子上有五角钱。 There is fifty cents on the table.
+Sentence 2: 三角钱。 Thirty cents.
+
+Chinese: 脚 English: n. foot
+Sentence 1: 妹妹脚上穿着漂亮的红皮鞋。 Little sister has beautiful red leather shoes on her feet.
+Sentence 2: 脚疼。 Foot hurts.
+
+Chinese: 教 English: v. teach
+Sentence 1: 李老师教我们数学。 Teacher Li teaches us math.
+Sentence 2: 教汉语。 Teach Chinese.
+
+Chinese: 接 English: v. receive / continue
+Sentence 1: 下午我去机场接你。 This afternoon I'll pick you up at the airport.
+Sentence 2: 他看了看表，躺下接着睡觉。 He looked at his watch, then lay back down and continued sleeping.
+
+Chinese: 街道 English: n. street
+Sentence 1: 这条街道很长，有四千多米。 This street is very long, over four thousand meters.
+Sentence 2: 街道很干净。 The street is very clean.
+
+Chinese: 节目 English: n. show; program
+Sentence 1: 今天我们一共演出12个节目。 Today we will perform twelve shows in total.
+Sentence 2: 电视节目。 TV program.
+
+Chinese: 节日 English: n. holiday; festival
+Sentence 1: 祝大家节日快乐！ Wishing everyone a happy holiday!
+Sentence 2: 春节是重要的节日。 Spring Festival is an important holiday.
+
+Chinese: 结婚 English: v. get married
+Sentence 1: 我们结婚10年了。 We have been married for ten years.
+Sentence 2: 什么时候结婚？ When to get married?
+
+Chinese: 结束 English: v. end; finish
+Sentence 1: 会议马上就要结束了。 The meeting is about to end.
+Sentence 2: 结束了。 It's over.
+
+Chinese: 解决 English: v. solve
+Sentence 1: 这个问题你打算怎么解决？ How do you plan to solve this problem?
+Sentence 2: 解决问题。 Solve the problem.
+
+Chinese: 借 English: v. borrow; lend
+Sentence 1: 我从图书馆借了三本书。 I borrowed three books from the library.
+Sentence 2: 借我十块钱。 Lend me ten yuan.
+
+Chinese: 经常 English: adv. often
+Sentence 1: 我经常在学校遇到他。 I often meet him at school.
+Sentence 2: 经常运动。 Exercise often.
+
+Chinese: 经过 English: v./prep. pass through
+Sentence 1: 上下班的时候，我都要经过这条街道。 When commuting to and from work, I always pass through this street.
+Sentence 2: 经过你这么一说，我终于明白了。 After you said that, I finally understood.
+
+Chinese: 经理 English: n. manager
+Sentence 1: 他是我们公司的经理。 He is the manager of our company.
+Sentence 2: 王经理。 Manager Wang.
+
+LESSON 10
+
+Chinese: 久 English: adj. a long time
+Sentence 1: 这个问题我想了很久才明白。 I thought about this problem for a long time before understanding.
+Sentence 2: 好久不见。 Long time no see.
+
+Chinese: 旧 English: adj. old (not new)
+Sentence 1: 这件衣服穿了两年，已经旧了。 I've worn this clothing for two years, it's already old.
+Sentence 2: 旧书。 Old book.
+
+Chinese: 句子 English: n. sentence
+Sentence 1: 请用这些词语说几个句子。 Please use these words to make a few sentences.
+Sentence 2: 这个句子不对。 This sentence is wrong.
+
+Chinese: 决定 English: v./n. decide/decision
+Sentence 1: 这件事是经理决定的。 This matter was decided by the manager.
+Sentence 2: 他已经做出了决定。 He has already made a decision.
+
+Chinese: 可爱 English: adj. cute; lovable
+Sentence 1: 你的儿子真可爱。 Your son is really cute.
+Sentence 2: 小猫很可爱。 The kitten is very cute.
+
+Chinese: 渴 English: adj. thirsty
+Sentence 1: 我渴了，想喝点儿水。 I am thirsty and want to drink some water.
+Sentence 2: 又渴又饿。 Thirsty and hungry.
+
+Chinese: 刻 English: n. quarter of an hour
+Sentence 1: 现在是三点一刻。 It is now a quarter past three.
+Sentence 2: 差一刻四点。 A quarter to four.
+
+Chinese: 客人 English: n. guest
+Sentence 1: 春节的时候，家里会来很多客人。 During Spring Festival, many guests come to the home.
+Sentence 2: 客人来了。 The guests are here.
+
+Chinese: 空调 English: n. air conditioner
+Sentence 1: 太热了，请把空调打开。 Too hot, please turn on the air conditioner.
+Sentence 2: 空调坏了。 The air conditioner is broken.
+
+Chinese: 口 English: nm. for people/animals
+Sentence 1: 我们家一共三口人。 Our family has three people in total.
+Sentence 2: 一口井。 One well.
+
+Chinese: 哭 English: v. cry
+Sentence 1: 孩子又哭了起来。 The child started crying again.
+Sentence 2: 别哭了。 Stop crying.
+
+Chinese: 裤子 English: n. pants; trousers
+Sentence 1: 这条裤子有点儿短。 These pants are a bit short.
+Sentence 2: 穿裤子。 Wear pants.
+
+Chinese: 筷子 English: n. chopsticks
+Sentence 1: 我来中国1个月了，已经会用筷子了。 I have been in China for one month, I can already use chopsticks.
+Sentence 2: 一双筷子。 One pair of chopsticks.
+
+Chinese: 蓝 English: adj. blue
+Sentence 1: 这条蓝裙子你喜欢吗？ Do you like this blue skirt?
+Sentence 2: 蓝色。 Blue.
+
+Chinese: 老 English: adj. old (aged)
+Sentence 1: 爷爷六十岁了，但是看起来一点儿也不老。 Grandpa is sixty years old, but he doesn't look old at all.
+Sentence 2: 老人。 Old person.
+
+LESSON 11
+
+Chinese: 离开 English: v. leave
+Sentence 1: 下个月我要离开一段时间，你好好照顾自己。 Next month I will leave for a while, take good care of yourself.
+Sentence 2: 离开北京。 Leave Beijing.
+
+Chinese: 礼物 English: n. gift
+Sentence 1: 过生日的时候，我收到了很多礼物。 When I celebrated my birthday, I received many gifts.
+Sentence 2: 送礼物。 Give a gift.
+
+Chinese: 历史 English: n. history
+Sentence 1: 这个房子差不多有300年的历史了。 This house has a history of nearly three hundred years.
+Sentence 2: 学习历史。 Study history.
+
+Chinese: 脸 English: n. face
+Sentence 1: 女儿的脸圆圆的，很可爱。 My daughter's face is round and very cute.
+Sentence 2: 洗脸。 Wash face.
+
+Chinese: 练习 English: v./n. practice/exercise
+Sentence 1: 学过的东西，要多练习才能记住。 Things you've learned need more practice to remember.
+Sentence 2: 同学们，下面我们开始做练习。 Classmates, below we will start doing exercises.
+
+Chinese: 辆 English: nm. for vehicles
+Sentence 1: 这辆车，是我新买的。 This car is newly bought by me.
+Sentence 2: 一辆汽车。 One car.
+
+Chinese: 聊天 English: v. chat
+Sentence 1: 我们经常在网上聊天。 We often chat online.
+Sentence 2: 聊天很有趣。 Chatting is very interesting.
+
+Chinese: 了解 English: v. understand; know
+Sentence 1: 我对她了解得不多。 I don't know much about her.
+Sentence 2: 互相了解。 Understand each other.
+
+Chinese: 邻居 English: n. neighbor
+Sentence 1: 我跟邻居们的关系非常好。 My relationship with the neighbors is very good.
+Sentence 2: 邻居很友好。 The neighbor is very friendly.
+
+Chinese: 留学 English: v. study abroad
+Sentence 1: 我哥哥在中国留学。 My older brother is studying abroad in China.
+Sentence 2: 去美国留学。 Go to the US to study.
+
+Chinese: 楼 English: n. building
+Sentence 1: 我在你家楼下等你。 I'll wait for you downstairs in your building.
+Sentence 2: 上楼。 Go upstairs.
+
+Chinese: 绿 English: adj. green
+Sentence 1: 春天来了，树和草都绿了。 Spring has come, the trees and grass are all green.
+Sentence 2: 绿色。 Green.
+
+Chinese: 马 English: n. horse
+Sentence 1: 我们学会骑马了。 We learned to ride a horse.
+Sentence 2: 马上。 Immediately.
+
+Chinese: 马上 English: adv. immediately
+Sentence 1: 我马上就到学校，你再等我几分钟。 I'll be at school immediately, just wait for me a few more minutes.
+Sentence 2: 马上来。 Coming right away.
+
+Chinese: 满意 English: v. be satisfied
+Sentence 1: 经理对他很满意。 The manager is very satisfied with him.
+Sentence 2: 非常满意。 Very satisfied.
+
+LESSON 12
+
+Chinese: 帽子 English: n. hat; cap
+Sentence 1: 这个帽子太小了，有大一点儿的吗？ This hat is too small, is there a bigger one?
+Sentence 2: 戴帽子。 Wear a hat.
+
+Chinese: 米 English: nm. meter
+Sentence 1: 这张桌子有两米长。 This table is two meters long.
+Sentence 2: 三米。 Three meters.
+
+Chinese: 面包 English: n. bread
+Sentence 1: 面包已经卖完了。 The bread is already sold out.
+Sentence 2: 吃面包。 Eat bread.
+
+Chinese: 面条 English: n. noodle
+Sentence 1: 服务员，我要一碗面条。 Waiter, I want a bowl of noodles.
+Sentence 2: 面条很好吃。 Noodles are very tasty.
+
+Chinese: 明白 English: v./adj. understand/clear
+Sentence 1: 我明白你的意思了。 I understand what you mean.
+Sentence 2: 他说得很明白，我懂了。 He spoke very clearly, I understood.
+
+Chinese: 拿 English: v. hold; take
+Sentence 1: 你手里拿的是什么？ What is that in your hand?
+Sentence 2: 拿过来。 Bring it over.
+
+Chinese: 奶奶 English: n. grandmother
+Sentence 1: 我奶奶住在北京。 My grandmother lives in Beijing.
+Sentence 2: 奶奶好。 Hello, grandma.
+
+Chinese: 南 English: n. south
+Sentence 1: 我家在火车站的南边。 My home is south of the train station.
+Sentence 2: 南方。 The South.
+
+Chinese: 难 English: adj. difficult
+Sentence 1: 这个题很难。 This question is very difficult.
+Sentence 2: 难不难？ Difficult or not?
+
+Chinese: 难过 English: v. feel sad; have a hard time
+Sentence 1: 他要离开了，我很难过。 He is about to leave, I feel very sad.
+Sentence 2: 别难过。 Don't be sad.
+
+Chinese: 年级 English: n. grade; year
+Sentence 1: 我儿子现在上三年级。 My son is now in third grade.
+Sentence 2: 高年级。 Upper grade.
+
+Chinese: 年轻 English: adj. young
+Sentence 1: 妈妈50岁了，看起来还很年轻。 Mom is fifty years old, but she still looks very young.
+Sentence 2: 年轻人。 Young person.
+
+Chinese: 鸟 English: n. bird
+Sentence 1: 树上有很多鸟在唱歌。 There are many birds singing in the tree.
+Sentence 2: 小鸟。 Little bird.
+
+Chinese: 努力 English: adj. hard-working
+Sentence 1: 学生们学习很努力。 The students study very hard.
+Sentence 2: 努力奋斗。 Strive hard.
+
+Chinese: 爬山 English: v. climb mountains
+Sentence 1: 我们决定明天去爬山。 We decided to climb mountains tomorrow.
+Sentence 2: 爬山很累。 Climbing mountains is very tiring.
+
+LESSON 13
+
+Chinese: 盘子 English: n. plate; dish
+Sentence 1: 盘子里有鱼，请吃吧。 There is fish on the plate, please eat.
+Sentence 2: 洗盘子。 Wash the dishes.
+
+Chinese: 胖 English: adj. fat / v. get fat
+Sentence 1: 熊猫很胖，很可爱。 Pandas are very fat and very cute.
+Sentence 2: 这个月我胖了五斤多。 I gained over five jin this month.
+
+Chinese: 皮鞋 English: n. leather shoes
+Sentence 1: 他穿着一双黑色的皮鞋。 He is wearing a pair of black leather shoes.
+Sentence 2: 皮鞋很贵。 Leather shoes are very expensive.
+
+Chinese: 啤酒 English: n. beer
+Sentence 1: 爸爸爱喝啤酒。 Dad loves drinking beer.
+Sentence 2: 来杯啤酒。 Have a glass of beer.
+
+Chinese: 普通话 English: n. Mandarin Chinese
+Sentence 1: 你的普通话说得很好。 Your Mandarin is very good.
+Sentence 2: 学习普通话。 Learn Mandarin.
+
+Chinese: 其实 English: adv. actually; in fact
+Sentence 1: 我其实不太了解他。 Actually, I don't know him very well.
+Sentence 2: 其实很好。 Actually, it's very good.
+
+Chinese: 其他 English: pron. other; else
+Sentence 1: 只有小明在教室里，其他人都回家了。 Only Xiao Ming is in the classroom, everyone else went home.
+Sentence 2: 其他的呢？ What about the others?
+
+Chinese: 奇怪 English: adj. odd; strange
+Sentence 1: 我觉得这个问题很奇怪。 I think this problem is very strange.
+Sentence 2: 真奇怪。 So strange.
+
+Chinese: 骑 English: v. ride
+Sentence 1: 今天我骑自行车去学校。 Today I will ride a bike to school.
+Sentence 2: 骑马。 Ride a horse.
+
+Chinese: 起飞 English: v. take off
+Sentence 1: 各位乘客，飞机马上就要起飞了。 Dear passengers, the plane is about to take off.
+Sentence 2: 准时起飞。 Take off on time.
+
+Chinese: 清楚 English: adj./v. clear/understand
+Sentence 1: 他把这件事儿说得很清楚了。 He explained this matter very clearly.
+Sentence 2: 你清楚这句话的意思吗？ Do you understand the meaning of this sentence?
+
+Chinese: 秋 English: n. autumn; fall
+Sentence 1: 秋天最舒服，不冷也不热。 Autumn is the most comfortable, neither cold nor hot.
+Sentence 2: 秋天很美。 Autumn is very beautiful.
+
+Chinese: 裙子 English: n. skirt
+Sentence 1: 姐姐穿着漂亮的裙子。 Older sister is wearing a beautiful skirt.
+Sentence 2: 一条裙子。 One skirt.
+
+Chinese: 然后 English: conj. then; after that
+Sentence 1: 我要先写完作业，然后再看电视。 I need to finish my homework first, then watch TV.
+Sentence 2: 然后呢？ And then?
+
+Chinese: 热情 English: adj. warm; fervent
+Sentence 1: 我们热情地欢迎客人。 We warmly welcome guests.
+Sentence 2: 很热情。 Very warm.
+
+LESSON 14
+
+Chinese: 认为 English: v. think; consider
+Sentence 1: 你认为他会来吗？ Do you think he will come?
+Sentence 2: 我认为不对。 I think it's wrong.
+
+Chinese: 认真 English: adj. conscientious; serious
+Sentence 1: 这个同学学习很认真，很努力。 This classmate studies very seriously and very hard.
+Sentence 2: 认真听课。 Listen to class seriously.
+
+Chinese: 容易 English: adj. easy
+Sentence 1: 这个问题很容易回答。 This question is very easy to answer.
+Sentence 2: 不容易。 Not easy.
+
+Chinese: 如果 English: conj. if
+Sentence 1: 如果你去，我就和你一起去。 If you go, I'll go with you.
+Sentence 2: 如果下雨就不去了。 If it rains, we won't go.
+
+Chinese: 伞 English: n. umbrella
+Sentence 1: 下雨了，别忘了带伞。 It's raining, don't forget to bring an umbrella.
+Sentence 2: 一把伞。 One umbrella.
+
+Chinese: 上网 English: v. go online
+Sentence 1: 我上网去看看新闻。 I'm going online to look at the news.
+Sentence 2: 天天上网。 Go online every day.
+
+Chinese: 生气 English: v. get angry
+Sentence 1: 请别生气，是我错了，对不起。 Please don't be angry, it's my fault, sorry.
+Sentence 2: 别生气了。 Don't be angry.
+
+Chinese: 声音 English: n. sound; voice
+Sentence 1: 你听，这是什么声音？ Listen, what sound is this?
+Sentence 2: 声音很大。 The sound is very loud.
+
+Chinese: 世界 English: n. world
+Sentence 1: 世界上有很多国家。 There are many countries in the world.
+Sentence 2: 世界各地。 All around the world.
+
+Chinese: 试 English: v. try
+Sentence 1: 我想试一下那件红色的。 I want to try that red one.
+Sentence 2: 试一试。 Give it a try.
+
+Chinese: 瘦 English: adj. thin / v. become thin
+Sentence 1: 姐姐现在很瘦，只有45公斤。 Older sister is very thin now, only 45 kilograms.
+Sentence 2: 这个月我瘦了三斤。 I lost three jin this month.
+
+Chinese: 叔叔 English: n. uncle
+Sentence 1: 叔叔，你喜欢这本书吗？ Uncle, do you like this book?
+Sentence 2: 叔叔好。 Hello, uncle.
+
+Chinese: 舒服 English: adj. comfortable; pleased
+Sentence 1: 坐在这里，真舒服。 Sitting here is really comfortable.
+Sentence 2: 身体不舒服。 The body feels unwell.
+
+Chinese: 树 English: n. tree
+Sentence 1: 我们学校里有很多树。 There are many trees in our school.
+Sentence 2: 树很高。 The tree is very high.
+
+Chinese: 数学 English: n. mathematics
+Sentence 1: 我的数学成绩很好。 My math grades are very good.
+Sentence 2: 学数学。 Study math.
+
+LESSON 15
+
+Chinese: 刷牙 English: v. brush teeth
+Sentence 1: 睡觉前要刷牙。 Before sleeping, brush your teeth.
+Sentence 2: 每天刷牙。 Brush teeth every day.
+
+Chinese: 双 English: nm. pair; couple
+Sentence 1: 我今天想去买双鞋。 I want to go buy a pair of shoes today.
+Sentence 2: 一双筷子。 One pair of chopsticks.
+
+Chinese: 水平 English: n. standard; level
+Sentence 1: 他的汉语水平很高。 His Chinese level is very high.
+Sentence 2: 提高水平。 Raise the level.
+
+Chinese: 司机 English: n. driver
+Sentence 1: 这位司机开出租车5年多了。 This driver has driven a taxi for over five years.
+Sentence 2: 出租车司机。 Taxi driver.
+
+Chinese: 太阳 English: n. sun
+Sentence 1: 你看，太阳出来了。 Look, the sun has come out.
+Sentence 2: 太阳很大。 The sun is very big.
+
+Chinese: 特别 English: adv. very; especially; particularly
+Sentence 1: 我特别想跟你一起去。 I especially want to go with you.
+Sentence 2: 特别好。 Very good.
+
+Chinese: 疼 English: adj. ache; hurt
+Sentence 1: 我的腿有点儿疼。 My leg hurts a bit.
+Sentence 2: 头疼。 Headache.
+
+Chinese: 提高 English: v./n. raise/improvement
+Sentence 1: 你数学成绩提高了不少。 Your math scores have improved quite a bit.
+Sentence 2: 人们的生活水平有了很大的提高。 People's living standards have seen a big improvement.
+
+Chinese: 体育 English: n. sports
+Sentence 1: 我很喜欢体育运动。 I really like sports activities.
+Sentence 2: 体育课。 PE class.
+
+Chinese: 甜 English: adj. sweet
+Sentence 1: 这个西瓜真甜啊！ This watermelon is really sweet!
+Sentence 2: 很甜。 Very sweet.
+
+Chinese: 条 English: nm. for long slender things
+Sentence 1: 这条裤子有点儿长。 These pants are a bit long.
+Sentence 2: 一条鱼。 One fish.
+
+Chinese: 同事 English: n. colleague
+Sentence 1: 这是我们的新同事，李华。 This is our new colleague, Li Hua.
+Sentence 2: 同事们。 Colleagues.
+
+Chinese: 同意 English: v. agree
+Sentence 1: 我不太同意他的想法。 I don't quite agree with his thoughts.
+Sentence 2: 同意吗？ Do you agree?
+
+Chinese: 头发 English: n. hair
+Sentence 1: 妈妈的头发又黑又亮。 Mom's hair is both black and shiny.
+Sentence 2: 长头发。 Long hair.
+
+Chinese: 突然 English: adj./adv. sudden/suddenly
+Sentence 1: 他突然站了起来。 He suddenly stood up.
+Sentence 2: 小狗突然跑了出来。 The little dog suddenly ran out.
+
+LESSON 16
+
+Chinese: 图书馆 English: n. library
+Sentence 1: 我从图书馆借来了两本书。 I borrowed two books from the library.
+Sentence 2: 去图书馆。 Go to the library.
+
+Chinese: 腿 English: n. leg
+Sentence 1: 你的腿还疼吗？ Does your leg still hurt?
+Sentence 2: 大腿。 Thigh.
+
+Chinese: 完成 English: v. accomplish; complete
+Sentence 1: 这件事，在周末前必须完成。 This matter must be completed before the weekend.
+Sentence 2: 完成了。 Completed.
+
+Chinese: 碗 English: n. bowl / a bowl of
+Sentence 1: 把米饭放在这个碗里吧。 Put the rice in this bowl.
+Sentence 2: 我吃一碗就可以了。 Eating one bowl is enough for me.
+
+Chinese: 万 English: n. ten thousand
+Sentence 1: 我们学校有一万一名学生。 Our school has 11,000 students.
+Sentence 2: 十万。 One hundred thousand.
+
+Chinese: 忘记 English: v. forget
+Sentence 1: 我忘记今天是他的生日了。 I forgot that today is his birthday.
+Sentence 2: 别忘了。 Don't forget.
+
+Chinese: 为 English: prep. for
+Sentence 1: 这些菜都是为你准备的。 These dishes are all prepared for you.
+Sentence 2: 为人民服务。 Serve the people.
+
+Chinese: 为了 English: prep. for the sake of
+Sentence 1: 为了身体健康，我每天都去运动。 For the sake of health, I exercise every day.
+Sentence 2: 为了你。 For you.
+
+Chinese: 位 English: nm. for people (polite)
+Sentence 1: 他真是一位好老师。 He is truly a good teacher.
+Sentence 2: 一位客人。 One guest.
+
+Chinese: 文化 English: n. culture
+Sentence 1: 我对中国文化很感兴趣。 I am very interested in Chinese culture.
+Sentence 2: 学习文化。 Study culture.
+
+Chinese: 西 English: n. west
+Sentence 1: 火车站在西边，你走错了。 The train station is to the west, you are going the wrong way.
+Sentence 2: 西方。 The West.
+
+Chinese: 习惯 English: v./n. be used to/habit
+Sentence 1: 他已经习惯了一个人生活。 He is already used to living alone.
+Sentence 2: 饭前洗手是好习惯。 Washing hands before meals is a good habit.
+
+Chinese: 洗手间 English: n. toilet; washroom
+Sentence 1: 我去一下洗手间。 I'm going to the washroom for a bit.
+Sentence 2: 洗手间在哪儿？ Where is the washroom?
+
+Chinese: 洗澡 English: v. take a bath/shower
+Sentence 1: 太热了，我先去洗澡。 Too hot, I'll go take a shower first.
+Sentence 2: 每天洗澡。 Take a bath every day.
+
+Chinese: 夏 English: n. summer
+Sentence 1: 今年夏天太热了。 This summer is too hot.
+Sentence 2: 夏天。 Summer.
+
+LESSON 17
+
+Chinese: 先 English: adv. first
+Sentence 1: 你先去，我一个小时后再去。 You go first, I'll go after an hour.
+Sentence 2: 先吃饭。 Eat first.
+
+Chinese: 相信 English: v. believe
+Sentence 1: 我完全相信你说的话。 I completely believe what you said.
+Sentence 2: 不相信。 Don't believe.
+
+Chinese: 香蕉 English: n. banana
+Sentence 1: 你想吃香蕉吗？ Do you want to eat a banana?
+Sentence 2: 香蕉很甜。 Bananas are very sweet.
+
+Chinese: 向 English: prep. to; towards
+Sentence 1: 向东走，就可以看到那个学校了。 Walk towards the east, and you will see that school.
+Sentence 2: 向前看。 Look forward.
+
+Chinese: 像 English: v. look like / prep. such as
+Sentence 1: 他长得像他爸爸。 He looks like his dad.
+Sentence 2: 像校长这样的人，到哪里都很受欢迎。 People like the principal are welcomed everywhere.
+
+Chinese: 小心 English: v./adj. take care/careful
+Sentence 1: 请小心，路上有很多水。 Please be careful, there is a lot of water on the road.
+Sentence 2: 我很小心地抱起了小猫。 I very carefully picked up the little cat.
+
+Chinese: 校长 English: n. principal; president
+Sentence 1: 校长好。 Hello, principal.
+Sentence 2: 校长很严肃。 The principal is very serious.
+
+Chinese: 新闻 English: n. news
+Sentence 1: 我每天晚上七点都看新闻。 I watch the news every evening at seven o'clock.
+Sentence 2: 一条新闻。 One piece of news.
+
+Chinese: 新鲜 English: adj. fresh
+Sentence 1: 这些都是新鲜水果。 These are all fresh fruits.
+Sentence 2: 空气很新鲜。 The air is very fresh.
+
+Chinese: 信用卡 English: n. credit card
+Sentence 1: 我想去银行办一张信用卡。 I want to go to the bank to apply for a credit card.
+Sentence 2: 用信用卡支付。 Pay with a credit card.
+
+Chinese: 行李箱 English: n. trunk; suitcase
+Sentence 1: 请把行李箱打开。 Please open the suitcase.
+Sentence 2: 行李箱很重。 The suitcase is very heavy.
+
+Chinese: 熊猫 English: n. panda
+Sentence 1: 我特别喜欢到动物园去看大熊猫。 I especially like going to the zoo to see the giant pandas.
+Sentence 2: 熊猫很可爱。 Pandas are very cute.
+
+Chinese: 需要 English: v. need
+Sentence 1: 我们需要一些帮助。 We need some help.
+Sentence 2: 需要时间。 Need time.
+
+Chinese: 选择 English: v./n. choose/choice
+Sentence 1: 今年夏天你选择去哪儿旅游？ Where do you choose to travel this summer?
+Sentence 2: 我们需要自己做出选择。 We need to make a choice ourselves.
+
+Chinese: 要求 English: v./n. request/demand
+Sentence 1: 老师要求我们把这些题做完。 The teacher requests that we finish these problems.
+Sentence 2: 这是爸爸对我的要求。 This is Dad's demand of me.
+
+LESSON 18
+
+Chinese: 爷爷 English: n. grandfather
+Sentence 1: 爷爷，请您坐这儿吧。 Grandfather, please sit here.
+Sentence 2: 爷爷好。 Hello, grandfather.
+
+Chinese: 一定 English: adv. surely; certainly
+Sentence 1: 明天的会议，请大家一定要参加。 For tomorrow's meeting, please be sure to attend.
+Sentence 2: 一定来。 Definitely come.
+
+Chinese: 一共 English: adv. altogether
+Sentence 1: 我们班一共有20名学生。 Our class has twenty students altogether.
+Sentence 2: 一共多少钱？ How much money altogether?
+
+Chinese: 一会儿 English: n. a moment; a while
+Sentence 1: 我看一会儿电视就睡觉。 I'll watch TV for a while then sleep.
+Sentence 2: 等一会儿。 Wait a moment.
+
+Chinese: 一样 English: adj. the same
+Sentence 1: 他跟爸爸长得一样。 He looks the same as his dad.
+Sentence 2: 一样大。 The same size.
+
+Chinese: 一般 English: adv. usually; generally
+Sentence 1: 我一般7点钟起床。 I usually get up at seven o'clock.
+Sentence 2: 一般情况。 Generally speaking.
+
+Chinese: 一边 English: adv. while; at the same time
+Sentence 1: 他喜欢一边看书，一边听音乐。 He likes reading a book while listening to music.
+Sentence 2: 一边走一边说。 Talk while walking.
+
+Chinese: 一直 English: adv. all along; always
+Sentence 1: 我一直不明白这句话的意思。 I have always not understood the meaning of this sentence.
+Sentence 2: 一直走。 Keep walking straight.
+
+Chinese: 以前 English: adv. before; previously
+Sentence 1: 我们看电影以前，先去吃个饭吧。 Before we watch a movie, let's go eat a meal first.
+Sentence 2: 以前我很胖。 Before, I was very fat.
+
+Chinese: 音乐 English: n. music
+Sentence 1: 她最喜欢看音乐节目。 She likes watching music shows the most.
+Sentence 2: 听音乐。 Listen to music.
+
+Chinese: 银行 English: n. bank
+Sentence 1: 银行下午5点关门。 The bank closes at five in the afternoon.
+Sentence 2: 去银行取钱。 Go to the bank to withdraw money.
+
+Chinese: 饮料 English: n. beverage; drink
+Sentence 1: 冰箱里还有饮料吗？ Is there still drinks in the refrigerator?
+Sentence 2: 买饮料。 Buy drinks.
+
+Chinese: 应该 English: aux. should; ought to
+Sentence 1: 8点了，应该去上班了。 It's eight o'clock, (I) should go to work.
+Sentence 2: 应该好好学习。 Should study hard.
+
+Chinese: 影响 English: v./n. influence/effect
+Sentence 1: 请不要影响别人休息。 Please don't affect others' rest.
+Sentence 2: 环境对人有很大的影响。 The environment has a great influence on people.
+
+Chinese: 用 English: v. use
+Sentence 1: 我用了两个小时打扫房间。 I used two hours to clean the room.
+Sentence 2: 用电脑。 Use the computer.
+
+LESSON 19
+
+Chinese: 游戏 English: n. game; play
+Sentence 1: 这是孩子们最喜欢玩的游戏。 This is the game children like playing the most.
+Sentence 2: 玩游戏。 Play a game.
+
+Chinese: 有名 English: adj. famous
+Sentence 1: 这本书很有名。 This book is very famous.
+Sentence 2: 有名的人。 Famous person.
+
+Chinese: 又 English: adv. again
+Sentence 1: 我们休息了一会儿，又开始工作了。 We rested for a while, then started working again.
+Sentence 2: 他又来了。 He came again.
+
+Chinese: 遇到 English: v. meet; encounter
+Sentence 1: 刚才我在街上遇到了张先生。 Just now I met Mr. Zhang on the street.
+Sentence 2: 遇到问题。 Encounter problems.
+
+Chinese: 元 English: nm. RMB Yuan
+Sentence 1: 这块手表600元。 This watch is 600 yuan.
+Sentence 2: 十元钱。 Ten yuan.
+
+Chinese: 愿意 English: aux. be willing to
+Sentence 1: 他很愿意帮助别人。 He is very willing to help others.
+Sentence 2: 愿意吗？ Are you willing?
+
+Chinese: 月亮 English: n. moon
+Sentence 1: 今晚的月亮真圆！ Tonight's moon is really round!
+Sentence 2: 月亮很美。 The moon is very beautiful.
+
+Chinese: 越 English: adv. the more...the more...
+Sentence 1: 他越说越高兴。 The more he spoke, the happier he got.
+Sentence 2: 越快越好。 The faster, the better.
+
+Chinese: 站 English: v. stand / nm. bus stop
+Sentence 1: 爸爸站在我的身边。 Dad stands beside me.
+Sentence 2: 去火车站，坐地铁3站就到了。 Going to the train station, three subway stops and you'll arrive.
+
+Chinese: 张 English: nm. for paper, tables, etc. / v. open up
+Sentence 1: 请给我一张纸。 Please give me a piece of paper.
+Sentence 2: 小女孩儿张开嘴，笑了。 The little girl opened her mouth and smiled.
+
+Chinese: 照顾 English: v. look after; take care of
+Sentence 1: 我生病了，妈妈一直照顾我。 I got sick, mom looked after me the whole time.
+Sentence 2: 照顾老人。 Take care of the elderly.
+
+Chinese: 照片 English: n. photo
+Sentence 1: 这是我小时候的照片。 This is a photo from when I was little.
+Sentence 2: 拍照片。 Take a photo.
+
+Chinese: 照相机 English: n. camera
+Sentence 1: 我新买了一个照相机。 I bought a new camera.
+Sentence 2: 用照相机拍照。 Use a camera to take pictures.
+
+Chinese: 只 English: nm. one of a pair; for animals
+Sentence 1: 我有一只鞋找不到了。 I can't find one shoe.
+Sentence 2: 树上有一只小猫。 There is a little cat in the tree.
+
+Chinese: 只 English: adv. only; merely
+Sentence 1: 房间里只有我一个人。 There is only me alone in the room.
+Sentence 2: 只吃水果。 Only eat fruit.
+
+LESSON 20
+
+Chinese: 中间 English: n. center; middle
+Sentence 1: 我站在中间，旁边的是我的同学。 I stand in the middle, next to me is my classmate.
+Sentence 2: 中间位置。 Middle position.
+
+Chinese: 中文 English: n. Chinese language
+Sentence 1: 我会用中文写文章。 I can write articles in Chinese.
+Sentence 2: 中文很难。 Chinese is very difficult.
+
+Chinese: 终于 English: adv. finally; at last
+Sentence 1: 春天终于来了。 Spring has finally arrived.
+Sentence 2: 终于明白了。 Finally understood.
+
+Chinese: 种 English: nm. kind; sort; type
+Sentence 1: 超市里有很多种新鲜水果。 There are many kinds of fresh fruit in the supermarket.
+Sentence 2: 这种颜色很好看。 This color is very nice.
+
+Chinese: 重要 English: adj. important
+Sentence 1: 我忘了一件重要的事情。 I forgot an important matter.
+Sentence 2: 非常重要. Very important.
+
+Chinese: 周末 English: n. weekend
+Sentence 1: 这个周末你有什么安排？ What plans do you have for this weekend?
+Sentence 2: 周末快乐。 Happy weekend.
+
+Chinese: 主要 English: adj. major; main
+Sentence 1: 这本书主要讲了些什么？ What are the main points of this book?
+Sentence 2: 主要原因。 Main reason.
+
+Chinese: 注意 English: v. pay attention to
+Sentence 1: 请注意安全。 Please pay attention to safety.
+Sentence 2: 注意听。 Pay attention and listen.
+
+Chinese: 着急 English: v. worry; feel anxious
+Sentence 1: 遇到事情，不要着急。 When encountering matters, don't worry.
+Sentence 2: 别着急。 Don't worry.
+
+Chinese: 自己 English: pron. oneself
+Sentence 1: 我喜欢自己一个人旅游。 I like traveling alone by myself.
+Sentence 2: 自己做。 Do it yourself.
+
+Chinese: 总是 English: adv. always
+Sentence 1: 他总是很早起床。 He always gets up very early.
+Sentence 2: 总是迟到。 Always late.
+
+Chinese: 嘴 English: n. mouth
+Sentence 1: 妹妹的嘴边有一粒米。 There is a grain of rice by little sister's mouth.
+Sentence 2: 张开嘴。 Open your mouth.
+
+Chinese: 最近 English: adv. recently; lately
+Sentence 1: 我最近很忙。 I have been very busy lately.
+Sentence 2: 最近怎么样？ How are things recently?
+
+Chinese: 作业 English: n. homework
+Sentence 1: 今天的作业你写完了吗？ Did you finish today's homework?
+Sentence 2: 做作业。 Do homework.
+
+Chinese: 作用 English: n. effect; influence
+Sentence 1: 这种感冒药对我没什么作用。 This cold medicine has no effect on me.
+Sentence 2: 有作用。 Has an effect.
