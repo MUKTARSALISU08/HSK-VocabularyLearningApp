@@ -136,9 +136,7 @@ export const authController = {
 
   async getProfile(req: Request, res: Response) {
     try {
-      const userId = req.user?.id as string
-      
-      const { user } = await authService.verifyToken(req.headers.authorization?.split(' ')[1] || '')
+      const user = req.user
       
       res.json({
         success: true,

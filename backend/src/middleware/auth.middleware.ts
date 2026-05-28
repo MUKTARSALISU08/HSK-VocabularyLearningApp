@@ -9,7 +9,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
       return res.status(401).json({ success: false, message: 'Unauthorized' })
     }
 
-    const user = await authService.verifyToken(token)
+    const { user } = await authService.verifyToken(token)
     
     req.user = user
     

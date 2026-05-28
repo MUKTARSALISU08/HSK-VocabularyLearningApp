@@ -1,53 +1,39 @@
-import jwt, { type Secret, type SignOptions } from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
 import { supabase } from '../utils/supabase'
 import type { User, Profile } from '../types'
 
-const JWT_SECRET = (process.env.JWT_SECRET || 'default_secret') as Secret
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
-
 export const authService = {
   async signup(email: string, password: string, username: string) {
-    // Check if user already exists in our custom users table first
-    const { data: existingCustomUser } = await supabase
-      .from('users')
-      .select('id')
+    // Check if user already exists in profiles table
+    const { data: existingProfile } = await supabase
+      .from('profiles')
+      .select('user_id')
       .eq('email', email)
       .maybeSingle()
 
-    if (existingCustomUser) {
+    if (existingProfile) {
       throw new Error('User already exists with this email')
     }
 
     // Create new user in Supabase Auth (trigger will auto-create profile)
-    const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
+    const { data: authUser, error: authError } = await supabase.auth.signUp({
       email,
       password,
-      email_confirm: false,
+      options: {
+        data: {
+          username,
+        },
+      },
     })
 
     if (authError) {
       throw new Error(`Failed to create auth user: ${authError.message}`)
     }
 
-    const userId = authUser.user.id
-
-    // Insert into our custom users table
-    const { data: user, error: userError } = await supabase
-      .from('users')
-      .insert({
-        id: userId,
-        email,
-        password: await bcrypt.hash(password, 12),
-        email_verified: false,
-      })
-      .select()
-      .single()
-
-    if (userError) {
-      await supabase.auth.admin.deleteUser(userId)
-      throw new Error(`Failed to create user: ${userError.message}`)
+    if (!authUser.user) {
+      throw new Error('Failed to create user')
     }
+
+    const userId = authUser.user.id
 
     // Wait for trigger to create profile, then fetch it
     let profile: Profile | null = null
@@ -67,7 +53,6 @@ export const authService = {
 
     if (!profile) {
       await supabase.auth.admin.deleteUser(userId)
-      await supabase.from('users').delete().eq('id', userId)
       throw new Error('Failed to create profile')
     }
 
@@ -83,33 +68,31 @@ export const authService = {
       throw new Error(`Failed to update profile: ${updateError.message}`)
     }
 
-    const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN } as SignOptions)
+    // Get Supabase session
+    const { data: session } = await supabase.auth.getSession()
 
-    return { user, profile: updatedProfile, token }
+    return { 
+      user: { id: userId, email }, 
+      profile: updatedProfile, 
+      token: session?.session?.access_token 
+    }
   },
 
   async login(email: string, password: string) {
+    // Use Supabase Auth for login
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
     if (authError) {
-      throw new Error('Invalid email or password')
+      throw new Error(`Invalid email or password: ${authError.message}`)
     }
 
     const userId = authData.user.id
+    const token = authData.session?.access_token
 
-    const { data: user, error: userError } = await supabase
-      .from('users')
-      .select('id, email')
-      .eq('id', userId)
-      .single()
-
-    if (userError || !user) {
-      throw new Error('User not found in database')
-    }
-
+    // Get profile from Supabase
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
@@ -120,81 +103,67 @@ export const authService = {
       throw new Error('Profile not found')
     }
 
-    const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN } as SignOptions)
-
-    return { user: { ...user, ...profile }, token }
+    return { 
+      user: { id: userId, email: authData.user.email, ...profile }, 
+      token 
+    }
   },
 
   async verifyToken(token: string) {
-    try {
-      const decoded = jwt.verify(token, JWT_SECRET) as { userId: string }
-      
-      const { data: user, error: userError } = await supabase
-        .from('users')
-        .select('id, email, email_verified')
-        .eq('id', decoded.userId)
-        .single()
+    // Verify token using Supabase Auth
+    const { data: user, error } = await supabase.auth.getUser(token)
 
-      if (userError || !user) {
-        throw new Error('User not found')
-      }
-
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('user_id', user.id)
-        .single()
-
-      if (profileError || !profile) {
-        throw new Error('Profile not found')
-      }
-
-      return { user: { ...user, ...profile } }
-    } catch {
+    if (error || !user.user) {
       throw new Error('Invalid token')
     }
+
+    const userId = user.user.id
+
+    // Get profile
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single()
+
+    if (profileError || !profile) {
+      throw new Error('Profile not found')
+    }
+
+    return { user: { id: userId, email: user.user.email, ...profile } }
+  },
+
+  async logout() {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      throw new Error(error.message)
+    }
+    return { message: 'Logout successful' }
   },
 
   async forgotPassword(email: string) {
-    const { data: user, error: userError } = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', email)
-      .single()
-
-    if (userError || !user) {
-      throw new Error('User not found')
-    }
-
-    const resetToken = jwt.sign({ userId: user.id, purpose: 'reset' }, JWT_SECRET, { expiresIn: '1h' })
+    const { error } = await supabase.auth.resetPasswordForEmail(email)
     
-    console.log(`Password reset token for ${email}: ${resetToken}`)
+    if (error) {
+      throw new Error(`Failed to send reset email: ${error.message}`)
+    }
 
     return { message: 'Password reset email sent' }
   },
 
   async resetPassword(token: string, newPassword: string) {
+    // Verify token first
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; purpose: string }
+      const { data: user } = await supabase.auth.getUser(token)
       
-      if (decoded.purpose !== 'reset') {
+      if (!user.user) {
         throw new Error('Invalid token')
       }
 
-      const { error: authError } = await supabase.auth.admin.updateUserById(decoded.userId, {
+      // Update password
+      const { error } = await supabase.auth.updateUser({
         password: newPassword,
       })
-
-      if (authError) {
-        throw new Error(authError.message)
-      }
-
-      const hashedPassword = await bcrypt.hash(newPassword, 12)
-
-      const { error } = await supabase
-        .from('users')
-        .update({ password: hashedPassword })
-        .eq('id', decoded.userId)
 
       if (error) {
         throw new Error(error.message)
@@ -207,39 +176,30 @@ export const authService = {
   },
 
   async changePassword(userId: string, currentPassword: string, newPassword: string) {
-    const { data: user, error: userError } = await supabase
-      .from('users')
-      .select('password')
-      .eq('id', userId)
-      .single()
-
-    if (userError || !user) {
+    // Get user email first
+    const { data: userData } = await supabase.auth.admin.getUserById(userId)
+    
+    if (!userData.user?.email) {
       throw new Error('User not found')
     }
 
-    const isPasswordValid = await bcrypt.compare(currentPassword, user.password)
+    // Verify current password by signing in
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: userData.user.email,
+      password: currentPassword,
+    })
 
-    if (!isPasswordValid) {
+    if (signInError) {
       throw new Error('Current password is incorrect')
     }
 
-    const { error: authError } = await supabase.auth.admin.updateUserById(userId, {
+    // Update password
+    const { error } = await supabase.auth.updateUser({
       password: newPassword,
     })
 
-    if (authError) {
-      throw new Error(authError.message)
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 12)
-
-    const { error: updateError } = await supabase
-      .from('users')
-      .update({ password: hashedPassword })
-      .eq('id', userId)
-
-    if (updateError) {
-      throw new Error(updateError.message)
+    if (error) {
+      throw new Error(error.message)
     }
 
     return { message: 'Password changed successfully' }
@@ -258,5 +218,27 @@ export const authService = {
     }
 
     return { data, error: null }
+  },
+
+  async getProfile(userId: string) {
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single()
+
+    if (error || !profile) {
+      throw new Error('Profile not found')
+    }
+
+    const { data: user } = await supabase.auth.admin.getUserById(userId)
+
+    return {
+      user: {
+        id: userId,
+        email: user.user?.email || '',
+        ...profile,
+      },
+    }
   },
 }
