@@ -2,6 +2,7 @@ import { supabase } from '../utils/supabase'
 import type { LessonProgress, QuizHistory, FavoriteWord, Achievement, StudyStatistic, QuizMistake, RecentlyLearned } from '../types'
 
 export const progressService = {
+  // ===== LESSON PROGRESS =====
   async saveLessonProgress(userId: string, progress: Omit<LessonProgress, 'id' | 'user_id' | 'created_at' | 'updated_at'>) {
     const { data, error } = await supabase
       .from('lesson_progress')
@@ -33,6 +34,7 @@ export const progressService = {
     return data
   },
 
+  // ===== QUIZ HISTORY =====
   async saveQuizHistory(userId: string, history: Omit<QuizHistory, 'id' | 'user_id' | 'completed_at'>) {
     const { data, error } = await supabase
       .from('quiz_history')
@@ -64,6 +66,7 @@ export const progressService = {
     return data
   },
 
+  // ===== FAVORITE WORDS =====
   async addFavoriteWord(userId: string, word: Omit<FavoriteWord, 'id' | 'user_id' | 'created_at'>) {
     const { data, error } = await supabase
       .from('favorite_words')
@@ -107,6 +110,7 @@ export const progressService = {
     return data
   },
 
+  // ===== ACHIEVEMENTS =====
   async addAchievement(userId: string, achievementId: string) {
     const { data: existing } = await supabase
       .from('achievements')
@@ -148,6 +152,7 @@ export const progressService = {
     return data
   },
 
+  // ===== STUDY STATISTICS =====
   async updateStudyStatistics(userId: string, stats: Omit<StudyStatistic, 'id' | 'user_id'>) {
     const today = new Date().toDateString()
     
@@ -207,6 +212,7 @@ export const progressService = {
     return data
   },
 
+  // ===== QUIZ MISTAKES =====
   async addQuizMistake(userId: string, mistake: Omit<QuizMistake, 'id' | 'user_id' | 'created_at'>) {
     const { data, error } = await supabase
       .from('quiz_mistakes')
@@ -237,6 +243,7 @@ export const progressService = {
     return data
   },
 
+  // ===== RECENTLY LEARNED =====
   async addRecentlyLearned(userId: string, word: Omit<RecentlyLearned, 'id' | 'user_id' | 'learned_at'>) {
     const { data: existing } = await supabase
       .from('recently_learned')
@@ -290,6 +297,7 @@ export const progressService = {
     return data
   },
 
+  // ===== PROFILE =====
   async updateProfile(userId: string, updates: Partial<{ xp: number; streak: number; last_study_date: string | null; current_level: string }>) {
     const { data, error } = await supabase
       .from('profiles')
@@ -304,6 +312,7 @@ export const progressService = {
     return data?.[0] || data
   },
 
+  // ===== DAILY XP =====
   async saveDailyXP(userId: string, dailyXP: Record<string, number>) {
     for (const [date, xp] of Object.entries(dailyXP)) {
       const { error } = await supabase
@@ -317,13 +326,14 @@ export const progressService = {
         })
 
       if (error) {
-        throw new Error(`Failed to save daily XP for ${date}: ${error.message}`)
+        console.error(`[PROGRESS] Failed to save daily XP for ${date}:`, error.message)
       }
     }
 
     return { success: true }
   },
 
+  // ===== SYNC PROGRESS (SIMPLIFIED) =====
   async syncProgress(userId: string, progress: {
     xp?: number
     streak?: number
@@ -335,163 +345,142 @@ export const progressService = {
   }) {
     console.log(`[SYNC] Starting progress sync for user: ${userId}`)
     console.log(`[SYNC] Progress data:`, JSON.stringify(progress))
-    
-    const promises: Promise<any>[] = []
-
-    if (progress.xp !== undefined) {
-      console.log(`[SYNC] Updating XP: ${progress.xp}`)
-      promises.push(this.updateProfile(userId, { xp: progress.xp }).catch(e => {
-        console.error(`[SYNC] Failed to update XP:`, e.message)
-        throw e
-      }))
-    }
-
-    if (progress.streak !== undefined) {
-      console.log(`[SYNC] Updating streak: ${progress.streak}`)
-      promises.push(this.updateProfile(userId, { streak: progress.streak }).catch(e => {
-        console.error(`[SYNC] Failed to update streak:`, e.message)
-        throw e
-      }))
-    }
-
-    if (progress.lastStudyDate !== undefined) {
-      console.log(`[SYNC] Updating last study date: ${progress.lastStudyDate}`)
-      promises.push(this.updateProfile(userId, { last_study_date: progress.lastStudyDate }).catch(e => {
-        console.error(`[SYNC] Failed to update last study date:`, e.message)
-        throw e
-      }))
-    }
-
-    if (progress.completedLessons && progress.completedLessons.length > 0) {
-      console.log(`[SYNC] Processing ${progress.completedLessons.length} completed lessons`)
-      // Create lesson progress entries for completed lessons
-      progress.completedLessons.forEach(lessonId => {
-        const lessonProgressData = {
-          lesson_id: lessonId,
-          words_learned: 10, // Default value
-          total_words: 10, // Default value
-          is_completed: true,
-          quiz_score: null,
-          last_studied: new Date().toISOString(),
-        }
-        promises.push(this.saveLessonProgress(userId, lessonProgressData).catch(e => {
-          console.error(`[SYNC] Failed to save lesson progress for ${lessonId}:`, e.message)
-          throw e
-        }))
-      })
-    }
-
-    if (progress.lessonProgress) {
-      console.log(`[SYNC] Processing ${Object.keys(progress.lessonProgress).length} lesson progress entries`)
-      Object.values(progress.lessonProgress).forEach(p => {
-        const lessonProgressData = {
-          lesson_id: p.lessonId || p.lesson_id,
-          words_learned: p.wordsLearned || p.words_learned || 0,
-          total_words: p.totalWords || p.total_words || 0,
-          is_completed: p.isCompleted || p.is_completed || false,
-          quiz_score: p.quizScore || p.quiz_score || null,
-          last_studied: p.lastStudied || p.last_studied || null,
-        }
-        if (lessonProgressData.lesson_id) {
-          promises.push(this.saveLessonProgress(userId, lessonProgressData).catch(e => {
-            console.error(`[SYNC] Failed to save lesson progress for ${lessonProgressData.lesson_id}:`, e.message)
-            throw e
-          }))
-        }
-      })
-    }
-
-    if (progress.achievements && progress.achievements.length > 0) {
-      console.log(`[SYNC] Processing ${progress.achievements.length} achievements`)
-      progress.achievements.forEach(a => {
-        promises.push(this.addAchievement(userId, a).catch(e => {
-          console.error(`[SYNC] Failed to add achievement ${a}:`, e.message)
-          throw e
-        }))
-      })
-    }
-
-    if (progress.dailyXP && Object.keys(progress.dailyXP).length > 0) {
-      console.log(`[SYNC] Processing ${Object.keys(progress.dailyXP).length} daily XP entries`)
-      promises.push(this.saveDailyXP(userId, progress.dailyXP).catch(e => {
-        console.error(`[SYNC] Failed to save daily XP:`, e.message)
-        throw e
-      }))
-    }
 
     try {
-      await Promise.all(promises)
+      // Update profile fields
+      const profileUpdates: Partial<{ xp: number; streak: number; last_study_date: string | null }> = {}
+      if (progress.xp !== undefined) profileUpdates.xp = progress.xp
+      if (progress.streak !== undefined) profileUpdates.streak = progress.streak
+      if (progress.lastStudyDate !== undefined) profileUpdates.last_study_date = progress.lastStudyDate
+
+      if (Object.keys(profileUpdates).length > 0) {
+        await this.updateProfile(userId, profileUpdates)
+        console.log(`[SYNC] Updated profile:`, Object.keys(profileUpdates))
+      }
+
+      // Handle completed lessons
+      if (progress.completedLessons && progress.completedLessons.length > 0) {
+        for (const lessonId of progress.completedLessons) {
+          await this.saveLessonProgress(userId, {
+            lesson_id: lessonId,
+            words_learned: 10,
+            total_words: 10,
+            is_completed: true,
+            quiz_score: null,
+            last_studied: new Date().toISOString(),
+          })
+        }
+        console.log(`[SYNC] Saved ${progress.completedLessons.length} completed lessons`)
+      }
+
+      // Handle detailed lesson progress
+      if (progress.lessonProgress) {
+        for (const [lessonId, lp] of Object.entries(progress.lessonProgress)) {
+          await this.saveLessonProgress(userId, {
+            lesson_id: lp.lessonId || lp.lesson_id || lessonId,
+            words_learned: lp.wordsLearned || lp.words_learned || 0,
+            total_words: lp.totalWords || lp.total_words || 0,
+            is_completed: lp.isCompleted || lp.is_completed || false,
+            quiz_score: lp.quizScore || lp.quiz_score || null,
+            last_studied: lp.lastStudied || lp.last_studied || null,
+          })
+        }
+        console.log(`[SYNC] Saved ${Object.keys(progress.lessonProgress).length} lesson progress entries`)
+      }
+
+      // Handle achievements
+      if (progress.achievements && progress.achievements.length > 0) {
+        for (const achievementId of progress.achievements) {
+          await this.addAchievement(userId, achievementId)
+        }
+        console.log(`[SYNC] Added ${progress.achievements.length} achievements`)
+      }
+
+      // Handle daily XP
+      if (progress.dailyXP && Object.keys(progress.dailyXP).length > 0) {
+        await this.saveDailyXP(userId, progress.dailyXP)
+        console.log(`[SYNC] Saved ${Object.keys(progress.dailyXP).length} daily XP entries`)
+      }
+
       console.log(`[SYNC] Progress sync completed successfully for user: ${userId}`)
       return { success: true }
+
     } catch (error) {
       console.error(`[SYNC] Progress sync failed for user ${userId}:`, (error as Error).message)
       throw error
     }
   },
 
+  // ===== GET FULL PROGRESS =====
   async getFullProgress(userId: string) {
-    const [
-      profileResult,
-      lessonProgress,
-      favorites,
-      quizHistory,
-      achievements,
-      statistics,
-      mistakes,
-      recentlyLearned,
-      dailyXP,
-    ] = await Promise.all([
-      supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
-      supabase.from('lesson_progress').select('*').eq('user_id', userId),
-      supabase.from('favorite_words').select('*').eq('user_id', userId),
-      supabase.from('quiz_history').select('*').eq('user_id', userId).order('completed_at', { ascending: false }),
-      supabase.from('achievements').select('*').eq('user_id', userId),
-      supabase.from('study_statistics').select('*').eq('user_id', userId).order('date', { ascending: false }),
-      supabase.from('quiz_mistakes').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
-      supabase.from('recently_learned').select('*').eq('user_id', userId).order('learned_at', { ascending: false }).limit(10),
-      supabase.from('daily_xp').select('*').eq('user_id', userId),
-    ])
+    console.log(`[PROGRESS] Loading full progress for user: ${userId}`)
+    
+    try {
+      const [
+        profileResult,
+        lessonProgress,
+        favorites,
+        quizHistory,
+        achievements,
+        statistics,
+        mistakes,
+        recentlyLearned,
+        dailyXP,
+      ] = await Promise.all([
+        supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
+        supabase.from('lesson_progress').select('*').eq('user_id', userId),
+        supabase.from('favorite_words').select('*').eq('user_id', userId),
+        supabase.from('quiz_history').select('*').eq('user_id', userId).order('completed_at', { ascending: false }),
+        supabase.from('achievements').select('*').eq('user_id', userId),
+        supabase.from('study_statistics').select('*').eq('user_id', userId).order('date', { ascending: false }),
+        supabase.from('quiz_mistakes').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
+        supabase.from('recently_learned').select('*').eq('user_id', userId).order('learned_at', { ascending: false }).limit(10),
+        supabase.from('daily_xp').select('*').eq('user_id', userId),
+      ])
 
-    // Handle profile being null
-    const profile = profileResult
+      // Convert lessonProgress array to object for frontend
+      const lessonProgressObj: Record<string, any> = {}
+      if (lessonProgress.data) {
+        lessonProgress.data.forEach((lp: any) => {
+          const key = lp.lesson_id || lp.lessonId || lp.id
+          if (key) {
+            lessonProgressObj[key] = lp
+          }
+        })
+      }
 
-    // Convert lessonProgress array to object for frontend
-    const lessonProgressObj: Record<string, any> = {}
-    if (lessonProgress.data) {
-      lessonProgress.data.forEach((lp: any) => {
-        const key = lp.lesson_id || lp.lessonId || lp.id
-        if (key) {
-          lessonProgressObj[key] = lp
-        }
-      })
-    }
+      // Extract completed lessons from lessonProgress
+      const completedLessons = lessonProgress.data
+        ? lessonProgress.data
+            .filter((lp: any) => lp.is_completed || lp.isCompleted)
+            .map((lp: any) => lp.lesson_id || lp.lessonId || lp.id)
+        : []
 
-    // Extract completed lessons from lessonProgress
-    const completedLessons = lessonProgress.data
-      ? lessonProgress.data
-          .filter((lp: any) => lp.is_completed || lp.isCompleted)
-          .map((lp: any) => lp.lesson_id || lp.lessonId || lp.id)
-      : []
+      // Convert dailyXP array to object for frontend
+      const dailyXPObj: Record<string, number> = {}
+      if (dailyXP.data) {
+        dailyXP.data.forEach((entry: any) => {
+          dailyXPObj[entry.date] = entry.xp
+        })
+      }
 
-    // Convert dailyXP array to object for frontend
-    const dailyXPObj: Record<string, number> = {}
-    if (dailyXP.data) {
-      dailyXP.data.forEach((entry: any) => {
-        dailyXPObj[entry.date] = entry.xp
-      })
-    }
+      console.log(`[PROGRESS] Loaded full progress for user: ${userId}`)
+      return {
+        profile: profileResult.data,
+        lessonProgress: lessonProgressObj,
+        completedLessons,
+        favorites: favorites.data,
+        quizHistory: quizHistory.data,
+        achievements: achievements.data,
+        statistics: statistics.data,
+        mistakes: mistakes.data,
+        recentlyLearned: recentlyLearned.data,
+        dailyXP: dailyXPObj,
+      }
 
-    return {
-      profile: profile.data,
-      lessonProgress: lessonProgressObj,
-      completedLessons,
-      favorites: favorites.data,
-      quizHistory: quizHistory.data,
-      achievements: achievements.data,
-      statistics: statistics.data,
-      mistakes: mistakes.data,
-      recentlyLearned: recentlyLearned.data,
-      dailyXP: dailyXPObj,
+    } catch (error) {
+      console.error(`[PROGRESS] Failed to load full progress for user ${userId}:`, (error as Error).message)
+      throw error
     }
   },
 }
