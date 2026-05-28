@@ -27,10 +27,18 @@ export const authService = {
             }
             throw new Error(`Failed to create account: ${authError.message}`);
         }
-        if (!authUser.user) {
+        // Wait for user to be available (handle async user creation)
+        let userId = authUser.user?.id || null;
+        let userCheckAttempts = 0;
+        while (!userId && userCheckAttempts < 5) {
+            await new Promise(resolve => setTimeout(resolve, 200));
+            const { data: sessionData } = await supabase.auth.getSession();
+            userId = sessionData?.session?.user.id || null;
+            userCheckAttempts++;
+        }
+        if (!userId) {
             throw new Error('Failed to create user');
         }
-        const userId = authUser.user.id;
         // Automatically confirm email to allow immediate login
         const { error: confirmError } = await supabase.auth.admin.updateUserById(userId, {
             email_confirm: true,
