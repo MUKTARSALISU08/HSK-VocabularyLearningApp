@@ -55,13 +55,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [loadUserFromStorage])
 
   const login = async (email: string, password: string, rememberMe = false) => {
-    const response = await api.auth.login({ email, password, rememberMe })
-    if (response.success) {
-      localStorage.setItem('token', response.token)
-      setUser(response.user)
-      setIsAuthenticated(true)
+    try {
+      const response = await api.auth.login({ email, password, rememberMe })
+      if (response.success) {
+        localStorage.setItem('token', response.token)
+        setUser(response.user)
+        setIsAuthenticated(true)
+      }
+      return { success: response.success, message: response.message }
+    } catch (error) {
+      console.error('Login error:', error)
+      return { success: false, message: 'Failed to connect to server' }
     }
-    return { success: response.success, message: response.message }
   }
 
   const signup = async (email: string, password: string, confirmPassword: string, username: string) => {

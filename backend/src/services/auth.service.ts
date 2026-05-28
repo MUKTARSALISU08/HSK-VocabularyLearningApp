@@ -244,4 +244,19 @@ export const authService = {
 
     return { message: 'Password changed successfully' }
   },
+
+  async uploadAvatar(userId: string, avatarBase64: string) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ avatar_url: avatarBase64 })
+      .eq('user_id', userId)
+      .select()
+      .single()
+
+    if (error) {
+      throw new Error(`Failed to update avatar: ${error.message}`)
+    }
+
+    return { data, error: null }
+  },
 }

@@ -157,4 +157,32 @@ export const authController = {
       res.status(401).json({ success: false, message: 'Unauthorized' })
     }
   },
+
+  async uploadAvatar(req: Request, res: Response) {
+    try {
+      const userId = req.user?.id as string
+      const { avatarBase64 } = req.body
+
+      if (!avatarBase64) {
+        return res.status(400).json({ success: false, message: 'Avatar data is required' })
+      }
+
+      const { data, error } = await authService.uploadAvatar(userId, avatarBase64)
+
+      if (error) {
+        throw new Error(error)
+      }
+
+      res.json({
+        success: true,
+        message: 'Avatar uploaded successfully',
+        avatarUrl: data?.avatar_url,
+      })
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: (error as Error).message,
+      })
+    }
+  },
 }
