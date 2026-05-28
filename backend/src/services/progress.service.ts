@@ -305,31 +305,22 @@ export const progressService = {
   },
 
   async saveDailyXP(userId: string, dailyXP: Record<string, number>) {
-    const entries: [string, number][] = Object.entries(dailyXP)
-    const promises: Promise<any>[] = []
-
-    for (let i = 0; i < entries.length; i++) {
-      const [date, xp] = entries[i]
-      const promise = supabase
+    for (const [date, xp] of Object.entries(dailyXP)) {
+      const { error } = await supabase
         .from('daily_xp')
         .upsert({
           user_id: userId,
           date: date,
           xp: xp,
         }, {
-          onConflict: 'user_id,date' as const
+          onConflict: 'user_id,date'
         })
-        .select()
-        .then((result) => {
-          if (result.error) {
-            throw new Error(`Failed to save daily XP for ${date}: ${result.error.message}`)
-          }
-          return result.data?.[0] || result.data
-        })
-      promises.push(promise)
+
+      if (error) {
+        throw new Error(`Failed to save daily XP for ${date}: ${error.message}`)
+      }
     }
 
-    await Promise.all(promises)
     return { success: true }
   },
 
