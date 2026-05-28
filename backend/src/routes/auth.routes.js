@@ -9,3 +9,4 @@ authRouter.post('/forgot-password', authController.forgotPassword);
 authRouter.post('/reset-password', authController.resetPassword);
 authRouter.post('/change-password', authenticate, authController.changePassword);
 authRouter.get('/profile', authenticate, authController.getProfile);
+authRouter.post('/avatar', authenticate, authController.uploadAvatar);

@@ -120,8 +120,7 @@ export const authController = {
     },
     async getProfile(req, res) {
         try {
-            const userId = req.user?.id;
-            const { user } = await authService.verifyToken(req.headers.authorization?.split(' ')[1] || '');
+            const user = req.user;
             res.json({
                 success: true,
                 user: {
@@ -138,6 +137,30 @@ export const authController = {
         }
         catch (error) {
             res.status(401).json({ success: false, message: 'Unauthorized' });
+        }
+    },
+    async uploadAvatar(req, res) {
+        try {
+            const userId = req.user?.id;
+            const { avatarBase64 } = req.body;
+            if (!avatarBase64) {
+                return res.status(400).json({ success: false, message: 'Avatar data is required' });
+            }
+            const { data, error } = await authService.uploadAvatar(userId, avatarBase64);
+            if (error) {
+                throw new Error(error);
+            }
+            res.json({
+                success: true,
+                message: 'Avatar uploaded successfully',
+                avatarUrl: data?.avatar_url,
+            });
+        }
+        catch (error) {
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
         }
     },
 };

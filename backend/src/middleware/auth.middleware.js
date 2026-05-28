@@ -5,7 +5,7 @@ export const authenticate = async (req, res, next) => {
         if (!token) {
             return res.status(401).json({ success: false, message: 'Unauthorized' });
         }
-        const user = await authService.verifyToken(token);
+        const { user } = await authService.verifyToken(token);
         req.user = user;
         next();
     }
