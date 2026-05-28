@@ -314,13 +314,13 @@ export const progressService = {
 
   // ===== DAILY XP =====
   async saveDailyXP(userId: string, dailyXP: Record<string, number>) {
-    for (const [date, xp] of Object.entries(dailyXP)) {
+    for (const [date, xpAmount] of Object.entries(dailyXP)) {
       const { error } = await supabase
         .from('daily_xp')
         .upsert({
           user_id: userId,
           date: date,
-          xp: xp,
+          xp_amount: xpAmount,
         }, {
           onConflict: 'user_id,date'
         })
@@ -460,7 +460,7 @@ export const progressService = {
       const dailyXPObj: Record<string, number> = {}
       if (dailyXP.data) {
         dailyXP.data.forEach((entry: any) => {
-          dailyXPObj[entry.date] = entry.xp
+          dailyXPObj[entry.date] = entry.xp_amount || entry.xp || 0
         })
       }
 
