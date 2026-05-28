@@ -8,6 +8,8 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
 
 export const authService = {
   async signup(email: string, password: string, username: string) {
+    let userId: string
+    
     // Check if user already exists in our custom users table first
     const { data: existingCustomUser } = await supabase
       .from('users')
@@ -19,7 +21,7 @@ export const authService = {
       throw new Error('User already exists with this email')
     }
 
-    // Create user in Supabase auth
+    // Create new user in Supabase Auth
     const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
       email,
       password,
@@ -27,12 +29,12 @@ export const authService = {
     })
 
     if (authError) {
-      throw new Error(authError.message)
+      throw new Error(`Failed to create auth user: ${authError.message}`)
     }
 
-    const userId = authUser.user.id
-    
-    // Insert into our custom users table
+    userId = authUser.user.id
+
+    // Create user in our custom users table
     const { data: user, error: userError } = await supabase
       .from('users')
       .insert({
@@ -46,7 +48,7 @@ export const authService = {
 
     if (userError) {
       await supabase.auth.admin.deleteUser(userId)
-      throw new Error(userError.message)
+      throw new Error(`Failed to create user: ${userError.message}`)
     }
 
     // Create profile
@@ -67,7 +69,7 @@ export const authService = {
     if (profileError) {
       await supabase.auth.admin.deleteUser(userId)
       await supabase.from('users').delete().eq('id', userId)
-      throw new Error(profileError.message)
+      throw new Error(`Failed to create profile: ${profileError.message}`)
     }
 
     const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN } as SignOptions)
@@ -94,7 +96,7 @@ export const authService = {
       .single()
 
     if (userError || !user) {
-      throw new Error('User not found')
+      throw new Error('User not found in database')
     }
 
     const { data: profile, error: profileError } = await supabase

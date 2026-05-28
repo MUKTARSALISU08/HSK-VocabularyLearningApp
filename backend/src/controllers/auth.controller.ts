@@ -10,6 +10,10 @@ export const authController = {
       
       const result = await authService.signup(validated.email, validated.password, validated.username)
       
+      if (!result.user || !result.profile) {
+        throw new Error('Failed to create user or profile')
+      }
+      
       res.status(201).json({
         success: true,
         message: 'User created successfully',
