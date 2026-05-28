@@ -263,33 +263,24 @@ export const progressService = {
             promises.push(this.updateProfile(userId, { last_study_date: progress.lastStudyDate }));
         }
         if (progress.lessonProgress) {
-            progress.lessonProgress.forEach(p => {
-                promises.push(this.saveLessonProgress(userId, p));
-            });
-        }
-        if (progress.favorites) {
-            progress.favorites.forEach(f => {
-                promises.push(this.addFavoriteWord(userId, f));
-            });
-        }
-        if (progress.quizHistory) {
-            progress.quizHistory.forEach(q => {
-                promises.push(this.saveQuizHistory(userId, q));
+            Object.values(progress.lessonProgress).forEach(p => {
+                // Convert camelCase to snake_case for Supabase
+                const lessonProgressData = {
+                    lesson_id: p.lessonId || p.lesson_id,
+                    words_learned: p.wordsLearned || p.words_learned || 0,
+                    total_words: p.totalWords || p.total_words || 0,
+                    is_completed: p.isCompleted || p.is_completed || false,
+                    quiz_score: p.quizScore || p.quiz_score || null,
+                    last_studied: p.lastStudied || p.last_studied || null,
+                };
+                if (lessonProgressData.lesson_id) {
+                    promises.push(this.saveLessonProgress(userId, lessonProgressData));
+                }
             });
         }
         if (progress.achievements) {
             progress.achievements.forEach(a => {
                 promises.push(this.addAchievement(userId, a));
-            });
-        }
-        if (progress.quizMistakes) {
-            progress.quizMistakes.forEach(m => {
-                promises.push(this.addQuizMistake(userId, m));
-            });
-        }
-        if (progress.recentlyLearned) {
-            progress.recentlyLearned.forEach(r => {
-                promises.push(this.addRecentlyLearned(userId, r));
             });
         }
         await Promise.all(promises);
@@ -306,9 +297,26 @@ export const progressService = {
             supabase.from('quiz_mistakes').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
             supabase.from('recently_learned').select('*').eq('user_id', userId).order('learned_at', { ascending: false }).limit(10),
         ]);
+        // Convert lessonProgress array to object for frontend
+        const lessonProgressObj = {};
+        if (lessonProgress.data) {
+            lessonProgress.data.forEach((lp) => {
+                const key = lp.lesson_id || lp.lessonId || lp.id;
+                if (key) {
+                    lessonProgressObj[key] = lp;
+                }
+            });
+        }
+        // Extract completed lessons from lessonProgress
+        const completedLessons = lessonProgress.data
+            ? lessonProgress.data
+                .filter((lp) => lp.is_completed || lp.isCompleted)
+                .map((lp) => lp.lesson_id || lp.lessonId || lp.id)
+            : [];
         return {
             profile: profile.data,
-            lessonProgress: lessonProgress.data,
+            lessonProgress: lessonProgressObj,
+            completedLessons,
             favorites: favorites.data,
             quizHistory: quizHistory.data,
             achievements: achievements.data,
