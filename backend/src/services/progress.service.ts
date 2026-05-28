@@ -313,23 +313,57 @@ export const progressService = {
     achievements?: string[]
     dailyXP?: Record<string, number>
   }) {
+    console.log(`[SYNC] Starting progress sync for user: ${userId}`)
+    console.log(`[SYNC] Progress data:`, JSON.stringify(progress))
+    
     const promises: Promise<any>[] = []
 
     if (progress.xp !== undefined) {
-      promises.push(this.updateProfile(userId, { xp: progress.xp }))
+      console.log(`[SYNC] Updating XP: ${progress.xp}`)
+      promises.push(this.updateProfile(userId, { xp: progress.xp }).catch(e => {
+        console.error(`[SYNC] Failed to update XP:`, e.message)
+        throw e
+      }))
     }
 
     if (progress.streak !== undefined) {
-      promises.push(this.updateProfile(userId, { streak: progress.streak }))
+      console.log(`[SYNC] Updating streak: ${progress.streak}`)
+      promises.push(this.updateProfile(userId, { streak: progress.streak }).catch(e => {
+        console.error(`[SYNC] Failed to update streak:`, e.message)
+        throw e
+      }))
     }
 
     if (progress.lastStudyDate !== undefined) {
-      promises.push(this.updateProfile(userId, { last_study_date: progress.lastStudyDate }))
+      console.log(`[SYNC] Updating last study date: ${progress.lastStudyDate}`)
+      promises.push(this.updateProfile(userId, { last_study_date: progress.lastStudyDate }).catch(e => {
+        console.error(`[SYNC] Failed to update last study date:`, e.message)
+        throw e
+      }))
+    }
+
+    if (progress.completedLessons && progress.completedLessons.length > 0) {
+      console.log(`[SYNC] Processing ${progress.completedLessons.length} completed lessons`)
+      // Create lesson progress entries for completed lessons
+      progress.completedLessons.forEach(lessonId => {
+        const lessonProgressData = {
+          lesson_id: lessonId,
+          words_learned: 10, // Default value
+          total_words: 10, // Default value
+          is_completed: true,
+          quiz_score: null,
+          last_studied: new Date().toISOString(),
+        }
+        promises.push(this.saveLessonProgress(userId, lessonProgressData).catch(e => {
+          console.error(`[SYNC] Failed to save lesson progress for ${lessonId}:`, e.message)
+          throw e
+        }))
+      })
     }
 
     if (progress.lessonProgress) {
+      console.log(`[SYNC] Processing ${Object.keys(progress.lessonProgress).length} lesson progress entries`)
       Object.values(progress.lessonProgress).forEach(p => {
-        // Convert camelCase to snake_case for Supabase
         const lessonProgressData = {
           lesson_id: p.lessonId || p.lesson_id,
           words_learned: p.wordsLearned || p.words_learned || 0,
@@ -339,20 +373,32 @@ export const progressService = {
           last_studied: p.lastStudied || p.last_studied || null,
         }
         if (lessonProgressData.lesson_id) {
-          promises.push(this.saveLessonProgress(userId, lessonProgressData))
+          promises.push(this.saveLessonProgress(userId, lessonProgressData).catch(e => {
+            console.error(`[SYNC] Failed to save lesson progress for ${lessonProgressData.lesson_id}:`, e.message)
+            throw e
+          }))
         }
       })
     }
 
-    if (progress.achievements) {
+    if (progress.achievements && progress.achievements.length > 0) {
+      console.log(`[SYNC] Processing ${progress.achievements.length} achievements`)
       progress.achievements.forEach(a => {
-        promises.push(this.addAchievement(userId, a))
+        promises.push(this.addAchievement(userId, a).catch(e => {
+          console.error(`[SYNC] Failed to add achievement ${a}:`, e.message)
+          throw e
+        }))
       })
     }
 
-    await Promise.all(promises)
-
-    return { success: true }
+    try {
+      await Promise.all(promises)
+      console.log(`[SYNC] Progress sync completed successfully for user: ${userId}`)
+      return { success: true }
+    } catch (error) {
+      console.error(`[SYNC] Progress sync failed for user ${userId}:`, (error as Error).message)
+      throw error
+    }
   },
 
   async getFullProgress(userId: string) {

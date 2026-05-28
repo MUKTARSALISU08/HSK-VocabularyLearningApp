@@ -158,7 +158,7 @@ export const authService = {
       .from('profiles')
       .select('*')
       .eq('user_id', userId)
-      .single()
+      .maybeSingle()
 
     if (profileError || !profile) {
       throw new Error('Profile not found')
