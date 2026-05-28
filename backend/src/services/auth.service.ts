@@ -6,6 +6,10 @@ import type { User, Profile } from '../types'
 const JWT_SECRET = (process.env.JWT_SECRET || 'default_secret') as Secret
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
 
+const generateId = () => {
+  return crypto.randomUUID()
+}
+
 export const authService = {
   async signup(email: string, password: string, username: string) {
     const hashedPassword = await bcrypt.hash(password, 12)
@@ -20,9 +24,12 @@ export const authService = {
       throw new Error('User already exists with this email')
     }
 
+    const userId = generateId()
+    
     const { data: user, error: userError } = await supabase
       .from('users')
       .insert({
+        id: userId,
         email,
         password: hashedPassword,
         email_verified: false,
