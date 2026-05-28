@@ -8,8 +8,6 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d'
 
 export const authService = {
   async signup(email: string, password: string, username: string) {
-    let userId: string
-    
     // Check if user already exists in our custom users table first
     const { data: existingCustomUser } = await supabase
       .from('users')
@@ -21,7 +19,7 @@ export const authService = {
       throw new Error('User already exists with this email')
     }
 
-    // Create new user in Supabase Auth
+    // Create new user in Supabase Auth (trigger will auto-create profile)
     const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
       email,
       password,
@@ -32,9 +30,9 @@ export const authService = {
       throw new Error(`Failed to create auth user: ${authError.message}`)
     }
 
-    userId = authUser.user.id
+    const userId = authUser.user.id
 
-    // Create user in our custom users table
+    // Insert into our custom users table
     const { data: user, error: userError } = await supabase
       .from('users')
       .insert({
@@ -51,30 +49,43 @@ export const authService = {
       throw new Error(`Failed to create user: ${userError.message}`)
     }
 
-    // Create profile
-    const { data: profile, error: profileError } = await supabase
+    // Wait for trigger to create profile, then fetch it
+    let profile: Profile | null = null
+    let attempts = 0
+    const maxAttempts = 10
+    
+    while (!profile && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      const { data: fetchedProfile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .single()
+      profile = fetchedProfile || null
+      attempts++
+    }
+
+    if (!profile) {
+      await supabase.auth.admin.deleteUser(userId)
+      await supabase.from('users').delete().eq('id', userId)
+      throw new Error('Failed to create profile')
+    }
+
+    // Update profile with username (trigger creates empty profile)
+    const { data: updatedProfile, error: updateError } = await supabase
       .from('profiles')
-      .insert({
-        user_id: userId,
-        username,
-        avatar_url: null,
-        xp: 0,
-        streak: 0,
-        last_study_date: null,
-        current_level: 'HSK 1',
-      })
+      .update({ username })
+      .eq('user_id', userId)
       .select()
       .single()
 
-    if (profileError) {
-      await supabase.auth.admin.deleteUser(userId)
-      await supabase.from('users').delete().eq('id', userId)
-      throw new Error(`Failed to create profile: ${profileError.message}`)
+    if (updateError) {
+      throw new Error(`Failed to update profile: ${updateError.message}`)
     }
 
     const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN } as SignOptions)
 
-    return { user, profile, token }
+    return { user, profile: updatedProfile, token }
   },
 
   async login(email: string, password: string) {
