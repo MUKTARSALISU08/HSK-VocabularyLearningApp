@@ -21,7 +21,11 @@ export const authService = {
             },
         });
         if (authError) {
-            throw new Error(`Failed to create auth user: ${authError.message}`);
+            // Handle rate limiting error
+            if (authError.message.includes('request this after')) {
+                throw new Error('Too many signup attempts. Please try again later.');
+            }
+            throw new Error(`Failed to create account: ${authError.message}`);
         }
         if (!authUser.user) {
             throw new Error('Failed to create user');
@@ -71,16 +75,26 @@ export const authService = {
         };
     },
     async login(email, password) {
-        // Use Supabase Auth for login
-        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-        if (authError) {
-            throw new Error(`Invalid email or password: ${authError.message}`);
+        let authData = await supabase.auth.signInWithPassword({ email, password });
+        // Handle email not confirmed error
+        if (authData.error && authData.error.message.includes('Email not confirmed')) {
+            const { data: users } = await supabase.auth.admin.listUsers();
+            const existingUser = users?.users.find(u => u.email === email);
+            if (existingUser) {
+                // Auto-confirm the email
+                await supabase.auth.admin.updateUserById(existingUser.id, {
+                    email_confirm: true,
+                });
+                // Retry login after confirmation
+                authData = await supabase.auth.signInWithPassword({ email, password });
+            }
         }
-        const userId = authData.user.id;
-        const token = authData.session?.access_token;
+        // Check for errors after retry
+        if (authData.error) {
+            throw new Error(`Invalid email or password: ${authData.error.message}`);
+        }
+        const userId = authData.data.user.id;
+        const token = authData.data.session?.access_token;
         // Get profile from Supabase
         const { data: profile, error: profileError } = await supabase
             .from('profiles')
@@ -91,7 +105,7 @@ export const authService = {
             throw new Error('Profile not found');
         }
         return {
-            user: { id: userId, email: authData.user.email, ...profile },
+            user: { id: userId, email: authData.data.user.email, ...profile },
             token
         };
     },
