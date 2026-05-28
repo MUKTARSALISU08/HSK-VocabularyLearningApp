@@ -125,8 +125,8 @@ export const api = {
     },
 
     updateProfile: async (data: { xp?: number; streak?: number; last_study_date?: string | null; current_level?: string }) => {
-      const response = await fetch(`${BASE_URL}/progress/profile`, {
-        method: 'POST',
+      const response = await fetch(`${BASE_URL}/profile`, {
+        method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify(data),
       })
