@@ -35,6 +35,15 @@ export const authService = {
 
     const userId = authUser.user.id
 
+    // Automatically confirm email to allow immediate login
+    const { error: confirmError } = await supabase.auth.admin.updateUserById(userId, {
+      email_confirm: true,
+    })
+
+    if (confirmError) {
+      throw new Error(`Failed to confirm email: ${confirmError.message}`)
+    }
+
     // Wait for trigger to create profile, then fetch it
     let profile: Profile | null = null
     let attempts = 0
