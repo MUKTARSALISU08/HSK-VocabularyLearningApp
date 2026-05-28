@@ -8,15 +8,16 @@ export const progressService = {
       .upsert({
         user_id: userId,
         ...progress,
+      }, {
+        onConflict: 'user_id,lesson_id'
       })
       .select()
-      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data?.[0] || data
   },
 
   async getLessonProgress(userId: string) {
@@ -41,13 +42,12 @@ export const progressService = {
         completed_at: new Date().toISOString(),
       })
       .select()
-      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data?.[0] || data
   },
 
   async getQuizHistory(userId: string) {
@@ -72,13 +72,12 @@ export const progressService = {
         ...word,
       })
       .select()
-      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data?.[0] || data
   },
 
   async removeFavoriteWord(userId: string, chinese: string) {
@@ -114,7 +113,7 @@ export const progressService = {
       .select('id')
       .eq('user_id', userId)
       .eq('achievement_id', achievementId)
-      .single()
+      .maybeSingle()
 
     if (existing) {
       return existing
@@ -128,13 +127,12 @@ export const progressService = {
         unlocked_at: new Date().toISOString(),
       })
       .select()
-      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data?.[0] || data
   },
 
   async getAchievements(userId: string) {
@@ -158,7 +156,7 @@ export const progressService = {
       .select('*')
       .eq('user_id', userId)
       .eq('date', today)
-      .single()
+      .maybeSingle()
 
     if (existing) {
       const { data, error } = await supabase
@@ -171,13 +169,12 @@ export const progressService = {
         })
         .eq('id', existing.id)
         .select()
-        .single()
 
       if (error) {
         throw new Error(error.message)
       }
 
-      return data
+      return data?.[0] || data
     }
 
     const { data, error } = await supabase
@@ -188,13 +185,12 @@ export const progressService = {
         date: today,
       })
       .select()
-      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data?.[0] || data
   },
 
   async getStudyStatistics(userId: string) {
@@ -219,13 +215,12 @@ export const progressService = {
         ...mistake,
       })
       .select()
-      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data?.[0] || data
   },
 
   async getQuizMistakes(userId: string) {
@@ -248,7 +243,7 @@ export const progressService = {
       .select('id')
       .eq('user_id', userId)
       .eq('word_chinese', word.word_chinese)
-      .single()
+      .maybeSingle()
 
     if (existing) {
       const { data, error } = await supabase
@@ -256,13 +251,12 @@ export const progressService = {
         .update({ learned_at: new Date().toISOString() })
         .eq('id', existing.id)
         .select()
-        .single()
 
       if (error) {
         throw new Error(error.message)
       }
 
-      return data
+      return data?.[0] || data
     }
 
     const { data, error } = await supabase
@@ -273,13 +267,12 @@ export const progressService = {
         learned_at: new Date().toISOString(),
       })
       .select()
-      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data?.[0] || data
   },
 
   async getRecentlyLearned(userId: string) {
@@ -303,13 +296,12 @@ export const progressService = {
       .update(updates)
       .eq('user_id', userId)
       .select()
-      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data
+    return data?.[0] || data
   },
 
   async syncProgress(userId: string, progress: {
@@ -365,7 +357,7 @@ export const progressService = {
 
   async getFullProgress(userId: string) {
     const [
-      profile,
+      profileResult,
       lessonProgress,
       favorites,
       quizHistory,
@@ -374,7 +366,7 @@ export const progressService = {
       mistakes,
       recentlyLearned,
     ] = await Promise.all([
-      supabase.from('profiles').select('*').eq('user_id', userId).single(),
+      supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
       supabase.from('lesson_progress').select('*').eq('user_id', userId),
       supabase.from('favorite_words').select('*').eq('user_id', userId),
       supabase.from('quiz_history').select('*').eq('user_id', userId).order('completed_at', { ascending: false }),
@@ -383,6 +375,9 @@ export const progressService = {
       supabase.from('quiz_mistakes').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
       supabase.from('recently_learned').select('*').eq('user_id', userId).order('learned_at', { ascending: false }).limit(10),
     ])
+
+    // Handle profile being null
+    const profile = profileResult
 
     // Convert lessonProgress array to object for frontend
     const lessonProgressObj: Record<string, any> = {}

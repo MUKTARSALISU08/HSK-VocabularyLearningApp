@@ -6,13 +6,14 @@ export const progressService = {
             .upsert({
             user_id: userId,
             ...progress,
+        }, {
+            onConflict: 'user_id,lesson_id'
         })
-            .select()
-            .single();
+            .select();
         if (error) {
             throw new Error(error.message);
         }
-        return data;
+        return data?.[0] || data;
     },
     async getLessonProgress(userId) {
         const { data, error } = await supabase
@@ -32,12 +33,11 @@ export const progressService = {
             ...history,
             completed_at: new Date().toISOString(),
         })
-            .select()
-            .single();
+            .select();
         if (error) {
             throw new Error(error.message);
         }
-        return data;
+        return data?.[0] || data;
     },
     async getQuizHistory(userId) {
         const { data, error } = await supabase
@@ -57,12 +57,11 @@ export const progressService = {
             user_id: userId,
             ...word,
         })
-            .select()
-            .single();
+            .select();
         if (error) {
             throw new Error(error.message);
         }
-        return data;
+        return data?.[0] || data;
     },
     async removeFavoriteWord(userId, chinese) {
         const { error } = await supabase
@@ -91,7 +90,7 @@ export const progressService = {
             .select('id')
             .eq('user_id', userId)
             .eq('achievement_id', achievementId)
-            .single();
+            .maybeSingle();
         if (existing) {
             return existing;
         }
@@ -102,12 +101,11 @@ export const progressService = {
             achievement_id: achievementId,
             unlocked_at: new Date().toISOString(),
         })
-            .select()
-            .single();
+            .select();
         if (error) {
             throw new Error(error.message);
         }
-        return data;
+        return data?.[0] || data;
     },
     async getAchievements(userId) {
         const { data, error } = await supabase
@@ -126,7 +124,7 @@ export const progressService = {
             .select('*')
             .eq('user_id', userId)
             .eq('date', today)
-            .single();
+            .maybeSingle();
         if (existing) {
             const { data, error } = await supabase
                 .from('study_statistics')
@@ -137,12 +135,11 @@ export const progressService = {
                 quiz_attempts: existing.quiz_attempts + stats.quiz_attempts,
             })
                 .eq('id', existing.id)
-                .select()
-                .single();
+                .select();
             if (error) {
                 throw new Error(error.message);
             }
-            return data;
+            return data?.[0] || data;
         }
         const { data, error } = await supabase
             .from('study_statistics')
@@ -151,12 +148,11 @@ export const progressService = {
             ...stats,
             date: today,
         })
-            .select()
-            .single();
+            .select();
         if (error) {
             throw new Error(error.message);
         }
-        return data;
+        return data?.[0] || data;
     },
     async getStudyStatistics(userId) {
         const { data, error } = await supabase
@@ -176,12 +172,11 @@ export const progressService = {
             user_id: userId,
             ...mistake,
         })
-            .select()
-            .single();
+            .select();
         if (error) {
             throw new Error(error.message);
         }
-        return data;
+        return data?.[0] || data;
     },
     async getQuizMistakes(userId) {
         const { data, error } = await supabase
@@ -200,18 +195,17 @@ export const progressService = {
             .select('id')
             .eq('user_id', userId)
             .eq('word_chinese', word.word_chinese)
-            .single();
+            .maybeSingle();
         if (existing) {
             const { data, error } = await supabase
                 .from('recently_learned')
                 .update({ learned_at: new Date().toISOString() })
                 .eq('id', existing.id)
-                .select()
-                .single();
+                .select();
             if (error) {
                 throw new Error(error.message);
             }
-            return data;
+            return data?.[0] || data;
         }
         const { data, error } = await supabase
             .from('recently_learned')
@@ -220,12 +214,11 @@ export const progressService = {
             ...word,
             learned_at: new Date().toISOString(),
         })
-            .select()
-            .single();
+            .select();
         if (error) {
             throw new Error(error.message);
         }
-        return data;
+        return data?.[0] || data;
     },
     async getRecentlyLearned(userId) {
         const { data, error } = await supabase
@@ -244,12 +237,11 @@ export const progressService = {
             .from('profiles')
             .update(updates)
             .eq('user_id', userId)
-            .select()
-            .single();
+            .select();
         if (error) {
             throw new Error(error.message);
         }
-        return data;
+        return data?.[0] || data;
     },
     async syncProgress(userId, progress) {
         const promises = [];
@@ -287,8 +279,8 @@ export const progressService = {
         return { success: true };
     },
     async getFullProgress(userId) {
-        const [profile, lessonProgress, favorites, quizHistory, achievements, statistics, mistakes, recentlyLearned,] = await Promise.all([
-            supabase.from('profiles').select('*').eq('user_id', userId).single(),
+        const [profileResult, lessonProgress, favorites, quizHistory, achievements, statistics, mistakes, recentlyLearned,] = await Promise.all([
+            supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
             supabase.from('lesson_progress').select('*').eq('user_id', userId),
             supabase.from('favorite_words').select('*').eq('user_id', userId),
             supabase.from('quiz_history').select('*').eq('user_id', userId).order('completed_at', { ascending: false }),
@@ -297,6 +289,8 @@ export const progressService = {
             supabase.from('quiz_mistakes').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
             supabase.from('recently_learned').select('*').eq('user_id', userId).order('learned_at', { ascending: false }).limit(10),
         ]);
+        // Handle profile being null
+        const profile = profileResult;
         // Convert lessonProgress array to object for frontend
         const lessonProgressObj = {};
         if (lessonProgress.data) {
