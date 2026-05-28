@@ -304,6 +304,34 @@ export const progressService = {
     return data?.[0] || data
   },
 
+  async saveDailyXP(userId: string, dailyXP: Record<string, number>) {
+    const promises: Promise<any>[] = []
+
+    for (const [date, xp] of Object.entries(dailyXP)) {
+      promises.push(
+        supabase
+          .from('daily_xp')
+          .upsert({
+            user_id: userId,
+            date,
+            xp,
+          }, {
+            onConflict: 'user_id,date'
+          })
+          .select()
+          .then(({ data, error }) => {
+            if (error) {
+              throw new Error(`Failed to save daily XP for ${date}: ${error.message}`)
+            }
+            return data?.[0] || data
+          })
+      )
+    }
+
+    await Promise.all(promises)
+    return { success: true }
+  },
+
   async syncProgress(userId: string, progress: {
     xp?: number
     streak?: number
@@ -391,6 +419,14 @@ export const progressService = {
       })
     }
 
+    if (progress.dailyXP && Object.keys(progress.dailyXP).length > 0) {
+      console.log(`[SYNC] Processing ${Object.keys(progress.dailyXP).length} daily XP entries`)
+      promises.push(this.saveDailyXP(userId, progress.dailyXP).catch(e => {
+        console.error(`[SYNC] Failed to save daily XP:`, e.message)
+        throw e
+      }))
+    }
+
     try {
       await Promise.all(promises)
       console.log(`[SYNC] Progress sync completed successfully for user: ${userId}`)
@@ -411,6 +447,7 @@ export const progressService = {
       statistics,
       mistakes,
       recentlyLearned,
+      dailyXP,
     ] = await Promise.all([
       supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
       supabase.from('lesson_progress').select('*').eq('user_id', userId),
@@ -420,6 +457,7 @@ export const progressService = {
       supabase.from('study_statistics').select('*').eq('user_id', userId).order('date', { ascending: false }),
       supabase.from('quiz_mistakes').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
       supabase.from('recently_learned').select('*').eq('user_id', userId).order('learned_at', { ascending: false }).limit(10),
+      supabase.from('daily_xp').select('*').eq('user_id', userId),
     ])
 
     // Handle profile being null
@@ -443,6 +481,14 @@ export const progressService = {
           .map((lp: any) => lp.lesson_id || lp.lessonId || lp.id)
       : []
 
+    // Convert dailyXP array to object for frontend
+    const dailyXPObj: Record<string, number> = {}
+    if (dailyXP.data) {
+      dailyXP.data.forEach((entry: any) => {
+        dailyXPObj[entry.date] = entry.xp
+      })
+    }
+
     return {
       profile: profile.data,
       lessonProgress: lessonProgressObj,
@@ -453,6 +499,7 @@ export const progressService = {
       statistics: statistics.data,
       mistakes: mistakes.data,
       recentlyLearned: recentlyLearned.data,
+      dailyXP: dailyXPObj,
     }
   },
 }
