@@ -145,96 +145,83 @@ ALTER TABLE public.quiz_mistakes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.recently_learned ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.daily_xp ENABLE ROW LEVEL SECURITY;
 
--- RLS Policies for users table
-CREATE POLICY "Users can view their own data" ON public.users
-    FOR SELECT USING (auth.uid() = id);
+-- Helper function to check if current role is service_role
+CREATE OR REPLACE FUNCTION public.is_service_role() 
+RETURNS BOOLEAN AS $$
+BEGIN
+    RETURN current_setting('role') = 'service_role';
+END;
+$$ LANGUAGE plpgsql STABLE;
 
-CREATE POLICY "Users can update their own data" ON public.users
-    FOR UPDATE USING (auth.uid() = id);
+-- RLS Policies for users table
+CREATE OR REPLACE POLICY "Users can view their own data" ON public.users
+    FOR SELECT USING (auth.uid() = id OR public.is_service_role());
+
+CREATE OR REPLACE POLICY "Users can update their own data" ON public.users
+    FOR ALL USING (auth.uid() = id OR public.is_service_role());
 
 -- RLS Policies for profiles table
-CREATE POLICY "Users can view their own profile" ON public.profiles
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own profile" ON public.profiles
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can update their own profile" ON public.profiles
-    FOR ALL USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can manage their own profile" ON public.profiles
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- RLS Policies for lesson_progress table
-CREATE POLICY "Users can view their own lesson progress" ON public.lesson_progress
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own lesson progress" ON public.lesson_progress
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can insert their own lesson progress" ON public.lesson_progress
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own lesson progress" ON public.lesson_progress
-    FOR UPDATE USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own lesson progress" ON public.lesson_progress
-    FOR DELETE USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can manage their own lesson progress" ON public.lesson_progress
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- RLS Policies for quiz_history table
-CREATE POLICY "Users can view their own quiz history" ON public.quiz_history
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own quiz history" ON public.quiz_history
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can insert their own quiz history" ON public.quiz_history
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can insert their own quiz history" ON public.quiz_history
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- RLS Policies for favorite_words table
-CREATE POLICY "Users can view their own favorites" ON public.favorite_words
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own favorites" ON public.favorite_words
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can insert their own favorites" ON public.favorite_words
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own favorites" ON public.favorite_words
-    FOR DELETE USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can manage their own favorites" ON public.favorite_words
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- RLS Policies for achievements table
-CREATE POLICY "Users can view their own achievements" ON public.achievements
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own achievements" ON public.achievements
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can insert their own achievements" ON public.achievements
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can insert their own achievements" ON public.achievements
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- RLS Policies for study_statistics table
-CREATE POLICY "Users can view their own statistics" ON public.study_statistics
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own statistics" ON public.study_statistics
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can insert their own statistics" ON public.study_statistics
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own statistics" ON public.study_statistics
-    FOR UPDATE USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can manage their own statistics" ON public.study_statistics
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- RLS Policies for quiz_mistakes table
-CREATE POLICY "Users can view their own mistakes" ON public.quiz_mistakes
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own mistakes" ON public.quiz_mistakes
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can insert their own mistakes" ON public.quiz_mistakes
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own mistakes" ON public.quiz_mistakes
-    FOR DELETE USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can manage their own mistakes" ON public.quiz_mistakes
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- RLS Policies for recently_learned table
-CREATE POLICY "Users can view their own recently learned" ON public.recently_learned
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own recently learned" ON public.recently_learned
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can insert their own recently learned" ON public.recently_learned
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own recently learned" ON public.recently_learned
-    FOR UPDATE USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can manage their own recently learned" ON public.recently_learned
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- RLS Policies for daily_xp table
-CREATE POLICY "Users can view their own daily XP" ON public.daily_xp
-    FOR SELECT USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can view their own daily XP" ON public.daily_xp
+    FOR SELECT USING (auth.uid() = user_id OR public.is_service_role());
 
-CREATE POLICY "Users can insert their own daily XP" ON public.daily_xp
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their own daily XP" ON public.daily_xp
-    FOR UPDATE USING (auth.uid() = user_id);
+CREATE OR REPLACE POLICY "Users can manage their own daily XP" ON public.daily_xp
+    FOR ALL USING (auth.uid() = user_id OR public.is_service_role());
 
 -- Function to handle new user signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()

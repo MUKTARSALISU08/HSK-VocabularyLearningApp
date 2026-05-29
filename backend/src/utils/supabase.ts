@@ -23,14 +23,22 @@ export const supabaseAuth = createClient(supabaseUrl, supabaseServiceRoleKey, {
 })
 
 // Client for DATABASE operations - NEVER use this for auth operations
-// This client always uses service role and bypasses RLS
+// This client uses service role key which inherently bypasses RLS
 export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false,
+    // Using service role key - this should automatically bypass RLS
+    // The service role has superuser privileges
   },
   db: {
     schema: 'public',
+  },
+  // Add headers to ensure service role is used
+  global: {
+    headers: {
+      'Authorization': `Bearer ${supabaseServiceRoleKey}`,
+    },
   },
 })
 
@@ -38,7 +46,7 @@ export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
 async function verifyServiceRole() {
   try {
     // Test 1: Check admin API access
-    const { data: users, error: adminError } = await supabase.auth.admin.listUsers()
+    const { data: users, error: adminError } = await supabaseAuth.auth.admin.listUsers()
     if (adminError) {
       console.error('[SUPABASE] FAILED to verify service role (admin API):', adminError.message)
     } else {
