@@ -8,6 +8,13 @@ const getAuthHeaders = () => {
   }
 }
 
+// Helper function to handle user not found errors
+const handleUserNotFound = () => {
+  localStorage.removeItem('token')
+  // Trigger a page reload to reset state
+  window.location.href = '/login'
+}
+
 export const api = {
   auth: {
     signup: async (data: { email: string; password: string; confirmPassword: string; username: string }) => {
@@ -87,7 +94,12 @@ export const api = {
         method: 'GET',
         headers: getAuthHeaders(),
       })
-      return response.json()
+      const result = await response.json()
+      // Handle user not found error
+      if (result.message && result.message.includes('does not exist in auth.users')) {
+        handleUserNotFound()
+      }
+      return result
     },
 
     syncProgress: async (data: any) => {
@@ -96,7 +108,12 @@ export const api = {
         headers: getAuthHeaders(),
         body: JSON.stringify(data),
       })
-      return response.json()
+      const result = await response.json()
+      // Handle user not found error
+      if (result.message && result.message.includes('does not exist in auth.users')) {
+        handleUserNotFound()
+      }
+      return result
     },
 
     getFavorites: async () => {
