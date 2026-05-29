@@ -1,4 +1,4 @@
-import { supabase } from '../utils/supabase'
+import { supabaseAuth, supabase } from '../utils/supabase'
 import type { User, Profile } from '../types'
 
 export const authService = {
@@ -15,7 +15,7 @@ export const authService = {
     }
 
     // Create new user in Supabase Auth (trigger will auto-create profile)
-    const { data: authUser, error: authError } = await supabase.auth.signUp({
+    const { data: authUser, error: authError } = await supabaseAuth.auth.signUp({
       email,
       password,
       options: {
@@ -39,7 +39,7 @@ export const authService = {
     
     while (!userId && userCheckAttempts < 5) {
       await new Promise(resolve => setTimeout(resolve, 200))
-      const { data: sessionData } = await supabase.auth.getSession()
+      const { data: sessionData } = await supabaseAuth.auth.getSession()
       userId = sessionData?.session?.user.id || null
       userCheckAttempts++
     }
@@ -49,7 +49,7 @@ export const authService = {
     }
 
     // Automatically confirm email to allow immediate login
-    const { error: confirmError } = await supabase.auth.admin.updateUserById(userId, {
+    const { error: confirmError } = await supabaseAuth.auth.admin.updateUserById(userId, {
       email_confirm: true,
     })
 
@@ -74,7 +74,7 @@ export const authService = {
     }
 
     if (!profile) {
-      await supabase.auth.admin.deleteUser(userId)
+      await supabaseAuth.auth.admin.deleteUser(userId)
       throw new Error('Failed to create profile')
     }
 
@@ -91,7 +91,7 @@ export const authService = {
     }
 
     // Get Supabase session
-    const { data: session } = await supabase.auth.getSession()
+    const { data: session } = await supabaseAuth.auth.getSession()
 
     return { 
       user: { id: userId, email }, 
@@ -101,20 +101,20 @@ export const authService = {
   },
 
   async login(email: string, password: string): Promise<{ user: { id: string; email: string; [key: string]: any }; token: string | undefined }> {
-    let authData = await supabase.auth.signInWithPassword({ email, password })
+    let authData = await supabaseAuth.auth.signInWithPassword({ email, password })
     
     // Handle email not confirmed error
     if (authData.error && authData.error.message.includes('Email not confirmed')) {
-      const { data: users } = await supabase.auth.admin.listUsers()
+      const { data: users } = await supabaseAuth.auth.admin.listUsers()
       const existingUser = users?.users.find(u => u.email === email)
       
       if (existingUser) {
         // Auto-confirm the email
-        await supabase.auth.admin.updateUserById(existingUser.id, {
+        await supabaseAuth.auth.admin.updateUserById(existingUser.id, {
           email_confirm: true,
         })
         // Retry login after confirmation
-        authData = await supabase.auth.signInWithPassword({ email, password })
+        authData = await supabaseAuth.auth.signInWithPassword({ email, password })
       }
     }
 
@@ -145,7 +145,7 @@ export const authService = {
 
   async verifyToken(token: string) {
     // Verify token using Supabase Auth
-    const { data: user, error } = await supabase.auth.getUser(token)
+    const { data: user, error } = await supabaseAuth.auth.getUser(token)
 
     if (error || !user.user) {
       throw new Error('Invalid token')
@@ -168,7 +168,7 @@ export const authService = {
   },
 
   async logout() {
-    const { error } = await supabase.auth.signOut()
+    const { error } = await supabaseAuth.auth.signOut()
     if (error) {
       throw new Error(error.message)
     }
@@ -176,7 +176,7 @@ export const authService = {
   },
 
   async forgotPassword(email: string) {
-    const { error } = await supabase.auth.resetPasswordForEmail(email)
+    const { error } = await supabaseAuth.auth.resetPasswordForEmail(email)
     
     if (error) {
       throw new Error(`Failed to send reset email: ${error.message}`)
@@ -188,14 +188,14 @@ export const authService = {
   async resetPassword(token: string, newPassword: string) {
     // Verify token first
     try {
-      const { data: user } = await supabase.auth.getUser(token)
+      const { data: user } = await supabaseAuth.auth.getUser(token)
       
       if (!user.user) {
         throw new Error('Invalid token')
       }
 
       // Update password
-      const { error } = await supabase.auth.updateUser({
+      const { error } = await supabaseAuth.auth.updateUser({
         password: newPassword,
       })
 
@@ -211,14 +211,14 @@ export const authService = {
 
   async changePassword(userId: string, currentPassword: string, newPassword: string) {
     // Get user email first
-    const { data: userData } = await supabase.auth.admin.getUserById(userId)
+    const { data: userData } = await supabaseAuth.auth.admin.getUserById(userId)
     
     if (!userData.user?.email) {
       throw new Error('User not found')
     }
 
     // Verify current password by signing in
-    const { error: signInError } = await supabase.auth.signInWithPassword({
+    const { error: signInError } = await supabaseAuth.auth.signInWithPassword({
       email: userData.user.email,
       password: currentPassword,
     })
@@ -228,7 +228,7 @@ export const authService = {
     }
 
     // Update password
-    const { error } = await supabase.auth.updateUser({
+    const { error } = await supabaseAuth.auth.updateUser({
       password: newPassword,
     })
 
@@ -265,7 +265,7 @@ export const authService = {
       throw new Error('Profile not found')
     }
 
-    const { data: user } = await supabase.auth.admin.getUserById(userId)
+    const { data: user } = await supabaseAuth.auth.admin.getUserById(userId)
 
     return {
       user: {
