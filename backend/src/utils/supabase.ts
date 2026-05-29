@@ -20,4 +20,25 @@ export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
     autoRefreshToken: false,
     persistSession: false,
   },
+  db: {
+    schema: 'public',
+  },
 })
+
+// Verify service role by checking admin capabilities
+async function verifyServiceRole() {
+  try {
+    const { data: users, error } = await supabase.auth.admin.listUsers()
+    if (error) {
+      console.error('[SUPABASE] FAILED to verify service role:', error.message)
+    } else {
+      console.log('[SUPABASE] Service role VERIFIED - can access admin API')
+      console.log('[SUPABASE] Number of users:', users?.users.length || 0)
+    }
+  } catch (err) {
+    console.error('[SUPABASE] Error verifying service role:', err)
+  }
+}
+
+// Run verification on startup
+verifyServiceRole()
