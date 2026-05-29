@@ -5,7 +5,10 @@ import cookieParser from 'cookie-parser'
 import { authRouter } from './routes/auth.routes'
 import { progressRouter } from './routes/progress.routes'
 
-dotenv.config()
+// Only load dotenv in development (when not on Render)
+if (!process.env.RENDER) {
+  dotenv.config()
+}
 
 declare global {
   namespace Express {

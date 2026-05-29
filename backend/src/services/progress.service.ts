@@ -7,13 +7,6 @@ export const progressService = {
     console.log(`[PROGRESS] saveLessonProgress - User ID: ${userId}`)
     console.log(`[PROGRESS] saveLessonProgress - Progress data:`, JSON.stringify(progress))
     
-    // Verify user exists in auth.users
-    const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(userId)
-    console.log(`[PROGRESS] saveLessonProgress - Auth user exists:`, authUser?.user ? 'Yes' : 'No')
-    if (authError) {
-      console.error(`[PROGRESS] saveLessonProgress - Auth user lookup error:`, authError.message)
-    }
-    
     const { data, error } = await supabase
       .from('lesson_progress')
       .upsert({
@@ -115,6 +108,7 @@ export const progressService = {
       .from('favorite_words')
       .select('*')
       .eq('user_id', userId)
+      .order('created_at', { ascending: false })
 
     if (error) {
       throw new Error(error.message)
@@ -125,23 +119,11 @@ export const progressService = {
 
   // ===== ACHIEVEMENTS =====
   async addAchievement(userId: string, achievementId: string) {
-    const { data: existing } = await supabase
-      .from('achievements')
-      .select('id')
-      .eq('user_id', userId)
-      .eq('achievement_id', achievementId)
-      .maybeSingle()
-
-    if (existing) {
-      return existing
-    }
-
     const { data, error } = await supabase
       .from('achievements')
       .insert({
         user_id: userId,
         achievement_id: achievementId,
-        unlocked_at: new Date().toISOString(),
       })
       .select()
 
@@ -167,40 +149,13 @@ export const progressService = {
 
   // ===== STUDY STATISTICS =====
   async updateStudyStatistics(userId: string, stats: Omit<StudyStatistic, 'id' | 'user_id'>) {
-    const today = new Date().toDateString()
-    
-    const { data: existing } = await supabase
-      .from('study_statistics')
-      .select('*')
-      .eq('user_id', userId)
-      .eq('date', today)
-      .maybeSingle()
-
-    if (existing) {
-      const { data, error } = await supabase
-        .from('study_statistics')
-        .update({
-          xp_earned: existing.xp_earned + stats.xp_earned,
-          words_learned: existing.words_learned + stats.words_learned,
-          lessons_completed: existing.lessons_completed + stats.lessons_completed,
-          quiz_attempts: existing.quiz_attempts + stats.quiz_attempts,
-        })
-        .eq('id', existing.id)
-        .select()
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      return data?.[0] || data
-    }
-
     const { data, error } = await supabase
       .from('study_statistics')
-      .insert({
+      .upsert({
         user_id: userId,
         ...stats,
-        date: today,
+      }, {
+        onConflict: 'user_id,date'
       })
       .select()
 
@@ -256,35 +211,27 @@ export const progressService = {
     return data
   },
 
-  // ===== RECENTLY LEARNED =====
-  async addRecentlyLearned(userId: string, word: Omit<RecentlyLearned, 'id' | 'user_id' | 'learned_at'>) {
-    const { data: existing } = await supabase
-      .from('recently_learned')
-      .select('id')
+  async removeQuizMistake(userId: string, mistakeId: string) {
+    const { error } = await supabase
+      .from('quiz_mistakes')
+      .delete()
       .eq('user_id', userId)
-      .eq('word_chinese', word.word_chinese)
-      .maybeSingle()
+      .eq('id', mistakeId)
 
-    if (existing) {
-      const { data, error } = await supabase
-        .from('recently_learned')
-        .update({ learned_at: new Date().toISOString() })
-        .eq('id', existing.id)
-        .select()
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      return data?.[0] || data
+    if (error) {
+      throw new Error(error.message)
     }
 
+    return { success: true }
+  },
+
+  // ===== RECENTLY LEARNED =====
+  async addRecentlyLearned(userId: string, learned: Omit<RecentlyLearned, 'id' | 'user_id' | 'learned_at'>) {
     const { data, error } = await supabase
       .from('recently_learned')
       .insert({
         user_id: userId,
-        ...word,
-        learned_at: new Date().toISOString(),
+        ...learned,
       })
       .select()
 
@@ -295,13 +242,13 @@ export const progressService = {
     return data?.[0] || data
   },
 
-  async getRecentlyLearned(userId: string) {
+  async getRecentlyLearned(userId: string, limit = 10) {
     const { data, error } = await supabase
       .from('recently_learned')
       .select('*')
       .eq('user_id', userId)
       .order('learned_at', { ascending: false })
-      .limit(10)
+      .limit(limit)
 
     if (error) {
       throw new Error(error.message)
@@ -312,22 +259,48 @@ export const progressService = {
 
   // ===== PROFILE =====
   async updateProfile(userId: string, updates: Partial<{ xp: number; streak: number; last_study_date: string | null; current_level: string }>) {
+    console.log(`[PROGRESS] updateProfile - User ID: ${userId}, updates:`, JSON.stringify(updates))
+    
     const { data, error } = await supabase
       .from('profiles')
-      .update(updates)
+      .update({
+        ...updates,
+        updated_at: new Date().toISOString(),
+      })
       .eq('user_id', userId)
       .select()
+      .single()
+
+    if (error) {
+      console.error(`[PROGRESS] updateProfile - Error:`, error.message)
+      throw new Error(`Failed to update profile: ${error.message}`)
+    }
+
+    console.log(`[PROGRESS] updateProfile - Success:`, JSON.stringify(data))
+    return data
+  },
+
+  async getProfile(userId: string) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single()
 
     if (error) {
       throw new Error(error.message)
     }
 
-    return data?.[0] || data
+    return data
   },
 
   // ===== DAILY XP =====
   async saveDailyXP(userId: string, dailyXP: Record<string, number>) {
+    console.log(`[PROGRESS] saveDailyXP - Saving ${Object.keys(dailyXP).length} entries for user: ${userId}`)
+    
     for (const [date, xpAmount] of Object.entries(dailyXP)) {
+      console.log(`[PROGRESS] saveDailyXP - Saving xp_amount: ${xpAmount} for date: ${date}`)
+      
       const { error } = await supabase
         .from('daily_xp')
         .upsert({
@@ -344,6 +317,20 @@ export const progressService = {
     }
 
     return { success: true }
+  },
+
+  async getDailyXP(userId: string) {
+    const { data, error } = await supabase
+      .from('daily_xp')
+      .select('*')
+      .eq('user_id', userId)
+      .order('date', { ascending: false })
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    return data
   },
 
   // ===== SYNC PROGRESS (SIMPLIFIED) =====
@@ -430,69 +417,36 @@ export const progressService = {
     
     try {
       const [
-        profileResult,
-        lessonProgress,
-        favorites,
-        quizHistory,
-        achievements,
-        statistics,
-        mistakes,
-        recentlyLearned,
-        dailyXP,
+        profile,
+        lessonProgressData,
+        dailyXPData,
+        achievementsData,
+        favoritesData,
+        mistakesData,
+        recentlyLearnedData,
       ] = await Promise.all([
-        supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
-        supabase.from('lesson_progress').select('*').eq('user_id', userId),
-        supabase.from('favorite_words').select('*').eq('user_id', userId),
-        supabase.from('quiz_history').select('*').eq('user_id', userId).order('completed_at', { ascending: false }),
-        supabase.from('achievements').select('*').eq('user_id', userId),
-        supabase.from('study_statistics').select('*').eq('user_id', userId).order('date', { ascending: false }),
-        supabase.from('quiz_mistakes').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
-        supabase.from('recently_learned').select('*').eq('user_id', userId).order('learned_at', { ascending: false }).limit(10),
-        supabase.from('daily_xp').select('*').eq('user_id', userId),
+        this.getProfile(userId),
+        this.getLessonProgress(userId),
+        this.getDailyXP(userId),
+        this.getAchievements(userId),
+        this.getFavoriteWords(userId),
+        this.getQuizMistakes(userId),
+        this.getRecentlyLearned(userId),
       ])
 
-      // Convert lessonProgress array to object for frontend
-      const lessonProgressObj: Record<string, any> = {}
-      if (lessonProgress.data) {
-        lessonProgress.data.forEach((lp: any) => {
-          const key = lp.lesson_id || lp.lessonId || lp.id
-          if (key) {
-            lessonProgressObj[key] = lp
-          }
-        })
-      }
-
-      // Extract completed lessons from lessonProgress
-      const completedLessons = lessonProgress.data
-        ? lessonProgress.data
-            .filter((lp: any) => lp.is_completed || lp.isCompleted)
-            .map((lp: any) => lp.lesson_id || lp.lessonId || lp.id)
-        : []
-
-      // Convert dailyXP array to object for frontend
-      const dailyXPObj: Record<string, number> = {}
-      if (dailyXP.data) {
-        dailyXP.data.forEach((entry: any) => {
-          dailyXPObj[entry.date] = entry.xp_amount || entry.xp || 0
-        })
-      }
-
       console.log(`[PROGRESS] Loaded full progress for user: ${userId}`)
-      return {
-        profile: profileResult.data,
-        lessonProgress: lessonProgressObj,
-        completedLessons,
-        favorites: favorites.data,
-        quizHistory: quizHistory.data,
-        achievements: achievements.data,
-        statistics: statistics.data,
-        mistakes: mistakes.data,
-        recentlyLearned: recentlyLearned.data,
-        dailyXP: dailyXPObj,
-      }
 
+      return {
+        profile,
+        lessonProgress: lessonProgressData,
+        dailyXP: dailyXPData,
+        achievements: achievementsData,
+        favorites: favoritesData,
+        mistakes: mistakesData,
+        recentlyLearned: recentlyLearnedData,
+      }
     } catch (error) {
-      console.error(`[PROGRESS] Failed to load full progress for user ${userId}:`, (error as Error).message)
+      console.error(`[PROGRESS] Failed to load progress for user ${userId}:`, (error as Error).message)
       throw error
     }
   },

@@ -3,9 +3,20 @@ import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = process.env.SUPABASE_URL || ''
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 
-// Debug: Verify environment variables are loaded
-console.log('[SUPABASE] URL loaded:', supabaseUrl ? 'Yes' : 'No')
-console.log('[SUPABASE] Service Role Key loaded:', supabaseServiceRoleKey ? 'Yes' : 'No')
-console.log('[SUPABASE] Key starts with sb_secret:', supabaseServiceRoleKey?.startsWith('sb_secret_') ? 'Yes' : 'No')
+// Debug logging
+console.log('[SUPABASE] URL:', supabaseUrl ? 'Loaded' : 'MISSING')
+console.log('[SUPABASE] Service Role Key:', supabaseServiceRoleKey ? `Loaded (${supabaseServiceRoleKey.substring(0, 10)}...)` : 'MISSING')
 
-export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey)
+if (!supabaseUrl || !supabaseServiceRoleKey) {
+  console.error('[SUPABASE] ERROR: Missing required environment variables!')
+  console.error('[SUPABASE] SUPABASE_URL:', supabaseUrl ? 'Set' : 'UNSET')
+  console.error('[SUPABASE] SUPABASE_SERVICE_ROLE_KEY:', supabaseServiceRoleKey ? 'Set' : 'UNSET')
+}
+
+// Create Supabase client with service role key - bypass RLS
+export const supabase = createClient(supabaseUrl, supabaseServiceRoleKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false,
+  },
+})
