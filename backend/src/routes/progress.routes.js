@@ -17,6 +17,11 @@ progressRouter.get('/statistics', authenticate, progressController.getStatistics
 progressRouter.post('/statistics', authenticate, progressController.updateStatistics);
 progressRouter.get('/mistakes', authenticate, progressController.getMistakes);
 progressRouter.post('/mistakes', authenticate, progressController.addMistake);
+progressRouter.delete('/mistakes', authenticate, progressController.deleteAllMistakes);
+// Alias routes for quiz API
+progressRouter.get('/quiz/mistakes', authenticate, progressController.getMistakes);
+progressRouter.post('/quiz/mistakes', authenticate, progressController.addMistake);
+progressRouter.delete('/quiz/mistakes', authenticate, progressController.deleteAllMistakes);
 progressRouter.get('/recently-learned', authenticate, progressController.getRecentlyLearned);
 progressRouter.post('/recently-learned', authenticate, progressController.addRecentlyLearned);
 progressRouter.put('/profile', authenticate, progressController.updateProfile);

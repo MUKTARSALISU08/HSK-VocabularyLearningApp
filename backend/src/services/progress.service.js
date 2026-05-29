@@ -215,6 +215,16 @@ export const progressService = {
         }
         return data;
     },
+    async deleteAllQuizMistakes(userId) {
+        const { error } = await supabase
+            .from('quiz_mistakes')
+            .delete()
+            .eq('user_id', userId);
+        if (error) {
+            throw new Error(error.message);
+        }
+        return { success: true };
+    },
     // ===== RECENTLY LEARNED =====
     async addRecentlyLearned(userId, word) {
         // Verify user exists in auth.users

@@ -152,6 +152,16 @@ export const progressController = {
             res.status(500).json({ success: false, message: error.message });
         }
     },
+    async deleteAllMistakes(req, res) {
+        try {
+            const userId = req.user?.id;
+            await progressService.deleteAllQuizMistakes(userId);
+            res.json({ success: true, message: 'All mistakes deleted' });
+        }
+        catch (error) {
+            res.status(500).json({ success: false, message: error.message });
+        }
+    },
     async getRecentlyLearned(req, res) {
         try {
             const userId = req.user?.id;

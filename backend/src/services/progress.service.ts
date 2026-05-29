@@ -264,6 +264,19 @@ export const progressService = {
     return data
   },
 
+  async deleteAllQuizMistakes(userId: string) {
+    const { error } = await supabase
+      .from('quiz_mistakes')
+      .delete()
+      .eq('user_id', userId)
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    return { success: true }
+  },
+
   // ===== RECENTLY LEARNED =====
   async addRecentlyLearned(userId: string, word: Omit<RecentlyLearned, 'id' | 'user_id' | 'learned_at'>) {
     // Verify user exists in auth.users
