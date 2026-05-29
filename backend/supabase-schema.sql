@@ -97,7 +97,8 @@ CREATE TABLE IF NOT EXISTS public.quiz_mistakes (
     your_answer TEXT NOT NULL,
     correct_answer TEXT NOT NULL,
     level TEXT NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW()
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(user_id, word_chinese, your_answer)
 );
 
 -- Recently Learned table
