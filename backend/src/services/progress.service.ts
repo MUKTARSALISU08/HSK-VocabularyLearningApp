@@ -1,10 +1,6 @@
 import { supabase } from '../utils/supabase'
 import type { LessonProgress, QuizHistory, FavoriteWord, Achievement, StudyStatistic, QuizMistake, RecentlyLearned } from '../types'
 
-// Debug: Verify Supabase client is using service role
-console.log('[PROGRESS SERVICE] Supabase URL:', supabase.url ? 'Set' : 'Missing')
-console.log('[PROGRESS SERVICE] Supabase has key:', supabase['_key'] ? 'Yes' : 'No')
-
 export const progressService = {
   // ===== LESSON PROGRESS =====
   async saveLessonProgress(userId: string, progress: Omit<LessonProgress, 'id' | 'user_id' | 'created_at' | 'updated_at'>) {
@@ -289,7 +285,7 @@ export const progressService = {
           updated_at: new Date().toISOString(),
         })
         .select()
-        .single()
+        .maybeSingle()
 
       if (insertError) {
         console.error(`[PROGRESS] updateProfile - Failed to create profile:`, insertError.message)

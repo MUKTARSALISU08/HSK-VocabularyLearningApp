@@ -68,7 +68,7 @@ export const authService = {
         .from('profiles')
         .select('*')
         .eq('user_id', userId)
-        .single()
+        .maybeSingle()
       profile = fetchedProfile || null
       attempts++
     }
@@ -84,7 +84,7 @@ export const authService = {
       .update({ username })
       .eq('user_id', userId)
       .select()
-      .single()
+      .maybeSingle()
 
     if (updateError) {
       throw new Error(`Failed to update profile: ${updateError.message}`)
@@ -131,7 +131,7 @@ export const authService = {
       .from('profiles')
       .select('*')
       .eq('user_id', userId)
-      .single()
+      .maybeSingle()
 
     if (profileError || !profile) {
       throw new Error('Profile not found')
@@ -245,7 +245,7 @@ export const authService = {
       .update({ avatar_url: avatarBase64 })
       .eq('user_id', userId)
       .select()
-      .single()
+      .maybeSingle()
 
     if (error) {
       throw new Error(`Failed to update avatar: ${error.message}`)
@@ -259,7 +259,7 @@ export const authService = {
       .from('profiles')
       .select('*')
       .eq('user_id', userId)
-      .single()
+      .maybeSingle()
 
     if (error || !profile) {
       throw new Error('Profile not found')

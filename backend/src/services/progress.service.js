@@ -232,7 +232,7 @@ export const progressService = {
                 updated_at: new Date().toISOString(),
             })
                 .select()
-                .single();
+                .maybeSingle();
             if (insertError) {
                 console.error(`[PROGRESS] updateProfile - Failed to create profile:`, insertError.message);
                 throw new Error(`Failed to create profile: ${insertError.message}`);
