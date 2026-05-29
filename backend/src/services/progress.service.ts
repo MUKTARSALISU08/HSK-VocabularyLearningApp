@@ -261,7 +261,8 @@ export const progressService = {
   async updateProfile(userId: string, updates: Partial<{ xp: number; streak: number; last_study_date: string | null; current_level: string }>) {
     console.log(`[PROGRESS] updateProfile - User ID: ${userId}, updates:`, JSON.stringify(updates))
     
-    const { data, error } = await supabase
+    // First try to update existing profile
+    const { data: updateData, error: updateError } = await supabase
       .from('profiles')
       .update({
         ...updates,
@@ -269,15 +270,34 @@ export const progressService = {
       })
       .eq('user_id', userId)
       .select()
-      .single()
+      .maybeSingle()
 
-    if (error) {
-      console.error(`[PROGRESS] updateProfile - Error:`, error.message)
-      throw new Error(`Failed to update profile: ${error.message}`)
+    // If profile doesn't exist, create it
+    if (updateError || !updateData) {
+      console.log(`[PROGRESS] updateProfile - Profile not found, creating new one for user: ${userId}`)
+      const { data: insertData, error: insertError } = await supabase
+        .from('profiles')
+        .insert({
+          user_id: userId,
+          username: `user_${userId.substring(0, 8)}`,
+          ...updates,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })
+        .select()
+        .single()
+
+      if (insertError) {
+        console.error(`[PROGRESS] updateProfile - Failed to create profile:`, insertError.message)
+        throw new Error(`Failed to create profile: ${insertError.message}`)
+      }
+
+      console.log(`[PROGRESS] updateProfile - Created new profile:`, JSON.stringify(insertData))
+      return insertData
     }
 
-    console.log(`[PROGRESS] updateProfile - Success:`, JSON.stringify(data))
-    return data
+    console.log(`[PROGRESS] updateProfile - Success:`, JSON.stringify(updateData))
+    return updateData
   },
 
   async getProfile(userId: string) {
@@ -285,7 +305,7 @@ export const progressService = {
       .from('profiles')
       .select('*')
       .eq('user_id', userId)
-      .single()
+      .maybeSingle()
 
     if (error) {
       throw new Error(error.message)

@@ -4,7 +4,10 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { authRouter } from './routes/auth.routes';
 import { progressRouter } from './routes/progress.routes';
-dotenv.config();
+// Only load dotenv in development (when not on Render)
+if (!process.env.RENDER) {
+    dotenv.config();
+}
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(cors({

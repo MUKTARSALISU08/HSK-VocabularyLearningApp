@@ -1,6 +1,9 @@
 import { supabase } from '../utils/supabase';
 export const progressService = {
+    // ===== LESSON PROGRESS =====
     async saveLessonProgress(userId, progress) {
+        console.log(`[PROGRESS] saveLessonProgress - User ID: ${userId}`);
+        console.log(`[PROGRESS] saveLessonProgress - Progress data:`, JSON.stringify(progress));
         const { data, error } = await supabase
             .from('lesson_progress')
             .upsert({
@@ -11,8 +14,11 @@ export const progressService = {
         })
             .select();
         if (error) {
+            console.error(`[PROGRESS] saveLessonProgress - Error:`, error.message);
+            console.error(`[PROGRESS] saveLessonProgress - Error details:`, JSON.stringify(error));
             throw new Error(error.message);
         }
+        console.log(`[PROGRESS] saveLessonProgress - Success, data:`, JSON.stringify(data?.[0] || data));
         return data?.[0] || data;
     },
     async getLessonProgress(userId) {
@@ -25,6 +31,7 @@ export const progressService = {
         }
         return data;
     },
+    // ===== QUIZ HISTORY =====
     async saveQuizHistory(userId, history) {
         const { data, error } = await supabase
             .from('quiz_history')
@@ -50,6 +57,7 @@ export const progressService = {
         }
         return data;
     },
+    // ===== FAVORITE WORDS =====
     async addFavoriteWord(userId, word) {
         const { data, error } = await supabase
             .from('favorite_words')
@@ -78,28 +86,20 @@ export const progressService = {
         const { data, error } = await supabase
             .from('favorite_words')
             .select('*')
-            .eq('user_id', userId);
+            .eq('user_id', userId)
+            .order('created_at', { ascending: false });
         if (error) {
             throw new Error(error.message);
         }
         return data;
     },
+    // ===== ACHIEVEMENTS =====
     async addAchievement(userId, achievementId) {
-        const { data: existing } = await supabase
-            .from('achievements')
-            .select('id')
-            .eq('user_id', userId)
-            .eq('achievement_id', achievementId)
-            .maybeSingle();
-        if (existing) {
-            return existing;
-        }
         const { data, error } = await supabase
             .from('achievements')
             .insert({
             user_id: userId,
             achievement_id: achievementId,
-            unlocked_at: new Date().toISOString(),
         })
             .select();
         if (error) {
@@ -117,36 +117,15 @@ export const progressService = {
         }
         return data;
     },
+    // ===== STUDY STATISTICS =====
     async updateStudyStatistics(userId, stats) {
-        const today = new Date().toDateString();
-        const { data: existing } = await supabase
-            .from('study_statistics')
-            .select('*')
-            .eq('user_id', userId)
-            .eq('date', today)
-            .maybeSingle();
-        if (existing) {
-            const { data, error } = await supabase
-                .from('study_statistics')
-                .update({
-                xp_earned: existing.xp_earned + stats.xp_earned,
-                words_learned: existing.words_learned + stats.words_learned,
-                lessons_completed: existing.lessons_completed + stats.lessons_completed,
-                quiz_attempts: existing.quiz_attempts + stats.quiz_attempts,
-            })
-                .eq('id', existing.id)
-                .select();
-            if (error) {
-                throw new Error(error.message);
-            }
-            return data?.[0] || data;
-        }
         const { data, error } = await supabase
             .from('study_statistics')
-            .insert({
+            .upsert({
             user_id: userId,
             ...stats,
-            date: today,
+        }, {
+            onConflict: 'user_id,date'
         })
             .select();
         if (error) {
@@ -165,6 +144,7 @@ export const progressService = {
         }
         return data;
     },
+    // ===== QUIZ MISTAKES =====
     async addQuizMistake(userId, mistake) {
         const { data, error } = await supabase
             .from('quiz_mistakes')
@@ -189,30 +169,24 @@ export const progressService = {
         }
         return data;
     },
-    async addRecentlyLearned(userId, word) {
-        const { data: existing } = await supabase
-            .from('recently_learned')
-            .select('id')
+    async removeQuizMistake(userId, mistakeId) {
+        const { error } = await supabase
+            .from('quiz_mistakes')
+            .delete()
             .eq('user_id', userId)
-            .eq('word_chinese', word.word_chinese)
-            .maybeSingle();
-        if (existing) {
-            const { data, error } = await supabase
-                .from('recently_learned')
-                .update({ learned_at: new Date().toISOString() })
-                .eq('id', existing.id)
-                .select();
-            if (error) {
-                throw new Error(error.message);
-            }
-            return data?.[0] || data;
+            .eq('id', mistakeId);
+        if (error) {
+            throw new Error(error.message);
         }
+        return { success: true };
+    },
+    // ===== RECENTLY LEARNED =====
+    async addRecentlyLearned(userId, learned) {
         const { data, error } = await supabase
             .from('recently_learned')
             .insert({
             user_id: userId,
-            ...word,
-            learned_at: new Date().toISOString(),
+            ...learned,
         })
             .select();
         if (error) {
@@ -220,103 +194,189 @@ export const progressService = {
         }
         return data?.[0] || data;
     },
-    async getRecentlyLearned(userId) {
+    async getRecentlyLearned(userId, limit = 10) {
         const { data, error } = await supabase
             .from('recently_learned')
             .select('*')
             .eq('user_id', userId)
             .order('learned_at', { ascending: false })
-            .limit(10);
+            .limit(limit);
         if (error) {
             throw new Error(error.message);
         }
         return data;
     },
+    // ===== PROFILE =====
     async updateProfile(userId, updates) {
+        console.log(`[PROGRESS] updateProfile - User ID: ${userId}, updates:`, JSON.stringify(updates));
+        // First try to update existing profile
+        const { data: updateData, error: updateError } = await supabase
+            .from('profiles')
+            .update({
+            ...updates,
+            updated_at: new Date().toISOString(),
+        })
+            .eq('user_id', userId)
+            .select()
+            .maybeSingle();
+        // If profile doesn't exist, create it
+        if (updateError || !updateData) {
+            console.log(`[PROGRESS] updateProfile - Profile not found, creating new one for user: ${userId}`);
+            const { data: insertData, error: insertError } = await supabase
+                .from('profiles')
+                .insert({
+                user_id: userId,
+                username: `user_${userId.substring(0, 8)}`,
+                ...updates,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+            })
+                .select()
+                .single();
+            if (insertError) {
+                console.error(`[PROGRESS] updateProfile - Failed to create profile:`, insertError.message);
+                throw new Error(`Failed to create profile: ${insertError.message}`);
+            }
+            console.log(`[PROGRESS] updateProfile - Created new profile:`, JSON.stringify(insertData));
+            return insertData;
+        }
+        console.log(`[PROGRESS] updateProfile - Success:`, JSON.stringify(updateData));
+        return updateData;
+    },
+    async getProfile(userId) {
         const { data, error } = await supabase
             .from('profiles')
-            .update(updates)
+            .select('*')
             .eq('user_id', userId)
-            .select();
+            .maybeSingle();
         if (error) {
             throw new Error(error.message);
         }
-        return data?.[0] || data;
+        return data;
     },
-    async syncProgress(userId, progress) {
-        const promises = [];
-        if (progress.xp !== undefined) {
-            promises.push(this.updateProfile(userId, { xp: progress.xp }));
-        }
-        if (progress.streak !== undefined) {
-            promises.push(this.updateProfile(userId, { streak: progress.streak }));
-        }
-        if (progress.lastStudyDate !== undefined) {
-            promises.push(this.updateProfile(userId, { last_study_date: progress.lastStudyDate }));
-        }
-        if (progress.lessonProgress) {
-            Object.values(progress.lessonProgress).forEach(p => {
-                // Convert camelCase to snake_case for Supabase
-                const lessonProgressData = {
-                    lesson_id: p.lessonId || p.lesson_id,
-                    words_learned: p.wordsLearned || p.words_learned || 0,
-                    total_words: p.totalWords || p.total_words || 0,
-                    is_completed: p.isCompleted || p.is_completed || false,
-                    quiz_score: p.quizScore || p.quiz_score || null,
-                    last_studied: p.lastStudied || p.last_studied || null,
-                };
-                if (lessonProgressData.lesson_id) {
-                    promises.push(this.saveLessonProgress(userId, lessonProgressData));
-                }
+    // ===== DAILY XP =====
+    async saveDailyXP(userId, dailyXP) {
+        console.log(`[PROGRESS] saveDailyXP - Saving ${Object.keys(dailyXP).length} entries for user: ${userId}`);
+        for (const [date, xpAmount] of Object.entries(dailyXP)) {
+            console.log(`[PROGRESS] saveDailyXP - Saving xp_amount: ${xpAmount} for date: ${date}`);
+            const { error } = await supabase
+                .from('daily_xp')
+                .upsert({
+                user_id: userId,
+                date: date,
+                xp_amount: xpAmount,
+            }, {
+                onConflict: 'user_id,date'
             });
+            if (error) {
+                console.error(`[PROGRESS] Failed to save daily XP for ${date}:`, error.message);
+            }
         }
-        if (progress.achievements) {
-            progress.achievements.forEach(a => {
-                promises.push(this.addAchievement(userId, a));
-            });
-        }
-        await Promise.all(promises);
         return { success: true };
     },
-    async getFullProgress(userId) {
-        const [profileResult, lessonProgress, favorites, quizHistory, achievements, statistics, mistakes, recentlyLearned,] = await Promise.all([
-            supabase.from('profiles').select('*').eq('user_id', userId).maybeSingle(),
-            supabase.from('lesson_progress').select('*').eq('user_id', userId),
-            supabase.from('favorite_words').select('*').eq('user_id', userId),
-            supabase.from('quiz_history').select('*').eq('user_id', userId).order('completed_at', { ascending: false }),
-            supabase.from('achievements').select('*').eq('user_id', userId),
-            supabase.from('study_statistics').select('*').eq('user_id', userId).order('date', { ascending: false }),
-            supabase.from('quiz_mistakes').select('*').eq('user_id', userId).order('created_at', { ascending: false }),
-            supabase.from('recently_learned').select('*').eq('user_id', userId).order('learned_at', { ascending: false }).limit(10),
-        ]);
-        // Handle profile being null
-        const profile = profileResult;
-        // Convert lessonProgress array to object for frontend
-        const lessonProgressObj = {};
-        if (lessonProgress.data) {
-            lessonProgress.data.forEach((lp) => {
-                const key = lp.lesson_id || lp.lessonId || lp.id;
-                if (key) {
-                    lessonProgressObj[key] = lp;
-                }
-            });
+    async getDailyXP(userId) {
+        const { data, error } = await supabase
+            .from('daily_xp')
+            .select('*')
+            .eq('user_id', userId)
+            .order('date', { ascending: false });
+        if (error) {
+            throw new Error(error.message);
         }
-        // Extract completed lessons from lessonProgress
-        const completedLessons = lessonProgress.data
-            ? lessonProgress.data
-                .filter((lp) => lp.is_completed || lp.isCompleted)
-                .map((lp) => lp.lesson_id || lp.lessonId || lp.id)
-            : [];
-        return {
-            profile: profile.data,
-            lessonProgress: lessonProgressObj,
-            completedLessons,
-            favorites: favorites.data,
-            quizHistory: quizHistory.data,
-            achievements: achievements.data,
-            statistics: statistics.data,
-            mistakes: mistakes.data,
-            recentlyLearned: recentlyLearned.data,
-        };
+        return data;
+    },
+    // ===== SYNC PROGRESS (SIMPLIFIED) =====
+    async syncProgress(userId, progress) {
+        console.log(`[SYNC] Starting progress sync for user: ${userId}`);
+        console.log(`[SYNC] Progress data:`, JSON.stringify(progress));
+        try {
+            // Update profile fields
+            const profileUpdates = {};
+            if (progress.xp !== undefined)
+                profileUpdates.xp = progress.xp;
+            if (progress.streak !== undefined)
+                profileUpdates.streak = progress.streak;
+            if (progress.lastStudyDate !== undefined)
+                profileUpdates.last_study_date = progress.lastStudyDate;
+            if (Object.keys(profileUpdates).length > 0) {
+                await this.updateProfile(userId, profileUpdates);
+                console.log(`[SYNC] Updated profile:`, Object.keys(profileUpdates));
+            }
+            // Handle completed lessons
+            if (progress.completedLessons && progress.completedLessons.length > 0) {
+                for (const lessonId of progress.completedLessons) {
+                    await this.saveLessonProgress(userId, {
+                        lesson_id: lessonId,
+                        words_learned: 10,
+                        total_words: 10,
+                        is_completed: true,
+                        quiz_score: null,
+                        last_studied: new Date().toISOString(),
+                    });
+                }
+                console.log(`[SYNC] Saved ${progress.completedLessons.length} completed lessons`);
+            }
+            // Handle detailed lesson progress
+            if (progress.lessonProgress) {
+                for (const [lessonId, lp] of Object.entries(progress.lessonProgress)) {
+                    await this.saveLessonProgress(userId, {
+                        lesson_id: lp.lessonId || lp.lesson_id || lessonId,
+                        words_learned: lp.wordsLearned || lp.words_learned || 0,
+                        total_words: lp.totalWords || lp.total_words || 0,
+                        is_completed: lp.isCompleted || lp.is_completed || false,
+                        quiz_score: lp.quizScore || lp.quiz_score || null,
+                        last_studied: lp.lastStudied || lp.last_studied || null,
+                    });
+                }
+                console.log(`[SYNC] Saved ${Object.keys(progress.lessonProgress).length} lesson progress entries`);
+            }
+            // Handle achievements
+            if (progress.achievements && progress.achievements.length > 0) {
+                for (const achievementId of progress.achievements) {
+                    await this.addAchievement(userId, achievementId);
+                }
+                console.log(`[SYNC] Added ${progress.achievements.length} achievements`);
+            }
+            // Handle daily XP
+            if (progress.dailyXP && Object.keys(progress.dailyXP).length > 0) {
+                await this.saveDailyXP(userId, progress.dailyXP);
+                console.log(`[SYNC] Saved ${Object.keys(progress.dailyXP).length} daily XP entries`);
+            }
+            console.log(`[SYNC] Progress sync completed successfully for user: ${userId}`);
+            return { success: true };
+        }
+        catch (error) {
+            console.error(`[SYNC] Progress sync failed for user ${userId}:`, error.message);
+            throw error;
+        }
+    },
+    // ===== GET FULL PROGRESS =====
+    async getFullProgress(userId) {
+        console.log(`[PROGRESS] Loading full progress for user: ${userId}`);
+        try {
+            const [profile, lessonProgressData, dailyXPData, achievementsData, favoritesData, mistakesData, recentlyLearnedData,] = await Promise.all([
+                this.getProfile(userId),
+                this.getLessonProgress(userId),
+                this.getDailyXP(userId),
+                this.getAchievements(userId),
+                this.getFavoriteWords(userId),
+                this.getQuizMistakes(userId),
+                this.getRecentlyLearned(userId),
+            ]);
+            console.log(`[PROGRESS] Loaded full progress for user: ${userId}`);
+            return {
+                profile,
+                lessonProgress: lessonProgressData,
+                dailyXP: dailyXPData,
+                achievements: achievementsData,
+                favorites: favoritesData,
+                mistakes: mistakesData,
+                recentlyLearned: recentlyLearnedData,
+            };
+        }
+        catch (error) {
+            console.error(`[PROGRESS] Failed to load progress for user ${userId}:`, error.message);
+            throw error;
+        }
     },
 };
