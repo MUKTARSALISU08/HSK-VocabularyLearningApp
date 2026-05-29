@@ -161,7 +161,28 @@ export const progressController = {
   async addMistake(req: Request, res: Response) {
     try {
       const userId = req.user?.id as string
-      const mistake = await progressService.saveQuizMistake(userId, req.body)
+      
+      // Transform frontend mistake format to database format
+      const frontendMistake = req.body as {
+        word: { chinese: string; pinyin?: string; english: string }
+        yourAnswer: string
+        correctAnswer: string
+        level: string
+        lessonId: string
+        date?: string
+      }
+      
+      const dbMistake = {
+        lesson_id: frontendMistake.lessonId,
+        word_chinese: frontendMistake.word.chinese,
+        word_pinyin: frontendMistake.word.pinyin || null,
+        word_english: frontendMistake.word.english,
+        your_answer: frontendMistake.yourAnswer,
+        correct_answer: frontendMistake.correctAnswer,
+        level: frontendMistake.level,
+      }
+      
+      const mistake = await progressService.saveQuizMistake(userId, dbMistake)
       
       res.json({ success: true, mistake })
     } catch (error) {
