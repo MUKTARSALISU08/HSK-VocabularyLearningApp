@@ -137,8 +137,10 @@ export const authService = {
       throw new Error('Profile not found')
     }
 
+    // Destructure profile to exclude its id field, keeping only auth user id
+    const { id: _profileId, ...profileData } = profile
     return { 
-      user: { id: userId, email: authData.data.user.email, ...profile }, 
+      user: { id: userId, email: authData.data.user.email, ...profileData }, 
       token 
     }
   },
@@ -164,7 +166,9 @@ export const authService = {
       throw new Error('Profile not found')
     }
 
-    return { user: { id: userId, email: user.user.email, ...profile } }
+    // Destructure profile to exclude its id field, keeping only auth user id
+    const { id: _profileId, ...profileData } = profile
+    return { user: { id: userId, email: user.user.email, ...profileData } }
   },
 
   async logout() {
@@ -267,11 +271,13 @@ export const authService = {
 
     const { data: user } = await supabaseAuth.auth.admin.getUserById(userId)
 
+    // Destructure profile to exclude its id field, keeping only auth user id
+    const { id: _profileId, ...profileData } = profile
     return {
       user: {
         id: userId,
         email: user.user?.email || '',
-        ...profile,
+        ...profileData,
       },
     }
   },
