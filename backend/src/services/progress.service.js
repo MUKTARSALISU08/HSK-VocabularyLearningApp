@@ -525,22 +525,48 @@ export const progressService = {
             const completedLessons = lessonProgress
                 .filter(lp => lp.is_completed)
                 .map(lp => lp.lesson_id);
-            // Transform dailyXP from array to object keyed by date
+            // Transform dailyXP from array to object keyed by date (format matching frontend's toDateString())
             const dailyXPObj = {};
             for (const xp of dailyXP) {
-                dailyXPObj[xp.date] = xp.xp_amount;
+                const dateStr = new Date(xp.date).toDateString();
+                dailyXPObj[dateStr] = xp.xp_amount;
             }
+            console.log(`[PROGRESS] loadFullProgress - dailyXP transformed:`, JSON.stringify(dailyXPObj));
+            // Transform favorite words to match frontend FavoriteWord interface
+            const transformedFavorites = favoriteWords.map(fw => ({
+                chinese: fw.chinese,
+                pinyin: fw.pinyin,
+                english: fw.english,
+                level: fw.level,
+                lessonId: fw.lesson_id || '',
+                addedAt: fw.created_at || new Date().toISOString(),
+            }));
+            // Transform quiz mistakes to match frontend QuizMistake interface
+            const transformedMistakes = quizMistakes.map(qm => ({
+                word: {
+                    chinese: qm.word_chinese,
+                    pinyin: qm.word_pinyin,
+                    english: qm.word_english,
+                },
+                yourAnswer: qm.your_answer,
+                correctAnswer: qm.correct_answer,
+                level: qm.level,
+                lessonId: qm.lesson_id,
+                date: qm.created_at || new Date().toISOString(),
+            }));
+            console.log(`[PROGRESS] loadFullProgress - Transformed favorites count: ${transformedFavorites.length}`);
+            console.log(`[PROGRESS] loadFullProgress - Transformed mistakes count: ${transformedMistakes.length}`);
             return {
                 profile,
                 lessonProgress: lessonProgressObj,
                 dailyXP: dailyXPObj,
                 completedLessons,
                 achievements,
-                favorites: favoriteWords,
-                mistakes: quizMistakes,
+                favorites: transformedFavorites,
+                mistakes: transformedMistakes,
                 recentlyLearned,
                 quizHistory,
-                quizMistakes,
+                quizMistakes: transformedMistakes,
                 studyStatistics,
             };
         }

@@ -57,6 +57,10 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       console.log('[PROGRESS] loadFromCloud - Cloud response received:', response)
 
       if (response.success && response.progress) {
+        console.log('[PROGRESS] loadFromCloud - Raw favorites from backend:', response.progress.favorites)
+        console.log('[PROGRESS] loadFromCloud - Raw mistakes from backend:', response.progress.mistakes)
+        console.log('[PROGRESS] loadFromCloud - Raw dailyXP from backend:', response.progress.dailyXP)
+        
         const loadedProgress: UserProgress = {
           xp: response.progress.profile?.xp ?? 0,
           streak: response.progress.profile?.streak ?? 0,
