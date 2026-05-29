@@ -4,6 +4,16 @@ import type { LessonProgress, QuizHistory, FavoriteWord, Achievement, StudyStati
 export const progressService = {
   // ===== LESSON PROGRESS =====
   async saveLessonProgress(userId: string, progress: Omit<LessonProgress, 'id' | 'user_id' | 'created_at' | 'updated_at'>) {
+    console.log(`[PROGRESS] saveLessonProgress - User ID: ${userId}`)
+    console.log(`[PROGRESS] saveLessonProgress - Progress data:`, JSON.stringify(progress))
+    
+    // Verify user exists in auth.users
+    const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(userId)
+    console.log(`[PROGRESS] saveLessonProgress - Auth user exists:`, authUser?.user ? 'Yes' : 'No')
+    if (authError) {
+      console.error(`[PROGRESS] saveLessonProgress - Auth user lookup error:`, authError.message)
+    }
+    
     const { data, error } = await supabase
       .from('lesson_progress')
       .upsert({
@@ -15,9 +25,12 @@ export const progressService = {
       .select()
 
     if (error) {
+      console.error(`[PROGRESS] saveLessonProgress - Error:`, error.message)
+      console.error(`[PROGRESS] saveLessonProgress - Error details:`, JSON.stringify(error))
       throw new Error(error.message)
     }
 
+    console.log(`[PROGRESS] saveLessonProgress - Success, data:`, JSON.stringify(data?.[0] || data))
     return data?.[0] || data
   },
 
