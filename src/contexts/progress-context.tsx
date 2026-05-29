@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState, useCallback, type React
 import type { UserProgress, FavoriteWord, QuizMistake, LessonProgress } from '@/types'
 import { api } from '@/services/api'
 import { useAuth } from '@/contexts/auth-context'
+import { toast } from 'sonner'
 
 const createEmptyProgress = (): UserProgress => ({
   xp: 0,
@@ -65,7 +66,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
           quizMistakes: [...(response.progress.mistakes || [])],
           lessonProgress: {},
           achievements: [...(response.progress.achievements?.map((a: { achievement_id: string }) => a.achievement_id) || [])],
-          dailyXP: {},
+          dailyXP: { ...(response.progress.dailyXP || {}) },
         }
 
         const lessonProgress = response.progress.lessonProgress as Record<string, LessonProgress> | undefined
@@ -85,12 +86,16 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
         setProgress(loadedProgress)
         console.log('[PROGRESS] loadFromCloud - Successfully loaded from cloud for user:', userId)
+        console.log('[PROGRESS] loadFromCloud - Loaded dailyXP:', Object.keys(loadedProgress.dailyXP))
+        console.log('[PROGRESS] loadFromCloud - Loaded completedLessons:', loadedProgress.completedLessons)
+        console.log('[PROGRESS] loadFromCloud - Loaded lessonProgress:', Object.keys(loadedProgress.lessonProgress))
       } else {
         console.log('[PROGRESS] loadFromCloud - No progress in cloud, starting fresh')
         setProgress(createEmptyProgress())
       }
     } catch (error) {
       console.error('[PROGRESS] loadFromCloud - Failed for user:', userId, error)
+      toast.error('Failed to load progress from cloud')
       setProgress(createEmptyProgress())
     } finally {
       setIsSyncing(false)
@@ -111,10 +116,23 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         lessonProgress: { ...progress.lessonProgress },
         achievements: [...progress.achievements],
         dailyXP: { ...progress.dailyXP },
+        favoriteWords: [...progress.favoriteWords],
+        quizMistakes: [...progress.quizMistakes],
       })
       console.log('[PROGRESS] syncToCloud - Synced progress for user:', userId)
+      console.log('[PROGRESS] syncToCloud - Synced items:', {
+        xp: progress.xp,
+        streak: progress.streak,
+        completedLessons: progress.completedLessons.length,
+        lessonProgress: Object.keys(progress.lessonProgress).length,
+        achievements: progress.achievements.length,
+        dailyXP: Object.keys(progress.dailyXP).length,
+        favoriteWords: progress.favoriteWords.length,
+        quizMistakes: progress.quizMistakes.length,
+      })
     } catch (error) {
       console.error('[PROGRESS] syncToCloud - Failed for user:', userId, error)
+      toast.error('Failed to sync progress to cloud')
     } finally {
       setIsSyncing(false)
     }

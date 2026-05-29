@@ -435,6 +435,8 @@ export const progressService = {
     lessonProgress?: Record<string, any>
     achievements?: string[]
     dailyXP?: Record<string, number>
+    favoriteWords?: Array<{ chinese: string; pinyin?: string; english: string; level: string }>
+    quizMistakes?: Array<{ word: { chinese: string; pinyin?: string; english: string }; yourAnswer: string; correctAnswer: string; level: string; lessonId: string }>
   }) {
     console.log(`[SYNC] Starting progress sync for user: ${userId}`)
     console.log(`[SYNC] Progress data:`, JSON.stringify(progressData))
@@ -516,6 +518,49 @@ export const progressService = {
           } catch (error) {
             console.error(`[SYNC] Failed to save achievement ${achievementId}:`, error)
             // Don't throw error for achievements, just log it
+          }
+        }
+      }
+
+      // Save favorite words
+      if (progressData.favoriteWords && progressData.favoriteWords.length > 0) {
+        console.log(`[SYNC] Processing ${progressData.favoriteWords.length} favorite words`)
+        
+        for (const word of progressData.favoriteWords) {
+          try {
+            await this.addFavoriteWord(userId, {
+              chinese: word.chinese,
+              pinyin: word.pinyin || null,
+              english: word.english,
+              level: word.level,
+            })
+            console.log(`[SYNC] Saved favorite word: ${word.chinese}`)
+          } catch (error) {
+            console.error(`[SYNC] Failed to save favorite word ${word.chinese}:`, error)
+            // Don't throw error for favorites, just log it
+          }
+        }
+      }
+
+      // Save quiz mistakes
+      if (progressData.quizMistakes && progressData.quizMistakes.length > 0) {
+        console.log(`[SYNC] Processing ${progressData.quizMistakes.length} quiz mistakes`)
+        
+        for (const mistake of progressData.quizMistakes) {
+          try {
+            await this.saveQuizMistake(userId, {
+              lesson_id: mistake.lessonId,
+              word_chinese: mistake.word.chinese,
+              word_pinyin: mistake.word.pinyin || null,
+              word_english: mistake.word.english,
+              your_answer: mistake.yourAnswer,
+              correct_answer: mistake.correctAnswer,
+              level: mistake.level,
+            })
+            console.log(`[SYNC] Saved quiz mistake for: ${mistake.word.chinese}`)
+          } catch (error) {
+            console.error(`[SYNC] Failed to save quiz mistake for ${mistake.word.chinese}:`, error)
+            // Don't throw error for mistakes, just log it
           }
         }
       }
