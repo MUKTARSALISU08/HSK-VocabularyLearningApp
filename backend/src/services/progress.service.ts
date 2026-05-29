@@ -235,9 +235,11 @@ export const progressService = {
     
     const { data, error } = await supabase
       .from('quiz_mistakes')
-      .insert({
+      .upsert({
         user_id: userId,
         ...mistake,
+      }, {
+        onConflict: 'user_id,word_chinese,your_answer'
       })
       .select()
 

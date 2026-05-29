@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback, useRef, type ReactNode } from 'react'
 import type { UserProgress, FavoriteWord, QuizMistake, LessonProgress } from '@/types'
 import { api } from '@/services/api'
 import { useAuth } from '@/contexts/auth-context'
@@ -36,10 +36,17 @@ interface ProgressContextType {
 
 const ProgressContext = createContext<ProgressContextType | undefined>(undefined)
 
+const MAX_SYNC_FAILURES = 3
+const MIN_SYNC_INTERVAL = 30000 // 30 seconds minimum between syncs
+
 export function ProgressProvider({ children }: { children: ReactNode }) {
   const [progress, setProgress] = useState<UserProgress>(createEmptyProgress())
   const [isSyncing, setIsSyncing] = useState(false)
+  const [syncFailureCount, setSyncFailureCount] = useState(0)
+  const [lastSyncTime, setLastSyncTime] = useState(0)
   const { user, isAuthenticated } = useAuth()
+  
+  const isSyncingRef = useRef(false)
 
   const loadFromCloud = useCallback(async () => {
     if (!isAuthenticated || !user?.id) {
@@ -61,6 +68,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         console.log('[PROGRESS] loadFromCloud - Raw mistakes from backend:', response.progress.mistakes)
         console.log('[PROGRESS] loadFromCloud - Raw dailyXP from backend:', response.progress.dailyXP)
         
+        // Create new progress object from cloud data - replaces existing state entirely
         const loadedProgress: UserProgress = {
           xp: response.progress.profile?.xp ?? 0,
           streak: response.progress.profile?.streak ?? 0,
@@ -88,7 +96,13 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
           }
         }
 
-        setProgress(loadedProgress)
+        // Direct state replacement - this ensures we don't append to existing mistakes
+        setProgress(prev => {
+          console.log('[PROGRESS] loadFromCloud - Replacing state, old mistakes count:', prev.quizMistakes.length)
+          console.log('[PROGRESS] loadFromCloud - New mistakes count:', loadedProgress.quizMistakes.length)
+          return loadedProgress
+        })
+        
         console.log('[PROGRESS] loadFromCloud - Successfully loaded from cloud for user:', userId)
         console.log('[PROGRESS] loadFromCloud - Loaded dailyXP:', Object.keys(loadedProgress.dailyXP))
         console.log('[PROGRESS] loadFromCloud - Loaded completedLessons:', loadedProgress.completedLessons)
@@ -106,12 +120,27 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     }
   }, [isAuthenticated, user?.id])
 
-  const syncToCloud = useCallback(async () => {
+  const syncToCloud = useCallback(async (force = false) => {
     if (!isAuthenticated || !user?.id) return
 
+    // Rate limiting - don't sync more often than MIN_SYNC_INTERVAL unless forced
+    const now = Date.now()
+    if (!force && now - lastSyncTime < MIN_SYNC_INTERVAL) {
+      console.log('[PROGRESS] syncToCloud - Skipping sync, too soon since last sync')
+      return
+    }
+
+    // Prevent simultaneous sync calls
+    if (isSyncingRef.current) {
+      console.log('[PROGRESS] syncToCloud - Skipping sync, already syncing')
+      return
+    }
+
     const userId = user.id
+    isSyncingRef.current = true
+    setIsSyncing(true)
+    
     try {
-      setIsSyncing(true)
       await api.progress.syncProgress({
         xp: progress.xp,
         streak: progress.streak,
@@ -123,6 +152,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         favoriteWords: [...progress.favoriteWords],
         quizMistakes: [...progress.quizMistakes],
       })
+      
       console.log('[PROGRESS] syncToCloud - Synced progress for user:', userId)
       console.log('[PROGRESS] syncToCloud - Synced items:', {
         xp: progress.xp,
@@ -134,13 +164,27 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         favoriteWords: progress.favoriteWords.length,
         quizMistakes: progress.quizMistakes.length,
       })
+      
+      // Reset failure count on success
+      setSyncFailureCount(0)
+      setLastSyncTime(now)
     } catch (error) {
+      const newFailureCount = syncFailureCount + 1
+      setSyncFailureCount(newFailureCount)
       console.error('[PROGRESS] syncToCloud - Failed for user:', userId, error)
-      toast.error('Failed to sync progress to cloud')
+      console.error('[PROGRESS] syncToCloud - Failure count:', newFailureCount)
+      
+      // Only show error to user after multiple consecutive failures
+      if (newFailureCount >= MAX_SYNC_FAILURES) {
+        toast.error('Failed to sync progress to cloud after multiple attempts')
+      } else {
+        console.log('[PROGRESS] syncToCloud - Silently retrying...')
+      }
     } finally {
+      isSyncingRef.current = false
       setIsSyncing(false)
     }
-  }, [isAuthenticated, user?.id, progress])
+  }, [isAuthenticated, user?.id, progress, lastSyncTime, syncFailureCount])
 
   useEffect(() => {
     console.log('[PROGRESS] Auth state changed - isAuthenticated:', isAuthenticated, 'userId:', user?.id)
@@ -160,7 +204,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
     const syncInterval = setInterval(() => {
       syncToCloud()
-    }, 15000)
+    }, MIN_SYNC_INTERVAL)
 
     return () => clearInterval(syncInterval)
   }, [isAuthenticated, syncToCloud])
