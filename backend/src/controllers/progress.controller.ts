@@ -5,7 +5,7 @@ export const progressController = {
   async getProgress(req: Request, res: Response) {
     try {
       const userId = req.user?.id as string
-      const progress = await progressService.getFullProgress(userId)
+      const progress = await progressService.loadFullProgress(userId)
       
       res.json({ success: true, progress })
     } catch (error) {
@@ -117,7 +117,7 @@ export const progressController = {
     try {
       const userId = req.user?.id as string
       const achievementId = req.body.achievementId
-      const achievement = await progressService.addAchievement(userId, achievementId)
+      const achievement = await progressService.unlockAchievement(userId, achievementId)
       
       res.json({ success: true, achievement })
     } catch (error) {
@@ -139,7 +139,7 @@ export const progressController = {
   async updateStatistics(req: Request, res: Response) {
     try {
       const userId = req.user?.id as string
-      const statistics = await progressService.updateStudyStatistics(userId, req.body)
+      const statistics = await progressService.saveStudyStatistics(userId, req.body)
       
       res.json({ success: true, statistics })
     } catch (error) {
@@ -161,7 +161,7 @@ export const progressController = {
   async addMistake(req: Request, res: Response) {
     try {
       const userId = req.user?.id as string
-      const mistake = await progressService.addQuizMistake(userId, req.body)
+      const mistake = await progressService.saveQuizMistake(userId, req.body)
       
       res.json({ success: true, mistake })
     } catch (error) {

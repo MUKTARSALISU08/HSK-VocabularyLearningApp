@@ -1,9 +1,30 @@
-import { supabase } from '../utils/supabase';
+import { supabase, supabaseAuth } from '../utils/supabase';
+// Helper function to verify user exists in auth.users
+async function verifyUserExists(userId) {
+    try {
+        const { data, error } = await supabaseAuth.auth.admin.getUserById(userId);
+        if (error || !data.user) {
+            console.log(`[PROGRESS] verifyUserExists - User not found in auth.users: ${userId}`);
+            return false;
+        }
+        console.log(`[PROGRESS] verifyUserExists - User found in auth.users: ${userId}`);
+        return true;
+    }
+    catch (error) {
+        console.error(`[PROGRESS] verifyUserExists - Error checking user:`, error);
+        return false;
+    }
+}
 export const progressService = {
     // ===== LESSON PROGRESS =====
     async saveLessonProgress(userId, progress) {
         console.log(`[PROGRESS] saveLessonProgress - User ID: ${userId}`);
         console.log(`[PROGRESS] saveLessonProgress - Progress data:`, JSON.stringify(progress));
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         const { data, error } = await supabase
             .from('lesson_progress')
             .upsert({
@@ -33,6 +54,11 @@ export const progressService = {
     },
     // ===== QUIZ HISTORY =====
     async saveQuizHistory(userId, history) {
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         const { data, error } = await supabase
             .from('quiz_history')
             .insert({
@@ -59,6 +85,11 @@ export const progressService = {
     },
     // ===== FAVORITE WORDS =====
     async addFavoriteWord(userId, word) {
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         const { data, error } = await supabase
             .from('favorite_words')
             .insert({
@@ -80,7 +111,6 @@ export const progressService = {
         if (error) {
             throw new Error(error.message);
         }
-        return { success: true };
     },
     async getFavoriteWords(userId) {
         const { data, error } = await supabase
@@ -94,7 +124,12 @@ export const progressService = {
         return data;
     },
     // ===== ACHIEVEMENTS =====
-    async addAchievement(userId, achievementId) {
+    async unlockAchievement(userId, achievementId) {
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         const { data, error } = await supabase
             .from('achievements')
             .insert({
@@ -111,14 +146,20 @@ export const progressService = {
         const { data, error } = await supabase
             .from('achievements')
             .select('*')
-            .eq('user_id', userId);
+            .eq('user_id', userId)
+            .order('unlocked_at', { ascending: false });
         if (error) {
             throw new Error(error.message);
         }
         return data;
     },
     // ===== STUDY STATISTICS =====
-    async updateStudyStatistics(userId, stats) {
+    async saveStudyStatistics(userId, stats) {
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         const { data, error } = await supabase
             .from('study_statistics')
             .upsert({
@@ -145,7 +186,12 @@ export const progressService = {
         return data;
     },
     // ===== QUIZ MISTAKES =====
-    async addQuizMistake(userId, mistake) {
+    async saveQuizMistake(userId, mistake) {
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         const { data, error } = await supabase
             .from('quiz_mistakes')
             .insert({
@@ -169,24 +215,21 @@ export const progressService = {
         }
         return data;
     },
-    async removeQuizMistake(userId, mistakeId) {
-        const { error } = await supabase
-            .from('quiz_mistakes')
-            .delete()
-            .eq('user_id', userId)
-            .eq('id', mistakeId);
-        if (error) {
-            throw new Error(error.message);
-        }
-        return { success: true };
-    },
     // ===== RECENTLY LEARNED =====
-    async addRecentlyLearned(userId, learned) {
+    async addRecentlyLearned(userId, word) {
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         const { data, error } = await supabase
             .from('recently_learned')
-            .insert({
+            .upsert({
             user_id: userId,
-            ...learned,
+            ...word,
+            learned_at: new Date().toISOString(),
+        }, {
+            onConflict: 'user_id,word_chinese'
         })
             .select();
         if (error) {
@@ -194,85 +237,42 @@ export const progressService = {
         }
         return data?.[0] || data;
     },
-    async getRecentlyLearned(userId, limit = 10) {
+    async getRecentlyLearned(userId) {
         const { data, error } = await supabase
             .from('recently_learned')
             .select('*')
             .eq('user_id', userId)
             .order('learned_at', { ascending: false })
-            .limit(limit);
-        if (error) {
-            throw new Error(error.message);
-        }
-        return data;
-    },
-    // ===== PROFILE =====
-    async updateProfile(userId, updates) {
-        console.log(`[PROGRESS] updateProfile - User ID: ${userId}, updates:`, JSON.stringify(updates));
-        // First try to update existing profile
-        const { data: updateData, error: updateError } = await supabase
-            .from('profiles')
-            .update({
-            ...updates,
-            updated_at: new Date().toISOString(),
-        })
-            .eq('user_id', userId)
-            .select()
-            .maybeSingle();
-        // If profile doesn't exist, create it
-        if (updateError || !updateData) {
-            console.log(`[PROGRESS] updateProfile - Profile not found, creating new one for user: ${userId}`);
-            const { data: insertData, error: insertError } = await supabase
-                .from('profiles')
-                .insert({
-                user_id: userId,
-                username: `user_${userId.substring(0, 8)}`,
-                ...updates,
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
-            })
-                .select()
-                .maybeSingle();
-            if (insertError) {
-                console.error(`[PROGRESS] updateProfile - Failed to create profile:`, insertError.message);
-                throw new Error(`Failed to create profile: ${insertError.message}`);
-            }
-            console.log(`[PROGRESS] updateProfile - Created new profile:`, JSON.stringify(insertData));
-            return insertData;
-        }
-        console.log(`[PROGRESS] updateProfile - Success:`, JSON.stringify(updateData));
-        return updateData;
-    },
-    async getProfile(userId) {
-        const { data, error } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('user_id', userId)
-            .maybeSingle();
+            .limit(20);
         if (error) {
             throw new Error(error.message);
         }
         return data;
     },
     // ===== DAILY XP =====
-    async saveDailyXP(userId, dailyXP) {
-        console.log(`[PROGRESS] saveDailyXP - Saving ${Object.keys(dailyXP).length} entries for user: ${userId}`);
-        for (const [date, xpAmount] of Object.entries(dailyXP)) {
-            console.log(`[PROGRESS] saveDailyXP - Saving xp_amount: ${xpAmount} for date: ${date}`);
-            const { error } = await supabase
-                .from('daily_xp')
-                .upsert({
-                user_id: userId,
-                date: date,
-                xp_amount: xpAmount,
-            }, {
-                onConflict: 'user_id,date'
-            });
-            if (error) {
-                console.error(`[PROGRESS] Failed to save daily XP for ${date}:`, error.message);
-            }
+    async saveDailyXP(userId, date, xpAmount) {
+        console.log(`[PROGRESS] saveDailyXP - User ID: ${userId}, Date: ${date}, XP: ${xpAmount}`);
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
         }
-        return { success: true };
+        const { data, error } = await supabase
+            .from('daily_xp')
+            .upsert({
+            user_id: userId,
+            date: date,
+            xp_amount: xpAmount,
+        }, {
+            onConflict: 'user_id,date'
+        })
+            .select();
+        if (error) {
+            console.error(`[PROGRESS] saveDailyXP - Error:`, error.message);
+            throw new Error(error.message);
+        }
+        console.log(`[PROGRESS] saveDailyXP - Success, data:`, JSON.stringify(data?.[0] || data));
+        return data?.[0] || data;
     },
     async getDailyXP(userId) {
         const { data, error } = await supabase
@@ -285,97 +285,203 @@ export const progressService = {
         }
         return data;
     },
-    // ===== SYNC PROGRESS (SIMPLIFIED) =====
-    async syncProgress(userId, progress) {
+    // ===== PROFILE =====
+    async updateProfile(userId, updates) {
+        console.log(`[PROGRESS] updateProfile - User ID: ${userId}, updates:`, JSON.stringify(updates));
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
+        // First, try to update existing profile
+        const { data: existingProfile, error: fetchError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('user_id', userId)
+            .maybeSingle();
+        if (fetchError) {
+            console.error(`[PROGRESS] updateProfile - Error fetching profile:`, fetchError.message);
+            throw new Error(fetchError.message);
+        }
+        if (existingProfile) {
+            // Update existing profile
+            const { data, error } = await supabase
+                .from('profiles')
+                .update({
+                ...updates,
+                updated_at: new Date().toISOString(),
+            })
+                .eq('user_id', userId)
+                .select()
+                .maybeSingle();
+            if (error) {
+                console.error(`[PROGRESS] updateProfile - Error updating profile:`, error.message);
+                throw new Error(error.message);
+            }
+            console.log(`[PROGRESS] updateProfile - Updated profile:`, JSON.stringify(data));
+            return data;
+        }
+        else {
+            // Create new profile
+            console.log(`[PROGRESS] updateProfile - Profile not found, creating new one for user: ${userId}`);
+            const { data, error } = await supabase
+                .from('profiles')
+                .insert({
+                user_id: userId,
+                ...updates,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+            })
+                .select()
+                .maybeSingle();
+            if (error) {
+                console.error(`[PROGRESS] updateProfile - Failed to create profile:`, error.message);
+                throw new Error(error.message);
+            }
+            console.log(`[PROGRESS] updateProfile - Created profile:`, JSON.stringify(data));
+            return data;
+        }
+    },
+    async getProfile(userId) {
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('user_id', userId)
+            .maybeSingle();
+        if (error) {
+            throw new Error(error.message);
+        }
+        return data;
+    },
+    // ===== FULL PROGRESS SYNC =====
+    async syncProgress(userId, progressData) {
         console.log(`[SYNC] Starting progress sync for user: ${userId}`);
-        console.log(`[SYNC] Progress data:`, JSON.stringify(progress));
+        console.log(`[SYNC] Progress data:`, JSON.stringify(progressData));
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         try {
-            // Update profile fields
-            const profileUpdates = {};
-            if (progress.xp !== undefined)
-                profileUpdates.xp = progress.xp;
-            if (progress.streak !== undefined)
-                profileUpdates.streak = progress.streak;
-            if (progress.lastStudyDate !== undefined)
-                profileUpdates.last_study_date = progress.lastStudyDate;
-            if (Object.keys(profileUpdates).length > 0) {
+            // Update profile (xp, streak, last_study_date)
+            if (progressData.xp !== undefined || progressData.streak !== undefined || progressData.lastStudyDate) {
+                const profileUpdates = {};
+                if (progressData.xp !== undefined) {
+                    profileUpdates.xp = progressData.xp;
+                    console.log(`[SYNC] Updating XP: ${progressData.xp}`);
+                }
+                if (progressData.streak !== undefined) {
+                    profileUpdates.streak = progressData.streak;
+                    console.log(`[SYNC] Updating streak: ${progressData.streak}`);
+                }
+                if (progressData.lastStudyDate) {
+                    profileUpdates.last_study_date = progressData.lastStudyDate;
+                    console.log(`[SYNC] Updating last study date: ${progressData.lastStudyDate}`);
+                }
                 await this.updateProfile(userId, profileUpdates);
                 console.log(`[SYNC] Updated profile:`, Object.keys(profileUpdates));
             }
-            // Handle completed lessons
-            if (progress.completedLessons && progress.completedLessons.length > 0) {
-                for (const lessonId of progress.completedLessons) {
-                    await this.saveLessonProgress(userId, {
-                        lesson_id: lessonId,
-                        words_learned: 10,
-                        total_words: 10,
-                        is_completed: true,
-                        quiz_score: null,
-                        last_studied: new Date().toISOString(),
-                    });
+            // Save lesson progress
+            if (progressData.lessonProgress) {
+                const lessonEntries = Object.entries(progressData.lessonProgress);
+                console.log(`[SYNC] Processing ${lessonEntries.length} lesson progress entries`);
+                for (const [lessonId, progress] of lessonEntries) {
+                    try {
+                        await this.saveLessonProgress(userId, {
+                            lesson_id: lessonId,
+                            words_learned: progress.wordsLearned || 0,
+                            total_words: progress.totalWords || 0,
+                            is_completed: progress.isCompleted || false,
+                            quiz_score: progress.quizScore || null,
+                            last_studied: progress.lastStudied || null,
+                        });
+                        console.log(`[SYNC] Saved lesson progress for ${lessonId}`);
+                    }
+                    catch (error) {
+                        console.error(`[SYNC] Failed to save lesson progress for ${lessonId}:`, error);
+                        throw error;
+                    }
                 }
-                console.log(`[SYNC] Saved ${progress.completedLessons.length} completed lessons`);
             }
-            // Handle detailed lesson progress
-            if (progress.lessonProgress) {
-                for (const [lessonId, lp] of Object.entries(progress.lessonProgress)) {
-                    await this.saveLessonProgress(userId, {
-                        lesson_id: lp.lessonId || lp.lesson_id || lessonId,
-                        words_learned: lp.wordsLearned || lp.words_learned || 0,
-                        total_words: lp.totalWords || lp.total_words || 0,
-                        is_completed: lp.isCompleted || lp.is_completed || false,
-                        quiz_score: lp.quizScore || lp.quiz_score || null,
-                        last_studied: lp.lastStudied || lp.last_studied || null,
-                    });
+            // Save daily XP
+            if (progressData.dailyXP) {
+                const dailyXPEntries = Object.entries(progressData.dailyXP);
+                console.log(`[SYNC] Processing ${dailyXPEntries.length} daily XP entries`);
+                for (const [date, xp] of dailyXPEntries) {
+                    try {
+                        await this.saveDailyXP(userId, date, xp);
+                        console.log(`[SYNC] Saved daily XP for ${date}: ${xp}`);
+                    }
+                    catch (error) {
+                        console.error(`[SYNC] Failed to save daily XP for ${date}:`, error);
+                        throw error;
+                    }
                 }
-                console.log(`[SYNC] Saved ${Object.keys(progress.lessonProgress).length} lesson progress entries`);
             }
-            // Handle achievements
-            if (progress.achievements && progress.achievements.length > 0) {
-                for (const achievementId of progress.achievements) {
-                    await this.addAchievement(userId, achievementId);
+            // Save achievements
+            if (progressData.achievements && progressData.achievements.length > 0) {
+                console.log(`[SYNC] Processing ${progressData.achievements.length} achievements`);
+                for (const achievementId of progressData.achievements) {
+                    try {
+                        await this.unlockAchievement(userId, achievementId);
+                        console.log(`[SYNC] Saved achievement: ${achievementId}`);
+                    }
+                    catch (error) {
+                        console.error(`[SYNC] Failed to save achievement ${achievementId}:`, error);
+                        // Don't throw error for achievements, just log it
+                    }
                 }
-                console.log(`[SYNC] Added ${progress.achievements.length} achievements`);
-            }
-            // Handle daily XP
-            if (progress.dailyXP && Object.keys(progress.dailyXP).length > 0) {
-                await this.saveDailyXP(userId, progress.dailyXP);
-                console.log(`[SYNC] Saved ${Object.keys(progress.dailyXP).length} daily XP entries`);
             }
             console.log(`[SYNC] Progress sync completed successfully for user: ${userId}`);
             return { success: true };
         }
         catch (error) {
-            console.error(`[SYNC] Progress sync failed for user ${userId}:`, error.message);
+            console.error(`[SYNC] Progress sync failed for user ${userId}:`, error);
             throw error;
         }
     },
-    // ===== GET FULL PROGRESS =====
-    async getFullProgress(userId) {
+    // ===== LOAD FULL PROGRESS =====
+    async loadFullProgress(userId) {
         console.log(`[PROGRESS] Loading full progress for user: ${userId}`);
+        // Verify user exists in auth.users
+        const userExists = await verifyUserExists(userId);
+        if (!userExists) {
+            throw new Error(`User ${userId} does not exist in auth.users. Please logout and login again.`);
+        }
         try {
-            const [profile, lessonProgressData, dailyXPData, achievementsData, favoritesData, mistakesData, recentlyLearnedData,] = await Promise.all([
-                this.getProfile(userId),
-                this.getLessonProgress(userId),
-                this.getDailyXP(userId),
-                this.getAchievements(userId),
-                this.getFavoriteWords(userId),
-                this.getQuizMistakes(userId),
-                this.getRecentlyLearned(userId),
-            ]);
+            // Get profile
+            const profile = await this.getProfile(userId);
+            // Get lesson progress
+            const lessonProgress = await this.getLessonProgress(userId);
+            // Get daily XP
+            const dailyXP = await this.getDailyXP(userId);
+            // Get achievements
+            const achievements = await this.getAchievements(userId);
+            // Get favorite words
+            const favoriteWords = await this.getFavoriteWords(userId);
+            // Get recently learned
+            const recentlyLearned = await this.getRecentlyLearned(userId);
+            // Get quiz history
+            const quizHistory = await this.getQuizHistory(userId);
+            // Get quiz mistakes
+            const quizMistakes = await this.getQuizMistakes(userId);
+            // Get study statistics
+            const studyStatistics = await this.getStudyStatistics(userId);
             console.log(`[PROGRESS] Loaded full progress for user: ${userId}`);
             return {
                 profile,
-                lessonProgress: lessonProgressData,
-                dailyXP: dailyXPData,
-                achievements: achievementsData,
-                favorites: favoritesData,
-                mistakes: mistakesData,
-                recentlyLearned: recentlyLearnedData,
+                lessonProgress,
+                dailyXP,
+                achievements,
+                favoriteWords,
+                recentlyLearned,
+                quizHistory,
+                quizMistakes,
+                studyStatistics,
             };
         }
         catch (error) {
-            console.error(`[PROGRESS] Failed to load progress for user ${userId}:`, error.message);
+            console.error(`[PROGRESS] Failed to load progress for user ${userId}:`, error);
             throw error;
         }
     },
