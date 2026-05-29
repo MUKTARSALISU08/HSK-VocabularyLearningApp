@@ -235,11 +235,9 @@ export const progressService = {
     
     const { data, error } = await supabase
       .from('quiz_mistakes')
-      .upsert({
+      .insert({
         user_id: userId,
         ...mistake,
-      }, {
-        onConflict: 'user_id,word_chinese,your_answer'
       })
       .select()
 
@@ -561,18 +559,32 @@ export const progressService = {
       if (progressData.quizMistakes && progressData.quizMistakes.length > 0) {
         console.log(`[SYNC] Processing ${progressData.quizMistakes.length} quiz mistakes`)
         
+        // Get existing mistakes to avoid duplicates
+        const existingMistakes = await this.getQuizMistakes(userId)
+        const existingKeys = new Set(
+          existingMistakes.map(m => `${m.user_id}-${m.word_chinese}-${m.your_answer}`)
+        )
+        
         for (const mistake of progressData.quizMistakes) {
           try {
-            await this.saveQuizMistake(userId, {
-              lesson_id: mistake.lessonId,
-              word_chinese: mistake.word.chinese,
-              word_pinyin: mistake.word.pinyin || null,
-              word_english: mistake.word.english,
-              your_answer: mistake.yourAnswer,
-              correct_answer: mistake.correctAnswer,
-              level: mistake.level,
-            })
-            console.log(`[SYNC] Saved quiz mistake for: ${mistake.word.chinese}`)
+            const mistakeKey = `${userId}-${mistake.word.chinese}-${mistake.yourAnswer}`
+            
+            // Only insert if this exact mistake doesn't already exist
+            if (!existingKeys.has(mistakeKey)) {
+              await this.saveQuizMistake(userId, {
+                lesson_id: mistake.lessonId,
+                word_chinese: mistake.word.chinese,
+                word_pinyin: mistake.word.pinyin || null,
+                word_english: mistake.word.english,
+                your_answer: mistake.yourAnswer,
+                correct_answer: mistake.correctAnswer,
+                level: mistake.level,
+              })
+              console.log(`[SYNC] Saved quiz mistake for: ${mistake.word.chinese}`)
+              existingKeys.add(mistakeKey) // Add to set to prevent duplicates in same sync
+            } else {
+              console.log(`[SYNC] Skipping duplicate quiz mistake for: ${mistake.word.chinese}`)
+            }
           } catch (error) {
             console.error(`[SYNC] Failed to save quiz mistake for ${mistake.word.chinese}:`, error)
             // Don't throw error for mistakes, just log it
