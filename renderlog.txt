@@ -1,0 +1,254 @@
+Search
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 0 daily XP entries
+[SYNC] Saved lesson progress for 1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"75d26733-17c7-40ba-92de-89fb71086dbb","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"1","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:52:16.884628+00:00","updated_at":"2026-05-29T09:52:16.884628+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"1","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved lesson progress for 0
+[PROGRESS] saveLessonProgress - Success, data: {"id":"04f37dc6-339a-46d0-867e-4115058846ec","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:51:33.169203+00:00","updated_at":"2026-05-29T09:51:33.169203+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 2 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:53:01.659+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00"}
+[SYNC] Updating last study date: 2026-05-29T00:00:00+00:00
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 235
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":235,"streak":1,"lastStudyDate":"2026-05-29T00:00:00+00:00","completedLessons":[],"lessonProgress":{"0":{},"1":{}},"achievements":[],"dailyXP":{}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 0 daily XP entries
+[SYNC] Saved lesson progress for 1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"75d26733-17c7-40ba-92de-89fb71086dbb","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"1","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:52:16.884628+00:00","updated_at":"2026-05-29T09:52:16.884628+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"1","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved lesson progress for 0
+[PROGRESS] saveLessonProgress - Success, data: {"id":"04f37dc6-339a-46d0-867e-4115058846ec","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:51:33.169203+00:00","updated_at":"2026-05-29T09:51:33.169203+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 2 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:52:46.481+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00"}
+[SYNC] Updating last study date: 2026-05-29T00:00:00+00:00
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 235
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":235,"streak":1,"lastStudyDate":"2026-05-29T00:00:00+00:00","completedLessons":[],"lessonProgress":{"0":{},"1":{}},"achievements":[],"dailyXP":{}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 0 daily XP entries
+[SYNC] Saved lesson progress for 1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"75d26733-17c7-40ba-92de-89fb71086dbb","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"1","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:52:16.884628+00:00","updated_at":"2026-05-29T09:52:16.884628+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"1","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved lesson progress for 0
+[PROGRESS] saveLessonProgress - Success, data: {"id":"04f37dc6-339a-46d0-867e-4115058846ec","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:51:33.169203+00:00","updated_at":"2026-05-29T09:51:33.169203+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 2 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:52:31.78+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00"}
+[SYNC] Updating last study date: 2026-05-29T00:00:00+00:00
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 235
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":235,"streak":1,"lastStudyDate":"2026-05-29T00:00:00+00:00","completedLessons":[],"lessonProgress":{"0":{},"1":{}},"achievements":[],"dailyXP":{}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 0 daily XP entries
+[SYNC] Saved lesson progress for 1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"75d26733-17c7-40ba-92de-89fb71086dbb","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"1","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:52:16.884628+00:00","updated_at":"2026-05-29T09:52:16.884628+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"1","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved lesson progress for 0
+[PROGRESS] saveLessonProgress - Success, data: {"id":"04f37dc6-339a-46d0-867e-4115058846ec","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:51:33.169203+00:00","updated_at":"2026-05-29T09:51:33.169203+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 2 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:52:16.357+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00"}
+[SYNC] Updating last study date: 2026-05-29T00:00:00+00:00
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 235
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":235,"streak":1,"lastStudyDate":"2026-05-29T00:00:00+00:00","completedLessons":[],"lessonProgress":{"0":{},"1":{}},"achievements":[],"dailyXP":{}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] Loaded full progress for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] Loading full progress for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 0 daily XP entries
+[SYNC] Saved lesson progress for 0
+[PROGRESS] saveLessonProgress - Success, data: {"id":"04f37dc6-339a-46d0-867e-4115058846ec","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:51:33.169203+00:00","updated_at":"2026-05-29T09:51:33.169203+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 1 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:51:48.106+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00"}
+[SYNC] Updating last study date: 2026-05-29T00:00:00+00:00
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 235
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":235,"streak":1,"lastStudyDate":"2026-05-29T00:00:00+00:00","completedLessons":[],"lessonProgress":{"0":{}},"achievements":[],"dailyXP":{}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 0 daily XP entries
+[SYNC] Saved lesson progress for 0
+[PROGRESS] saveLessonProgress - Success, data: {"id":"04f37dc6-339a-46d0-867e-4115058846ec","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null,"created_at":"2026-05-29T09:51:33.169203+00:00","updated_at":"2026-05-29T09:51:33.169203+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"0","words_learned":0,"total_words":0,"is_completed":false,"quiz_score":null,"last_studied":null}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 1 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:51:32.854+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00"}
+[SYNC] Updating last study date: 2026-05-29T00:00:00+00:00
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 235
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":235,"streak":1,"lastStudyDate":"2026-05-29T00:00:00+00:00","completedLessons":[],"lessonProgress":{"0":{}},"achievements":[],"dailyXP":{}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] Loaded full progress for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] Loading full progress for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":235,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:50:57.56+00:00"}
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved daily XP for Fri May 29 2026: 125
+[PROGRESS] saveDailyXP - Success, data: {"id":"46e6f939-4cdf-4d10-b0a8-0e4ec757412f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","date":"2026-05-29","xp_amount":125}
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved lesson progress for hsk1-lesson-1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"be03b510-6776-4195-a24d-df6afafaf63f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"hsk1-lesson-1","words_learned":0,"total_words":0,"is_completed":true,"quiz_score":110,"last_studied":"2026-05-29T09:50:57.098+00:00","created_at":"2026-05-29T09:49:52.558267+00:00","updated_at":"2026-05-29T09:49:52.558267+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveDailyXP - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, Date: Fri May 29 2026, XP: 125
+[SYNC] Processing 1 daily XP entries
+[SYNC] Saved lesson progress for hsk1-lesson-1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"be03b510-6776-4195-a24d-df6afafaf63f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"hsk1-lesson-1","words_learned":15,"total_words":15,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.223+00:00","created_at":"2026-05-29T09:49:52.558267+00:00","updated_at":"2026-05-29T09:49:52.558267+00:00"}
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":235}
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"hsk1-lesson-1","words_learned":0,"total_words":0,"is_completed":true,"quiz_score":110,"last_studied":"2026-05-29T09:50:57.098Z"}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 1 lesson progress entries
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"completedLessons":["hsk1-lesson-1","hsk1-lesson-1"],"lessonProgress":{"hsk1-lesson-1":{"lessonId":"hsk1-lesson-1","isCompleted":true,"quizScore":110,"lastStudied":"2026-05-29T09:50:57.098Z"}}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"hsk1-lesson-1","words_learned":15,"total_words":15,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.223Z"}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 1 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":125,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:50:56.997+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":125,"streak":1,"last_study_date":"Fri May 29 2026"}
+[SYNC] Updating last study date: Fri May 29 2026
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 125
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":125,"streak":1,"lastStudyDate":"Fri May 29 2026","completedLessons":["hsk1-lesson-1"],"lessonProgress":{"hsk1-lesson-1":{"lessonId":"hsk1-lesson-1","wordsLearned":15,"totalWords":15,"isCompleted":true,"lastStudied":"2026-05-29T09:49:56.223Z"}},"achievements":[],"dailyXP":{"Fri May 29 2026":125}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved daily XP for Fri May 29 2026: 125
+[PROGRESS] saveDailyXP - Success, data: {"id":"46e6f939-4cdf-4d10-b0a8-0e4ec757412f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","date":"2026-05-29","xp_amount":125}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveDailyXP - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, Date: Fri May 29 2026, XP: 125
+[SYNC] Processing 1 daily XP entries
+[SYNC] Saved lesson progress for hsk1-lesson-1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"be03b510-6776-4195-a24d-df6afafaf63f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"hsk1-lesson-1","words_learned":15,"total_words":15,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.223+00:00","created_at":"2026-05-29T09:49:52.558267+00:00","updated_at":"2026-05-29T09:49:52.558267+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"hsk1-lesson-1","words_learned":15,"total_words":15,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.223Z"}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 1 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":125,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:50:41.943+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":125,"streak":1,"last_study_date":"Fri May 29 2026"}
+[SYNC] Updating last study date: Fri May 29 2026
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 125
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":125,"streak":1,"lastStudyDate":"Fri May 29 2026","completedLessons":["hsk1-lesson-1"],"lessonProgress":{"hsk1-lesson-1":{"lessonId":"hsk1-lesson-1","wordsLearned":15,"totalWords":15,"isCompleted":true,"lastStudied":"2026-05-29T09:49:56.223Z"}},"achievements":[],"dailyXP":{"Fri May 29 2026":125}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved daily XP for Fri May 29 2026: 125
+[PROGRESS] saveDailyXP - Success, data: {"id":"46e6f939-4cdf-4d10-b0a8-0e4ec757412f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","date":"2026-05-29","xp_amount":125}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveDailyXP - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, Date: Fri May 29 2026, XP: 125
+[SYNC] Processing 1 daily XP entries
+[SYNC] Saved lesson progress for hsk1-lesson-1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"be03b510-6776-4195-a24d-df6afafaf63f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"hsk1-lesson-1","words_learned":15,"total_words":15,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.223+00:00","created_at":"2026-05-29T09:49:52.558267+00:00","updated_at":"2026-05-29T09:49:52.558267+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"hsk1-lesson-1","words_learned":15,"total_words":15,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.223Z"}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 1 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":125,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:50:27.404+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":125,"streak":1,"last_study_date":"Fri May 29 2026"}
+[SYNC] Updating last study date: Fri May 29 2026
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 125
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":125,"streak":1,"lastStudyDate":"Fri May 29 2026","completedLessons":["hsk1-lesson-1"],"lessonProgress":{"hsk1-lesson-1":{"lessonId":"hsk1-lesson-1","wordsLearned":15,"totalWords":15,"isCompleted":true,"lastStudied":"2026-05-29T09:49:56.223Z"}},"achievements":[],"dailyXP":{"Fri May 29 2026":125}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved daily XP for Fri May 29 2026: 125
+[PROGRESS] saveDailyXP - Success, data: {"id":"46e6f939-4cdf-4d10-b0a8-0e4ec757412f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","date":"2026-05-29","xp_amount":125}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveDailyXP - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, Date: Fri May 29 2026, XP: 125
+[SYNC] Processing 1 daily XP entries
+[SYNC] Saved lesson progress for hsk1-lesson-1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"be03b510-6776-4195-a24d-df6afafaf63f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"hsk1-lesson-1","words_learned":15,"total_words":15,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.223+00:00","created_at":"2026-05-29T09:49:52.558267+00:00","updated_at":"2026-05-29T09:49:52.558267+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"hsk1-lesson-1","words_learned":15,"total_words":15,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.223Z"}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 1 lesson progress entries
+[SYNC] Updated profile: [ 'xp', 'streak', 'last_study_date' ]
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":125,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:50:12.046+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":125,"streak":1,"last_study_date":"Fri May 29 2026"}
+[SYNC] Updating last study date: Fri May 29 2026
+[SYNC] Updating streak: 1
+[SYNC] Updating XP: 125
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Progress data: {"xp":125,"streak":1,"lastStudyDate":"Fri May 29 2026","completedLessons":["hsk1-lesson-1"],"lessonProgress":{"hsk1-lesson-1":{"lessonId":"hsk1-lesson-1","wordsLearned":15,"totalWords":15,"isCompleted":true,"lastStudied":"2026-05-29T09:49:56.223Z"}},"achievements":[],"dailyXP":{"Fri May 29 2026":125}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":125,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:49:56.24+00:00"}
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Saved lesson progress for hsk1-lesson-1
+[PROGRESS] saveLessonProgress - Success, data: {"id":"be03b510-6776-4195-a24d-df6afafaf63f","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","lesson_id":"hsk1-lesson-1","words_learned":0,"total_words":0,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.222+00:00","created_at":"2026-05-29T09:49:52.558267+00:00","updated_at":"2026-05-29T09:49:52.558267+00:00"}
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] saveLessonProgress - Progress data: {"lesson_id":"hsk1-lesson-1","words_learned":0,"total_words":0,"is_completed":true,"quiz_score":null,"last_studied":"2026-05-29T09:49:56.222Z"}
+[PROGRESS] saveLessonProgress - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a
+[SYNC] Processing 1 lesson progress entries
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - User ID: a40a2108-6324-48c8-8fae-c078f4fd652a, updates: {"xp":125}
+[SYNC] Progress data: {"completedLessons":["hsk1-lesson-1"],"lessonProgress":{"hsk1-lesson-1":{"lessonId":"hsk1-lesson-1","isCompleted":true,"lastStudied":"2026-05-29T09:49:56.222Z"}}}
+[SYNC] Starting progress sync for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] updateProfile - Updated profile: {"id":"81734bec-a4aa-4d67-b9ec-cab668972ead","user_id":"a40a2108-6324-48c8-8fae-c078f4fd652a","username":"MUKTAR","avatar_url":null,"xp":75,"streak":1,"last_study_date":"2026-05-29T00:00:00+00:00","current_level":"HSK 1","created_at":"2026-05-29T08:00:30.638895+00:00","updated_at":"2026-05-29T09:49:54.986+00:00"}
+[SYNC] Progress sync completed successfully for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] Loaded full progress for user: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] verifyUserExists - User found in auth.users: a40a2108-6324-48c8-8fae-c078f4fd652a
+[PROGRESS] Loading full progress for user: a40a2108-6324-48c8-8fae-c078f4fd652a

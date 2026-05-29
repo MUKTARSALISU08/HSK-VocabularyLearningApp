@@ -468,12 +468,35 @@ export const progressService = {
             // Get study statistics
             const studyStatistics = await this.getStudyStatistics(userId);
             console.log(`[PROGRESS] Loaded full progress for user: ${userId}`);
+            // Transform lessonProgress from array to object keyed by lesson_id
+            const lessonProgressObj = {};
+            for (const lp of lessonProgress) {
+                lessonProgressObj[lp.lesson_id] = {
+                    lessonId: lp.lesson_id,
+                    wordsLearned: lp.words_learned,
+                    totalWords: lp.total_words,
+                    isCompleted: lp.is_completed,
+                    quizScore: lp.quiz_score,
+                    lastStudied: lp.last_studied,
+                };
+            }
+            // Extract completed lessons from lessonProgress
+            const completedLessons = lessonProgress
+                .filter(lp => lp.is_completed)
+                .map(lp => lp.lesson_id);
+            // Transform dailyXP from array to object keyed by date
+            const dailyXPObj = {};
+            for (const xp of dailyXP) {
+                dailyXPObj[xp.date] = xp.xp_amount;
+            }
             return {
                 profile,
-                lessonProgress,
-                dailyXP,
+                lessonProgress: lessonProgressObj,
+                dailyXP: dailyXPObj,
+                completedLessons,
                 achievements,
-                favoriteWords,
+                favorites: favoriteWords,
+                mistakes: quizMistakes,
                 recentlyLearned,
                 quizHistory,
                 quizMistakes,
