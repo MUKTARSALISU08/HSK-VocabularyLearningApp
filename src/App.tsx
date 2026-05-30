@@ -14,6 +14,7 @@ import { SignupPage } from '@/pages/auth/signup-page'
 import { LoginPage } from '@/pages/auth/login-page'
 import { ForgotPasswordPage } from '@/pages/auth/forgot-password-page'
 import { ResetPasswordPage } from '@/pages/auth/reset-password-page'
+import { VerificationNeededPage } from '@/pages/auth/verification-needed-page'
 import { ProfilePage } from '@/pages/profile/profile-page'
 
 function ProtectedLayout({ children }: { children: React.ReactNode }) {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <Route path="/forgot-password" component={ForgotPasswordPage} />
         <Route path="/reset-password" component={ResetPasswordPage} />
+        <Route path="/verification-needed" component={VerificationNeededPage} />
         
         <Route path="/search">
           <ProtectedLayout>

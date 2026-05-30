@@ -39,13 +39,9 @@ export const authService = {
         if (!userId) {
             throw new Error('Failed to create user');
         }
-        // Automatically confirm email to allow immediate login
-        const { error: confirmError } = await supabaseAuth.auth.admin.updateUserById(userId, {
-            email_confirm: true,
-        });
-        if (confirmError) {
-            throw new Error(`Failed to confirm email: ${confirmError.message}`);
-        }
+        // NOTE: Email verification is required - do NOT auto-confirm emails
+        // Users must verify their email before logging in
+        // Supabase will send verification email automatically
         // Wait for trigger to create profile, then fetch it
         let profile = null;
         let attempts = 0;
@@ -74,28 +70,21 @@ export const authService = {
         if (updateError) {
             throw new Error(`Failed to update profile: ${updateError.message}`);
         }
-        // Get Supabase session
+        // Get Supabase session - but this will be null since email isn't confirmed yet
         const { data: session } = await supabaseAuth.auth.getSession();
+        // Return success but NO token - user must verify email first
         return {
             user: { id: userId, email },
             profile: updatedProfile,
-            token: session?.session?.access_token
+            token: null // Do not return token - email must be verified first
         };
     },
     async login(email, password) {
         let authData = await supabaseAuth.auth.signInWithPassword({ email, password });
-        // Handle email not confirmed error
+        // Handle email not confirmed error - SECURITY: Do NOT auto-confirm emails
+        // Users must verify their email before logging in
         if (authData.error && authData.error.message.includes('Email not confirmed')) {
-            const { data: users } = await supabaseAuth.auth.admin.listUsers();
-            const existingUser = users?.users.find(u => u.email === email);
-            if (existingUser) {
-                // Auto-confirm the email
-                await supabaseAuth.auth.admin.updateUserById(existingUser.id, {
-                    email_confirm: true,
-                });
-                // Retry login after confirmation
-                authData = await supabaseAuth.auth.signInWithPassword({ email, password });
-            }
+            throw new Error('Please verify your email address before logging in. Check your inbox for the verification link.');
         }
         // Check for errors after retry
         if (authData.error) {

@@ -30,7 +30,8 @@ export function SignupPage() {
     const result = await signup(email, password, confirmPassword, username)
     
     if (result.success) {
-      toast.success('Account created successfully!')
+      toast.success('Account created successfully! Please check your email to verify your account.')
+      navigate('/verification-needed')
     } else {
       toast.error(result.message)
     }

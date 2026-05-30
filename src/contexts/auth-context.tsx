@@ -71,10 +71,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = async (email: string, password: string, confirmPassword: string, username: string) => {
     const response = await api.auth.signup({ email, password, confirmPassword, username })
+    // SECURITY: Do NOT auto-login after signup - user must verify email first
+    // The backend no longer returns a token for unverified users
     if (response.success) {
-      localStorage.setItem('token', response.token)
-      setUser(response.user)
-      setIsAuthenticated(true)
+      // Clear any existing session state - user must verify email first
+      localStorage.removeItem('token')
+      setUser(null)
+      setIsAuthenticated(false)
     }
     return { success: response.success, message: response.message }
   }
