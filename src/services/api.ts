@@ -52,6 +52,15 @@ export const api = {
       return response.json()
     },
 
+    resendVerification: async (email: string) => {
+      const response = await fetch(`${BASE_URL}/auth/resend-verification`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      return response.json()
+    },
+
     resetPassword: async (password: string, _confirmPassword: string, token: string) => {
       const response = await fetch(`${BASE_URL}/auth/reset-password`, {
         method: 'POST',

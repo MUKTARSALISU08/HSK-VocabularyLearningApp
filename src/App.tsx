@@ -35,7 +35,9 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <Route path="/forgot-password" component={ForgotPasswordPage} />
         <Route path="/reset-password" component={ResetPasswordPage} />
-        <Route path="/verification-needed" component={VerificationNeededPage} />
+        <Route path="/verification-needed">
+          <VerificationNeededPage />
+        </Route>
         
         <Route path="/search">
           <ProtectedLayout>

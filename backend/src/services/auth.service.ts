@@ -176,6 +176,19 @@ export const authService = {
     return { message: 'Password reset email sent' }
   },
 
+  async resendVerification(email: string) {
+    const { error } = await supabaseAuth.auth.resend({
+      type: 'signup',
+      email,
+    })
+    
+    if (error) {
+      throw new Error(`Failed to resend verification email: ${error.message}`)
+    }
+
+    return { message: 'Verification email sent' }
+  },
+
   async resetPassword(token: string, newPassword: string) {
     // Verify token first
     try {

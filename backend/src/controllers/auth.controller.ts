@@ -98,6 +98,23 @@ export const authController = {
     }
   },
 
+  async resendVerification(req: Request, res: Response) {
+    try {
+      const validated = forgotPasswordSchema.parse(req.body)
+      
+      await authService.resendVerification(validated.email)
+      
+      res.json({ success: true, message: 'Verification email sent' })
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error instanceof z.ZodError 
+          ? error.errors.map(e => e.message).join(', ')
+          : (error as Error).message,
+      })
+    }
+  },
+
   async resetPassword(req: Request, res: Response) {
     try {
       const validated = resetPasswordSchema.parse(req.body)

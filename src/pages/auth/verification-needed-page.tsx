@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { Link } from 'wouter'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Mail, CheckCircle, ArrowLeft, RefreshCw } from 'lucide-react'
 import { api } from '@/services/api'
 import { toast } from 'sonner'
 
 interface VerificationNeededPageProps {
   email?: string
+  [key: string]: unknown
 }
 
 export function VerificationNeededPage({ email: initialEmail }: VerificationNeededPageProps) {
@@ -64,6 +66,20 @@ export function VerificationNeededPage({ email: initialEmail }: VerificationNeed
           <p className="text-sm text-yellow-800 dark:text-yellow-200">
             <strong>Important:</strong> If you cannot find the email, please check your Spam or Junk folder.
           </p>
+        </div>
+
+        <div className="space-y-4 mb-6">
+          <div>
+            <label className="text-sm font-medium mb-2 block">Email Address</label>
+            <Input
+              type="email"
+              placeholder="Enter your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={hasResent}
+              className="w-full"
+            />
+          </div>
         </div>
 
         <div className="space-y-3">
