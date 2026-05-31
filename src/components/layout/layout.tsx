@@ -24,7 +24,7 @@ interface LayoutProps {
 }
 
 const navItems = [
-  { href: '/', label: 'Home', icon: Home },
+  { href: '/dashboard', label: 'Home', icon: Home },
   { href: '/lessons', label: 'Lessons', icon: BookOpen },
   { href: '/challenge', label: 'Challenge', icon: Target },
   { href: '/stats', label: 'Statistics', icon: BarChart3 },
