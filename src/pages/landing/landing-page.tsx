@@ -41,26 +41,29 @@ interface FloatingCharacter {
 }
 
 function generateFloatingCharacters(count: number): FloatingCharacter[] {
-  const motionGroups: MotionGroup[] = ['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', 'D', 'D']
-  const depthLayers: DepthLayer[] = ['background', 'background', 'background', 'background', 'middle', 'middle', 'middle', 'foreground', 'foreground', 'foreground']
-
   return Array.from({ length: count }, () => {
-    const motionGroup = motionGroups[Math.floor(Math.random() * motionGroups.length)]
-    const depthLayer = depthLayers[Math.floor(Math.random() * depthLayers.length)]
+    const rand = Math.random()
+    const motionGroup: MotionGroup = rand < 0.3 ? 'A' : rand < 0.6 ? 'B' : rand < 0.8 ? 'C' : 'D'
+    
+    const rand2 = Math.random()
+    const depthLayer: DepthLayer = rand2 < 0.4 ? 'background' : rand2 < 0.7 ? 'middle' : 'foreground'
+    
     const shouldRotate = Math.random() < 0.125
 
-    const layerConfig = ({
-      background: { opacity: [0.08, 0.15, 0.15, 0.08], scale: [0.6, 0.75, 0.75, 0.6], duration: 70, speedMod: 1 },
-      middle: { opacity: [0.15, 0.25, 0.25, 0.15], scale: [0.8, 0.95, 0.95, 0.8], duration: 55, speedMod: 1.3 },
-      foreground: { opacity: [0.25, 0.4, 0.4, 0.25], scale: [0.95, 1.1, 1.1, 0.95], duration: 45, speedMod: 1.6 },
-    } as const)[depthLayer]!
+    const layerConfigs = {
+      background: { opacity: [0.08, 0.15, 0.15, 0.08] as const, scale: [0.6, 0.75, 0.75, 0.6] as const, duration: 70, speedMod: 1 },
+      middle: { opacity: [0.15, 0.25, 0.25, 0.15] as const, scale: [0.8, 0.95, 0.95, 0.8] as const, duration: 55, speedMod: 1.3 },
+      foreground: { opacity: [0.25, 0.4, 0.4, 0.25] as const, scale: [0.95, 1.1, 1.1, 0.95] as const, duration: 45, speedMod: 1.6 },
+    }
+    const layerConfig = layerConfigs[depthLayer]
 
-    const groupConfig = ({
+    const groupConfigs = {
       A: { durationMod: 1, startPos: '-15vw', endPos: '115vw' },
       B: { durationMod: 1.25, startPos: '115vw', endPos: '-15vw' },
       C: { durationMod: 0.85, startPos: '-15vh', endPos: '115vh' },
       D: { durationMod: 1.4, startPos: '115vh', endPos: '-15vh' },
-    } as const)[motionGroup]!
+    }
+    const groupConfig = groupConfigs[motionGroup]
 
     return {
       char: HSK_CHARACTERS[Math.floor(Math.random() * HSK_CHARACTERS.length)],
