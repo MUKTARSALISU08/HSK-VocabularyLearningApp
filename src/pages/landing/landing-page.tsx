@@ -59,58 +59,56 @@ function FloatingCharacters() {
 
   return (
     <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
-      <AnimatePresence>
-        {characters.map((char, i) => {
-          const getAnimation = () => {
-            switch (char.direction) {
-              case 'left':
-                return { x: ['-10%', '110%'] }
-              case 'right':
-                return { x: ['110%', '-10%'] }
-              case 'up':
-                return { y: ['110%', '-10%'] }
-              case 'down':
-                return { y: ['-10%', '110%'] }
-            }
+      {characters.map((char, i) => {
+        const getAnimation = () => {
+          switch (char.direction) {
+            case 'left':
+              return { x: ['-10%', '110%'] }
+            case 'right':
+              return { x: ['110%', '-10%'] }
+            case 'up':
+              return { y: ['110%', '-10%'] }
+            case 'down':
+              return { y: ['-10%', '110%'] }
           }
+        }
 
-          return (
-            <motion.div
-              key={i}
-              className="absolute select-none"
-              style={{ left: `${char.x}%`, top: `${char.y}%` }}
-              initial={{ opacity: 0 }}
-              animate={{
-                ...getAnimation(),
-                opacity: [0, char.opacity, char.opacity, 0],
-                scale: [0.5, char.scale, char.scale, 0.5],
-                rotate: [0, char.rotate],
-              }}
-              transition={{
-                duration: char.duration,
-                delay: char.delay,
-                repeat: Infinity,
-                ease: 'linear',
+        return (
+          <motion.div
+            key={i}
+            className="absolute select-none"
+            style={{ left: `${char.x}%`, top: `${char.y}%` }}
+            initial={{ opacity: 0 }}
+            animate={{
+              ...getAnimation(),
+              opacity: [0, char.opacity, char.opacity, 0],
+              scale: [0.5, char.scale, char.scale, 0.5],
+              rotate: [0, char.rotate],
+            }}
+            transition={{
+              duration: char.duration,
+              delay: char.delay,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          >
+            <span
+              className="text-5xl md:text-6xl lg:text-7xl font-bold inline-block"
+              style={{
+                color: char.colorConfig.color,
+                textShadow: `
+                  0 0 15px ${char.colorConfig.glow},
+                  0 0 30px ${char.colorConfig.glow},
+                  0 0 45px ${char.colorConfig.glow}
+                `,
+                filter: 'blur(0.5px)',
               }}
             >
-              <span
-                className="text-5xl md:text-6xl lg:text-7xl font-bold inline-block"
-                style={{
-                  color: char.colorConfig.color,
-                  textShadow: `
-                    0 0 15px ${char.colorConfig.glow},
-                    0 0 30px ${char.colorConfig.glow},
-                    0 0 45px ${char.colorConfig.glow}
-                  `,
-                  filter: 'blur(0.5px)',
-                }}
-              >
-                {char.char}
-              </span>
-            </motion.div>
-          )
-        })}
-      </AnimatePresence>
+              {char.char}
+            </span>
+          </motion.div>
+        )
+      })}
     </div>
   )
 }
