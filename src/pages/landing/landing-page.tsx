@@ -43,38 +43,46 @@ interface FloatingCharacter {
 function generateFloatingCharacters(count: number): FloatingCharacter[] {
   return Array.from({ length: count }, () => {
     const rand = Math.random()
-    const motionGroup: MotionGroup = rand < 0.3 ? 'A' : rand < 0.6 ? 'B' : rand < 0.8 ? 'C' : 'D'
+    const motionGroup = rand < 0.3 ? 'A' : rand < 0.6 ? 'B' : rand < 0.8 ? 'C' : 'D'
     
     const rand2 = Math.random()
-    const depthLayer: DepthLayer = rand2 < 0.4 ? 'background' : rand2 < 0.7 ? 'middle' : 'foreground'
+    const depthLayer = rand2 < 0.4 ? 'background' : rand2 < 0.7 ? 'middle' : 'foreground'
     
     const shouldRotate = Math.random() < 0.125
 
-    const layerConfigs = {
-      background: { opacity: [0.08, 0.15, 0.15, 0.08] as const, scale: [0.6, 0.75, 0.75, 0.6] as const, duration: 70, speedMod: 1 },
-      middle: { opacity: [0.15, 0.25, 0.25, 0.15] as const, scale: [0.8, 0.95, 0.95, 0.8] as const, duration: 55, speedMod: 1.3 },
-      foreground: { opacity: [0.25, 0.4, 0.4, 0.25] as const, scale: [0.95, 1.1, 1.1, 0.95] as const, duration: 45, speedMod: 1.6 },
-    }
-    const layerConfig = layerConfigs[depthLayer]
+    let opacity: readonly [number, number, number, number]
+    let scale: readonly [number, number, number, number]
+    let duration: number
 
-    const groupConfigs = {
-      A: { durationMod: 1, startPos: '-15vw', endPos: '115vw' },
-      B: { durationMod: 1.25, startPos: '115vw', endPos: '-15vw' },
-      C: { durationMod: 0.85, startPos: '-15vh', endPos: '115vh' },
-      D: { durationMod: 1.4, startPos: '115vh', endPos: '-15vh' },
+    if (depthLayer === 'background') {
+      opacity = [0.08, 0.15, 0.15, 0.08]
+      scale = [0.6, 0.75, 0.75, 0.6]
+      duration = 70
+    } else if (depthLayer === 'middle') {
+      opacity = [0.15, 0.25, 0.25, 0.15]
+      scale = [0.8, 0.95, 0.95, 0.8]
+      duration = 55
+    } else {
+      opacity = [0.25, 0.4, 0.4, 0.25]
+      scale = [0.95, 1.1, 1.1, 0.95]
+      duration = 45
     }
-    const groupConfig = groupConfigs[motionGroup]
+
+    let durationMod = 1
+    if (motionGroup === 'B') durationMod = 1.25
+    else if (motionGroup === 'C') durationMod = 0.85
+    else if (motionGroup === 'D') durationMod = 1.4
 
     return {
       char: HSK_CHARACTERS[Math.floor(Math.random() * HSK_CHARACTERS.length)],
       x: Math.random() * 90 + 5,
       y: Math.random() * 90 + 5,
-      duration: layerConfig.duration * groupConfig.durationMod + Math.random() * 20,
+      duration: duration * durationMod + Math.random() * 20,
       delay: Math.random() * 20,
-      motionGroup,
-      depthLayer,
-      opacity: layerConfig.opacity,
-      scale: layerConfig.scale,
+      motionGroup: motionGroup as MotionGroup,
+      depthLayer: depthLayer as DepthLayer,
+      opacity,
+      scale,
       shouldRotate,
       rotateAmount: -5 + Math.random() * 10,
       colorConfig: PREMIUM_COLORS[Math.floor(Math.random() * PREMIUM_COLORS.length)],
