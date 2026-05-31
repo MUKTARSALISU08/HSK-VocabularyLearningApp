@@ -33,8 +33,8 @@ interface FloatingCharacter {
   delay: number
   motionGroup: MotionGroup
   depthLayer: DepthLayer
-  opacity: number
-  scale: number
+  opacity: readonly [number, number, number, number]
+  scale: readonly [number, number, number, number]
   shouldRotate: boolean
   rotateAmount: number
   colorConfig: typeof PREMIUM_COLORS[0]
@@ -59,6 +59,7 @@ function generateFloatingCharacters(count: number): FloatingCharacter[] {
     let opacity: readonly [number, number, number, number] = [0.08, 0.15, 0.15, 0.08]
     let scale: readonly [number, number, number, number] = [0.6, 0.75, 0.75, 0.6]
     let duration = 70
+    let durationMod = 1
 
     if (depthLayer === 'middle') {
       opacity = [0.15, 0.25, 0.25, 0.15]
@@ -70,12 +71,11 @@ function generateFloatingCharacters(count: number): FloatingCharacter[] {
       duration = 45
     }
 
-    let durationMod = 1
     if (motionGroup === 'B') durationMod = 1.25
     else if (motionGroup === 'C') durationMod = 0.85
     else if (motionGroup === 'D') durationMod = 1.4
 
-    result.push({
+    const item: FloatingCharacter = {
       char: HSK_CHARACTERS[Math.floor(Math.random() * HSK_CHARACTERS.length)],
       x: Math.random() * 90 + 5,
       y: Math.random() * 90 + 5,
@@ -88,7 +88,8 @@ function generateFloatingCharacters(count: number): FloatingCharacter[] {
       shouldRotate,
       rotateAmount: -5 + Math.random() * 10,
       colorConfig: PREMIUM_COLORS[Math.floor(Math.random() * PREMIUM_COLORS.length)],
-    })
+    }
+    result.push(item)
   }
   return result
 }
@@ -119,8 +120,8 @@ function FloatingCharacters() {
             initial={{ opacity: 0 }}
             animate={{
               ...getAnimation(),
-              opacity: char.opacity,
-              scale: char.scale,
+              opacity: char.opacity as [number, number, number, number],
+              scale: char.scale as [number, number, number, number],
               rotate: char.shouldRotate ? [0, char.rotateAmount, 0, -char.rotateAmount, 0] : 0,
             }}
             transition={{
