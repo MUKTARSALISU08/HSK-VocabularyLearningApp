@@ -13,14 +13,17 @@ const HSK_CHARACTERS = [
   '秒', '早', '午', '晚', '今', '天', '明', '月', '年', '岁'
 ]
 
-const CHARACTER_COLORS = [
-  { color: '#E63946', glow: 'rgba(230, 57, 70, 0.5)', name: 'Chinese Red' },
-  { color: '#2A9D8F', glow: 'rgba(42, 157, 143, 0.5)', name: 'Jade Green' },
-  { color: '#F4A261', glow: 'rgba(244, 162, 97, 0.5)', name: 'Gold' },
-  { color: '#4EA8DE', glow: 'rgba(78, 168, 222, 0.5)', name: 'Sky Blue' },
-  { color: '#9D4EDD', glow: 'rgba(157, 78, 221, 0.5)', name: 'Purple' },
-  { color: '#10B981', glow: 'rgba(16, 185, 129, 0.5)', name: 'Emerald' },
+const PREMIUM_COLORS = [
+  { color: '#6366F1', glow: 'rgba(99, 102, 241, 0.4)', name: 'Indigo' },
+  { color: '#8B5CF6', glow: 'rgba(139, 92, 246, 0.4)', name: 'Purple' },
+  { color: '#06B6D4', glow: 'rgba(6, 182, 212, 0.4)', name: 'Cyan' },
+  { color: '#0EA5E9', glow: 'rgba(14, 165, 233, 0.4)', name: 'Sky Blue' },
+  { color: '#F59E0B', glow: 'rgba(245, 158, 11, 0.35)', name: 'Gold' },
+  { color: '#10B981', glow: 'rgba(16, 185, 129, 0.35)', name: 'Soft Emerald' },
 ]
+
+type MotionGroup = 'A' | 'B' | 'C' | 'D'
+type DepthLayer = 'background' | 'middle' | 'foreground'
 
 interface FloatingCharacter {
   char: string
@@ -28,47 +31,70 @@ interface FloatingCharacter {
   y: number
   duration: number
   delay: number
-  direction: 'left' | 'right' | 'up' | 'down'
+  motionGroup: MotionGroup
+  depthLayer: DepthLayer
   opacity: number
   scale: number
-  rotate: number
-  colorConfig: typeof CHARACTER_COLORS[0]
+  shouldRotate: boolean
+  rotateAmount: number
+  colorConfig: typeof PREMIUM_COLORS[0]
 }
 
 function generateFloatingCharacters(count: number): FloatingCharacter[] {
+  const motionGroups: MotionGroup[] = ['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', 'D', 'D']
+  const depthLayers: DepthLayer[] = ['background', 'background', 'background', 'background', 'middle', 'middle', 'middle', 'foreground', 'foreground', 'foreground']
+
   return Array.from({ length: count }, () => {
-    const colorConfig = CHARACTER_COLORS[Math.floor(Math.random() * CHARACTER_COLORS.length)]
+    const motionGroup = motionGroups[Math.floor(Math.random() * motionGroups.length)]
+    const depthLayer = depthLayers[Math.floor(Math.random() * depthLayers.length)]
+    const shouldRotate = Math.random() < 0.125
+
+    const layerConfig = {
+      background: { opacity: [0.08, 0.15, 0.15, 0.08], scale: [0.6, 0.75, 0.75, 0.6], duration: 70, speedMod: 1 },
+      middle: { opacity: [0.15, 0.25, 0.25, 0.15], scale: [0.8, 0.95, 0.95, 0.8], duration: 55, speedMod: 1.3 },
+      foreground: { opacity: [0.25, 0.4, 0.4, 0.25], scale: [0.95, 1.1, 1.1, 0.95], duration: 45, speedMod: 1.6 },
+    }[depthLayer]
+
+    const groupConfig = {
+      A: { durationMod: 1, startPos: '-15vw', endPos: '115vw' },
+      B: { durationMod: 1.25, startPos: '115vw', endPos: '-15vw' },
+      C: { durationMod: 0.85, startPos: '-15vh', endPos: '115vh' },
+      D: { durationMod: 1.4, startPos: '115vh', endPos: '-15vh' },
+    }[motionGroup]
+
     return {
       char: HSK_CHARACTERS[Math.floor(Math.random() * HSK_CHARACTERS.length)],
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      duration: 40 + Math.random() * 30,
-      delay: Math.random() * 15,
-      direction: ['left', 'right', 'up', 'down'][Math.floor(Math.random() * 4)] as FloatingCharacter['direction'],
-      opacity: 0.15 + Math.random() * 0.25,
-      scale: 0.6 + Math.random() * 0.8,
-      rotate: -10 + Math.random() * 20,
-      colorConfig,
+      x: Math.random() * 90 + 5,
+      y: Math.random() * 90 + 5,
+      duration: layerConfig.duration * groupConfig.durationMod + Math.random() * 20,
+      delay: Math.random() * 20,
+      motionGroup,
+      depthLayer,
+      opacity: layerConfig.opacity,
+      scale: layerConfig.scale,
+      shouldRotate,
+      rotateAmount: -5 + Math.random() * 10,
+      colorConfig: PREMIUM_COLORS[Math.floor(Math.random() * PREMIUM_COLORS.length)],
     }
   })
 }
 
 function FloatingCharacters() {
-  const [characters] = useState(() => generateFloatingCharacters(60))
+  const [characters] = useState(() => generateFloatingCharacters(50))
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {characters.map((char, i) => {
         const getAnimation = () => {
-          switch (char.direction) {
-            case 'left':
-              return { translateX: ['-100%', '110vw'] }
-            case 'right':
-              return { translateX: ['110vw', '-100%'] }
-            case 'up':
-              return { translateY: ['110vh', '-100%'] }
-            case 'down':
-              return { translateY: ['-100%', '110vh'] }
+          switch (char.motionGroup) {
+            case 'A':
+              return { translateX: ['-15vw', '115vw'] }
+            case 'B':
+              return { translateX: ['115vw', '-15vw'] }
+            case 'C':
+              return { translateY: ['-15vh', '115vh'] }
+            case 'D':
+              return { translateY: ['115vh', '-15vh'] }
           }
         }
 
@@ -79,14 +105,20 @@ function FloatingCharacters() {
             initial={{ opacity: 0 }}
             animate={{
               ...getAnimation(),
-              opacity: [0, char.opacity, char.opacity, 0],
-              scale: [0.5, char.scale, char.scale, 0.5],
+              opacity: char.opacity,
+              scale: char.scale,
+              rotate: char.shouldRotate ? [0, char.rotateAmount, 0, -char.rotateAmount, 0] : 0,
             }}
             transition={{
               duration: char.duration,
               delay: char.delay,
               repeat: Infinity,
               ease: 'linear',
+              rotate: char.shouldRotate ? {
+                duration: char.duration * 0.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              } : {},
             }}
             style={{
               left: `${char.x}%`,
@@ -94,16 +126,21 @@ function FloatingCharacters() {
             }}
           >
             <span
-              className="text-3xl md:text-4xl lg:text-5xl font-bold inline-block"
+              className={
+                char.depthLayer === 'foreground'
+                  ? 'text-4xl md:text-5xl lg:text-6xl font-bold inline-block'
+                  : char.depthLayer === 'middle'
+                  ? 'text-3xl md:text-4xl lg:text-5xl font-bold inline-block'
+                  : 'text-2xl md:text-3xl lg:text-4xl font-bold inline-block'
+              }
               style={{
                 color: char.colorConfig.color,
                 textShadow: `
-                  0 0 15px ${char.colorConfig.glow},
-                  0 0 30px ${char.colorConfig.glow},
-                  0 0 45px ${char.colorConfig.glow}
+                  0 0 10px ${char.colorConfig.glow},
+                  0 0 20px ${char.colorConfig.glow},
+                  0 0 30px ${char.colorConfig.glow}
                 `,
-                filter: 'blur(0.5px)',
-                transform: `rotate(${char.rotate}deg)`,
+                filter: 'blur(0.3px)',
               }}
             >
               {char.char}
