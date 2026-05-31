@@ -55,22 +55,22 @@ function generateFloatingCharacters(count: number): FloatingCharacter[] {
 
 function FloatingCharacters() {
   const [characters] = useState(() => generateFloatingCharacters(60))
-  const constraintsRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div ref={constraintsRef} className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
       <AnimatePresence>
         {characters.map((char, i) => {
           const getAnimation = () => {
             switch (char.direction) {
               case 'left':
-                return { x: [-100, window.innerWidth + 100] }
+                return { x: ['-10%', '110%'] }
               case 'right':
-                return { x: [window.innerWidth + 100, -100] }
+                return { x: ['110%', '-10%'] }
               case 'up':
-                return { y: [window.innerHeight + 100, -100] }
+                return { y: ['110%', '-10%'] }
               case 'down':
-                return { y: [-100, window.innerHeight + 100] }
+                return { y: ['-10%', '110%'] }
             }
           }
 
@@ -143,24 +143,24 @@ function Navbar() {
         isScrolled ? 'bg-white/90 dark:bg-slate-900/90 backdrop-blur-lg shadow-lg' : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <motion.div
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 shrink-0"
             whileHover={{ scale: 1.05 }}
           >
             <Book className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 bg-clip-text text-transparent whitespace-nowrap">
               HSK Learning
             </span>
           </motion.div>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8 shrink-0">
             {['Home', 'Features', 'About'].map((item) => (
               <motion.button
                 key={item}
                 onClick={() => scrollToSection(item.toLowerCase())}
-                className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative"
+                className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative whitespace-nowrap"
                 whileHover={{ y: -2 }}
               >
                 {item}
@@ -173,7 +173,7 @@ function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4 shrink-0">
             <Link href="/login">
               <Button variant="ghost" className="font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">Login</Button>
             </Link>
@@ -185,7 +185,7 @@ function Navbar() {
           </div>
 
           <button
-            className="md:hidden p-2 text-slate-600 dark:text-slate-300"
+            className="md:hidden p-2 text-slate-600 dark:text-slate-300 shrink-0"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -201,7 +201,7 @@ function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 overflow-hidden"
           >
-            <div className="px-4 py-4 space-y-3">
+            <div className="w-full max-w-7xl mx-auto px-4 py-4 space-y-3">
               {['Home', 'Features', 'About'].map((item) => (
                 <button
                   key={item}
@@ -244,8 +244,8 @@ function FeaturesSection() {
   const ref = useRef(null)
 
   return (
-    <section id="features" ref={ref} className="py-20 md:py-28 bg-slate-50 dark:bg-slate-900/50 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="features" ref={ref} className="w-full py-20 md:py-28 bg-slate-50 dark:bg-slate-900/50 overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -255,7 +255,7 @@ function FeaturesSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
             Powerful <span className="text-blue-600 dark:text-blue-400">Features</span>
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto px-4">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Everything you need to master Chinese vocabulary effectively
           </p>
         </motion.div>
@@ -269,7 +269,7 @@ function FeaturesSection() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 hover:shadow-xl hover:shadow-blue-500/10 dark:hover:shadow-violet-500/10 hover:border-blue-300 dark:hover:border-violet-700 transition-all duration-300"
+              className="w-full bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 hover:shadow-xl hover:shadow-blue-500/10 dark:hover:shadow-violet-500/10 hover:border-blue-300 dark:hover:border-violet-700 transition-all duration-300"
             >
               <motion.div
                 whileHover={{ rotate: 5, scale: 1.1 }}
@@ -297,8 +297,8 @@ function JourneySection() {
   ]
 
   return (
-    <section className="py-20 md:py-28 bg-white dark:bg-slate-900 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full py-20 md:py-28 bg-white dark:bg-slate-900 overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -308,13 +308,13 @@ function JourneySection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
             Your Learning <span className="text-blue-600 dark:text-blue-400">Journey</span>
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto px-4">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Follow these steps to become fluent in Chinese
           </p>
         </motion.div>
 
         <div className="relative max-w-3xl mx-auto">
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 via-violet-500 to-blue-600" />
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-600 via-violet-500 to-blue-600 md:-translate-x-1/2" />
 
           {steps.map((step, i) => (
             <motion.div
@@ -325,8 +325,8 @@ function JourneySection() {
               transition={{ delay: i * 0.15 }}
               className="relative flex items-start gap-4 md:gap-6 mb-8 md:mb-10 pl-12 md:pl-0"
             >
-              <div className="flex-1 md:text-center">
-                <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-4 md:p-6 border border-slate-200 dark:border-slate-700 shadow-lg inline-block w-full md:max-w-sm">
+              <div className="flex-1 min-w-0 md:text-center">
+                <div className="w-full md:max-w-sm md:mx-auto bg-slate-50 dark:bg-slate-800 rounded-xl p-4 md:p-6 border border-slate-200 dark:border-slate-700 shadow-lg">
                   <h3 className="text-lg md:text-xl font-semibold mb-1 md:mb-2 text-slate-900 dark:text-white">{step.title}</h3>
                   <p className="text-sm md:text-base text-slate-600 dark:text-slate-400">{step.description}</p>
                 </div>
@@ -337,7 +337,7 @@ function JourneySection() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.15 + 0.1, type: 'spring', stiffness: 200 }}
-                className="absolute left-0 md:relative md:left-auto md:translate-x-0 w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-600/40 z-10 shrink-0"
+                className="absolute left-0 md:relative md:left-auto w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-600/40 z-10 shrink-0"
               >
                 {i + 1}
               </motion.div>
@@ -383,8 +383,8 @@ function StatsSection() {
   ]
 
   return (
-    <section className="py-20 md:py-28 bg-gradient-to-br from-blue-50 via-slate-50 to-violet-50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="w-full py-20 md:py-28 bg-gradient-to-br from-blue-50 via-slate-50 to-violet-50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950 overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -394,12 +394,12 @@ function StatsSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
             Platform <span className="text-blue-600 dark:text-blue-400">Statistics</span>
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto px-4">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Numbers that showcase our commitment to excellence
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -428,8 +428,8 @@ const WHY_CHOOSE = [
 
 function WhyChooseSection() {
   return (
-    <section id="about" className="py-20 md:py-28 bg-white dark:bg-slate-900 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="w-full py-20 md:py-28 bg-white dark:bg-slate-900 overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -439,12 +439,12 @@ function WhyChooseSection() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-slate-900 dark:text-white">
             Why Choose <span className="text-blue-600 dark:text-blue-400">This Platform</span>
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto px-4">
+          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Experience the future of language learning
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
           {WHY_CHOOSE.map((item, i) => (
             <motion.div
               key={item.title}
@@ -453,7 +453,7 @@ function WhyChooseSection() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
-              className="flex items-start gap-4 p-5 md:p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl hover:border-blue-300 dark:hover:border-violet-700 transition-all duration-300"
+              className="w-full flex items-start gap-4 p-5 md:p-6 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl hover:border-blue-300 dark:hover:border-violet-700 transition-all duration-300"
             >
               <motion.div
                 whileHover={{ rotate: 360 }}
@@ -462,7 +462,7 @@ function WhyChooseSection() {
               >
                 <item.icon className="w-6 h-6 text-white" />
               </motion.div>
-              <div>
+              <div className="min-w-0">
                 <h3 className="font-semibold text-base md:text-lg mb-1 text-slate-900 dark:text-white">{item.title}</h3>
                 <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">{item.description}</p>
               </div>
@@ -480,11 +480,11 @@ function HeroSection() {
   const scale = useTransform(scrollY, [0, 400], [1, 0.8])
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-blue-50 to-violet-50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950 pt-16 md:pt-20">
+    <section id="home" className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-blue-50 to-violet-50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950 pt-16 md:pt-20">
       <FloatingCharacters />
       <motion.div
         style={{ opacity, scale }}
-        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center"
+        className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -506,7 +506,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-base md:text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 md:mb-10 px-4 leading-relaxed"
+          className="text-base md:text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed"
         >
           Learn HSK vocabulary through interactive lessons, quizzes, progress tracking,
           achievements, and cloud synchronization.
@@ -516,13 +516,13 @@ function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4"
         >
           <Link href="/signup">
             <motion.div
               whileHover={{ scale: 1.05, boxShadow: '0 0 50px rgba(37, 99, 235, 0.5)' }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold bg-gradient-to-r from-blue-600 to-violet-600 text-white rounded-full shadow-xl shadow-blue-600/30 hover:shadow-2xl hover:shadow-blue-600/40 transition-all cursor-pointer inline-block"
+              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold bg-gradient-to-r from-blue-600 to-violet-600 text-white rounded-full shadow-xl shadow-blue-600/30 hover:shadow-2xl hover:shadow-blue-600/40 transition-all cursor-pointer inline-block whitespace-nowrap"
             >
               Get Started
             </motion.div>
@@ -531,7 +531,7 @@ function HeroSection() {
             variant="outline"
             size="lg"
             onClick={() => scrollToSection('features')}
-            className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold rounded-full border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-blue-400 dark:hover:border-violet-400 w-full sm:w-auto transition-all duration-300"
+            className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold rounded-full border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-blue-400 dark:hover:border-violet-400 transition-all duration-300 whitespace-nowrap"
           >
             Learn More
             <ChevronDown className="ml-2 w-4 h-4 md:w-5 md:h-5" />
@@ -559,29 +559,28 @@ function HeroSection() {
 
 function CTASection() {
   return (
-    <section className="py-20 md:py-28 bg-gradient-to-br from-blue-600 via-violet-600 to-blue-700 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-15">
+    <section className="w-full py-20 md:py-28 bg-gradient-to-br from-blue-600 via-violet-600 to-blue-700 relative overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden opacity-15">
         {HSK_CHARACTERS.slice(0, 12).map((char, i) => (
           <motion.div
             key={i}
             className="absolute text-5xl md:text-6xl lg:text-7xl font-bold text-white"
-            initial={{ x: -100 }}
-            animate={{
-              x: [null, window.innerWidth + 100],
-            }}
+            initial={{ x: '-10%' }}
+            animate={{ x: '110%' }}
             transition={{
               duration: 25 + i * 3,
+              delay: i * 2,
               repeat: Infinity,
               ease: 'linear',
             }}
-            style={{ top: `${Math.random() * 100}%` }}
+            style={{ top: `${(i * 8) % 100}%` }}
           >
             {char}
           </motion.div>
         ))}
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -606,13 +605,13 @@ function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4"
         >
           <Link href="/signup">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold bg-white text-blue-600 rounded-full shadow-xl cursor-pointer inline-block w-full sm:w-auto"
+              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold bg-white text-blue-600 rounded-full shadow-xl cursor-pointer inline-block whitespace-nowrap"
             >
               Create Account
             </motion.div>
@@ -621,7 +620,7 @@ function CTASection() {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white border-2 border-white/30 hover:bg-white/10 rounded-full cursor-pointer inline-block w-full sm:w-auto transition-all duration-300"
+              className="px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white border-2 border-white/30 hover:bg-white/10 rounded-full cursor-pointer inline-block whitespace-nowrap transition-all duration-300"
             >
               Login
             </motion.div>
@@ -634,13 +633,13 @@ function CTASection() {
 
 function Footer() {
   return (
-    <footer className="py-10 md:py-12 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="w-full py-10 md:py-12 bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <Book className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400 bg-clip-text text-transparent whitespace-nowrap">
                 HSK Learning
               </span>
             </div>
@@ -678,9 +677,9 @@ function Footer() {
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 overflow-x-hidden">
+    <div className="w-full min-h-screen bg-white dark:bg-slate-900 overflow-x-hidden overflow-y-auto">
       <Navbar />
-      <main>
+      <main className="w-full">
         <HeroSection />
         <FeaturesSection />
         <JourneySection />
