@@ -41,28 +41,30 @@ interface FloatingCharacter {
 }
 
 function generateFloatingCharacters(count: number): FloatingCharacter[] {
-  return Array.from({ length: count }, () => {
+  const result: FloatingCharacter[] = []
+  for (let i = 0; i < count; i++) {
     const rand = Math.random()
-    const motionGroup = rand < 0.3 ? 'A' : rand < 0.6 ? 'B' : rand < 0.8 ? 'C' : 'D'
+    let motionGroup: MotionGroup = 'A'
+    if (rand >= 0.3 && rand < 0.6) motionGroup = 'B'
+    else if (rand >= 0.6 && rand < 0.8) motionGroup = 'C'
+    else if (rand >= 0.8) motionGroup = 'D'
     
     const rand2 = Math.random()
-    const depthLayer = rand2 < 0.4 ? 'background' : rand2 < 0.7 ? 'middle' : 'foreground'
+    let depthLayer: DepthLayer = 'background'
+    if (rand2 >= 0.4 && rand2 < 0.7) depthLayer = 'middle'
+    else if (rand2 >= 0.7) depthLayer = 'foreground'
     
     const shouldRotate = Math.random() < 0.125
 
-    let opacity: readonly [number, number, number, number]
-    let scale: readonly [number, number, number, number]
-    let duration: number
+    let opacity: readonly [number, number, number, number] = [0.08, 0.15, 0.15, 0.08]
+    let scale: readonly [number, number, number, number] = [0.6, 0.75, 0.75, 0.6]
+    let duration = 70
 
-    if (depthLayer === 'background') {
-      opacity = [0.08, 0.15, 0.15, 0.08]
-      scale = [0.6, 0.75, 0.75, 0.6]
-      duration = 70
-    } else if (depthLayer === 'middle') {
+    if (depthLayer === 'middle') {
       opacity = [0.15, 0.25, 0.25, 0.15]
       scale = [0.8, 0.95, 0.95, 0.8]
       duration = 55
-    } else {
+    } else if (depthLayer === 'foreground') {
       opacity = [0.25, 0.4, 0.4, 0.25]
       scale = [0.95, 1.1, 1.1, 0.95]
       duration = 45
@@ -73,21 +75,22 @@ function generateFloatingCharacters(count: number): FloatingCharacter[] {
     else if (motionGroup === 'C') durationMod = 0.85
     else if (motionGroup === 'D') durationMod = 1.4
 
-    return {
+    result.push({
       char: HSK_CHARACTERS[Math.floor(Math.random() * HSK_CHARACTERS.length)],
       x: Math.random() * 90 + 5,
       y: Math.random() * 90 + 5,
       duration: duration * durationMod + Math.random() * 20,
       delay: Math.random() * 20,
-      motionGroup: motionGroup as MotionGroup,
-      depthLayer: depthLayer as DepthLayer,
+      motionGroup,
+      depthLayer,
       opacity,
       scale,
       shouldRotate,
       rotateAmount: -5 + Math.random() * 10,
       colorConfig: PREMIUM_COLORS[Math.floor(Math.random() * PREMIUM_COLORS.length)],
-    }
-  })
+    })
+  }
+  return result
 }
 
 function FloatingCharacters() {
