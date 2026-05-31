@@ -42,12 +42,12 @@ function generateFloatingCharacters(count: number): FloatingCharacter[] {
       char: HSK_CHARACTERS[Math.floor(Math.random() * HSK_CHARACTERS.length)],
       x: Math.random() * 100,
       y: Math.random() * 100,
-      duration: 15 + Math.random() * 20,
-      delay: Math.random() * 10,
+      duration: 40 + Math.random() * 30,
+      delay: Math.random() * 15,
       direction: ['left', 'right', 'up', 'down'][Math.floor(Math.random() * 4)] as FloatingCharacter['direction'],
-      opacity: 0.3 + Math.random() * 0.4,
-      scale: 0.8 + Math.random() * 1.2,
-      rotate: -15 + Math.random() * 30,
+      opacity: 0.15 + Math.random() * 0.25,
+      scale: 0.6 + Math.random() * 0.8,
+      rotate: -10 + Math.random() * 20,
       colorConfig,
     }
   })
@@ -94,7 +94,7 @@ function FloatingCharacters() {
             }}
           >
             <span
-              className="text-5xl md:text-6xl lg:text-7xl font-bold inline-block"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold inline-block"
               style={{
                 color: char.colorConfig.color,
                 textShadow: `
@@ -564,12 +564,12 @@ function CTASection() {
         {HSK_CHARACTERS.slice(0, 12).map((char, i) => (
           <motion.div
             key={i}
-            className="absolute text-5xl md:text-6xl lg:text-7xl font-bold text-white"
-            initial={{ x: '-10%' }}
-            animate={{ x: '110%' }}
+            className="absolute text-3xl md:text-4xl lg:text-5xl font-bold text-white"
+            initial={{ translateX: '-100%' }}
+            animate={{ translateX: '110vw' }}
             transition={{
-              duration: 25 + i * 3,
-              delay: i * 2,
+              duration: 35 + i * 4,
+              delay: i * 2.5,
               repeat: Infinity,
               ease: 'linear',
             }}
