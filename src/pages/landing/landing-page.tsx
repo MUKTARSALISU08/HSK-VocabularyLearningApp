@@ -49,18 +49,18 @@ function generateFloatingCharacters(count: number): FloatingCharacter[] {
     const depthLayer = depthLayers[Math.floor(Math.random() * depthLayers.length)]
     const shouldRotate = Math.random() < 0.125
 
-    const layerConfig = {
+    const layerConfig = ({
       background: { opacity: [0.08, 0.15, 0.15, 0.08], scale: [0.6, 0.75, 0.75, 0.6], duration: 70, speedMod: 1 },
       middle: { opacity: [0.15, 0.25, 0.25, 0.15], scale: [0.8, 0.95, 0.95, 0.8], duration: 55, speedMod: 1.3 },
       foreground: { opacity: [0.25, 0.4, 0.4, 0.25], scale: [0.95, 1.1, 1.1, 0.95], duration: 45, speedMod: 1.6 },
-    }[depthLayer]
+    } as const)[depthLayer]!
 
-    const groupConfig = {
+    const groupConfig = ({
       A: { durationMod: 1, startPos: '-15vw', endPos: '115vw' },
       B: { durationMod: 1.25, startPos: '115vw', endPos: '-15vw' },
       C: { durationMod: 0.85, startPos: '-15vh', endPos: '115vh' },
       D: { durationMod: 1.4, startPos: '115vh', endPos: '-15vh' },
-    }[motionGroup]
+    } as const)[motionGroup]!
 
     return {
       char: HSK_CHARACTERS[Math.floor(Math.random() * HSK_CHARACTERS.length)],
